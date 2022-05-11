@@ -10,13 +10,24 @@ We created ten random stimuli in which the 15 target fruit items were uniformly 
 
 
 
-
-
 This line runs the code that gets the individual participant results files in.
 
 
 ```r
 source("e1_process_individual_results_files.R", local = knitr::knit_global())
+#> ── Attaching packages ─────────────────── tidyverse 1.3.1 ──
+#> ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+#> ✔ tibble  3.1.7     ✔ dplyr   1.0.9
+#> ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+#> ✔ readr   2.1.2     ✔ forcats 0.5.1
+#> ── Conflicts ────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> 
+#>  *********************************************************** 
+#>           Loading standardize package version 0.2.2          
+#>      Call standardize.news() to see new features/changes     
+#>  ***********************************************************
 #> P001 done
 #> P002 done
 #> P003 done

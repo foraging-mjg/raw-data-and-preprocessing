@@ -5,7 +5,7 @@ date: "`r format(Sys.time(), '%A %d %B %Y at %X')`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
+url: https://mjgreen.github.io/foraging-paradigm-paper-2022/
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
   This is a minimal example of using the bookdown package to write a book.

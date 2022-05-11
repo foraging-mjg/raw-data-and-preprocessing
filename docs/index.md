@@ -1,11 +1,11 @@
 --- 
 title: "Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging"
 author: "Matthew Green"
-date: "Wednesday 11 May 2022 at 00:47:08"
+date: "Wednesday 11 May 2022 at 01:05:03"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
+url: https://mjgreen.github.io/foraging-paradigm-paper-2022/
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
   This is a minimal example of using the bookdown package to write a book.
@@ -16,5 +16,7 @@ csl: chicago-fullnote-bibliography.csl
 ---
 
 # First things first
+
+Things about the series of two experiments before we consider experiment one and experiment two separately.
 
 
