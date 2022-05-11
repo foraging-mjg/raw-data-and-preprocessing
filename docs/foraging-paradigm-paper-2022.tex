@@ -117,25 +117,8 @@
 
 \title{Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging}
 \author{Matthew Green}
-\date{Wednesday 11 May 2022 at 00:34:45}
+\date{Wednesday 11 May 2022 at 01:19:01}
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\newtheorem{conjecture}{Conjecture}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}[chapter]
-\theoremstyle{definition}
-\newtheorem{hypothesis}{Hypothesis}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -146,48 +129,19 @@
 \hypertarget{first-things-first}{%
 \chapter{First things first}\label{first-things-first}}
 
+Things about the series of two experiments before we consider experiment one and experiment two separately.
+
 \hypertarget{part-experiment-one}{%
 \part{Experiment One}\label{part-experiment-one}}
 
 \hypertarget{experiment-one-introduction}{%
 \chapter{Experiment One Introduction}\label{experiment-one-introduction}}
 
-In experiment 1, the computerized gaze contingent task consisted of
-20 individual trials. In each trial participants were presented with a display
-containing 30 trees, 15 of which contained a hidden fruit
-item which was the target (the target was an apple, represented by a
-filled red circle). On each trial, the participant's task was to forage for
-and retrieve 10 of the 15 fruit items.
+In experiment 1, the computerized gaze contingent task consisted of 20 individual trials. In each trial participants were presented with a display containing 30 trees, 15 of which contained a hidden fruit item which was the target (the target was an apple, represented by a filled red circle). On each trial, the participant's task was to forage for and retrieve 10 of the 15 fruit items.
 
-We manipulated one factor within-subjects (Resource Distribution) with 2 levels: \texttt{.pat} for `clumped' and \texttt{dis} for `random'
+We manipulated one factor within-subjects (Resource Distribution) with 2 levels: `clumped' and `random'.
 
-We created ten random stimuli in which
-the 15 target fruit items were uniformly distributed about the 30 trees
-(random condition) and ten stimuli in which all 15 target fruit items
-were arranged in one large patch (clumped condition) that covered either
-the left or the right side of the layout.
-
-\hypertarget{experiment-one-revisits-per-trial}{%
-\chapter{Experiment One Revisits Per Trial}\label{experiment-one-revisits-per-trial}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\CommentTok{\#\textgreater{} {-}{-} Attaching packages {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse 1.3.1 {-}{-}}
-\CommentTok{\#\textgreater{} v ggplot2 3.3.6     v purrr   0.3.4}
-\CommentTok{\#\textgreater{} v tibble  3.1.7     v dplyr   1.0.9}
-\CommentTok{\#\textgreater{} v tidyr   1.2.0     v stringr 1.4.0}
-\CommentTok{\#\textgreater{} v readr   2.1.2     v forcats 0.5.1}
-\CommentTok{\#\textgreater{} {-}{-} Conflicts {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse\_conflicts() {-}{-}}
-\CommentTok{\#\textgreater{} x dplyr::filter() masks stats::filter()}
-\CommentTok{\#\textgreater{} x dplyr::lag()    masks stats::lag()}
-\FunctionTok{library}\NormalTok{(ez)}
-\FunctionTok{library}\NormalTok{(gt)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{raw-data}{%
-\section{Raw data}\label{raw-data}}
+We created ten random stimuli in which the 15 target fruit items were uniformly distributed about the 30 trees (random condition) and ten stimuli in which all 15 target fruit items were arranged in one large patch (clumped condition) that covered either the left or the right side of the layout.
 
 This line runs the code that gets the individual participant results files in.
 
@@ -196,6 +150,12 @@ This line runs the code that gets the individual participant results files in.
 \CommentTok{\# source("e1\_process\_individual\_results\_files.R", local = knitr::knit\_global())}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{experiment-one-revisits-per-trial}{%
+\chapter{Experiment One Revisits Per Trial}\label{experiment-one-revisits-per-trial}}
+
+\hypertarget{raw-data}{%
+\section{Raw data}\label{raw-data}}
 
 This line reads in the dataset that results from collating the results files for each participant.
 
@@ -265,8 +225,6 @@ Condition descriptives
 \CommentTok{\# we first need data with one clumped score for each participant and one random score }
 \CommentTok{\# for each participant, averaging over early and late stages.}
 \NormalTok{tempCond }\OtherTok{\textless{}{-}}\NormalTok{ PARTICIPANT\_MEANS }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(pp,condition) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{cmeans=}\FunctionTok{mean}\NormalTok{(meanrevisits))}
-\CommentTok{\#\textgreater{} \textasciigrave{}summarise()\textasciigrave{} has grouped output by \textquotesingle{}pp\textquotesingle{}. You can override}
-\CommentTok{\#\textgreater{} using the \textasciigrave{}.groups\textasciigrave{} argument.}
 \CommentTok{\# Now we can ask for means and sd for clumped and random that each pp contributed one value to}
 \NormalTok{CONDITION\_DESCRIPTIVES }\OtherTok{\textless{}{-}}\NormalTok{ tempCond }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(condition) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(cmeans), }\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(cmeans))}
 \CommentTok{\# issue the table}
@@ -278,7 +236,7 @@ Condition descriptives
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{001-02-e1-revisits-per-trial_files/figure-latex/CONDITION_DESCRIPTIVES-1.png}
+\includegraphics[width=0.33\linewidth]{e1_figures/CONDITION_DESCRIPTIVES-1}
 
 Stage descriptives
 
@@ -287,8 +245,6 @@ Stage descriptives
 \CommentTok{\# To generate mean and sd properly for each level of stage, we first need to }
 \CommentTok{\# collapse over condition (clumped/random) to get one score for each participant per level of stage (early/late)}
 \NormalTok{tempStage }\OtherTok{\textless{}{-}}\NormalTok{ PARTICIPANT\_MEANS }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(pp,stage) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{smeans=}\FunctionTok{mean}\NormalTok{(meanrevisits))}
-\CommentTok{\#\textgreater{} \textasciigrave{}summarise()\textasciigrave{} has grouped output by \textquotesingle{}pp\textquotesingle{}. You can override}
-\CommentTok{\#\textgreater{} using the \textasciigrave{}.groups\textasciigrave{} argument.}
 \CommentTok{\# Now we can ask for means and sd per level of stage}
 \NormalTok{STAGE\_DESCRIPTIVES }\OtherTok{\textless{}{-}}\NormalTok{ tempStage  }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(stage) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(smeans),}\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(smeans))}
 \CommentTok{\# issue the table}
@@ -300,7 +256,7 @@ Stage descriptives
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{001-02-e1-revisits-per-trial_files/figure-latex/STAGE_DESCRIPTIVES-1.png}
+\includegraphics[width=0.33\linewidth]{e1_figures/STAGE_DESCRIPTIVES-1}
 
 SxC Descriptives
 
@@ -308,8 +264,6 @@ SxC Descriptives
 \begin{Highlighting}[]
 \CommentTok{\# To get the 2 x 2 interaction means, yielding a 2x2 table with mean and sd}
 \NormalTok{SxC\_DESCRIPTIVES }\OtherTok{\textless{}{-}}\NormalTok{ PARTICIPANT\_MEANS }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(condition,stage) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(meanrevisits),}\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(meanrevisits))}
-\CommentTok{\#\textgreater{} \textasciigrave{}summarise()\textasciigrave{} has grouped output by \textquotesingle{}condition\textquotesingle{}. You can}
-\CommentTok{\#\textgreater{} override using the \textasciigrave{}.groups\textasciigrave{} argument.}
 \NormalTok{SxC\_DESCRIPTIVES }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{gt}\NormalTok{(}\AttributeTok{rowname\_col =} \StringTok{"stage"}\NormalTok{, }\AttributeTok{groupname\_col =} \StringTok{"condition"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{tab\_stubhead}\NormalTok{(}\AttributeTok{label =} \StringTok{"condition"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
@@ -319,14 +273,14 @@ SxC Descriptives
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{001-02-e1-revisits-per-trial_files/figure-latex/SxC_Descriptives-1.png}
+\includegraphics[width=0.33\linewidth]{e1_figures/SxC_Descriptives-1}
 
 \hypertarget{plots}{%
 \section{Plots}\label{plots}}
 
-\includegraphics[width=0.5\linewidth]{001-02-e1-revisits-per-trial_files/figure-latex/progress-revisits-1}
+\includegraphics[width=0.5\linewidth]{e1_figures/progress-revisits-1}
 
-\includegraphics[width=0.5\linewidth]{001-02-e1-revisits-per-trial_files/figure-latex/stage-revisits-1}
+\includegraphics[width=0.5\linewidth]{e1_figures/stage-revisits-1}
 
 \hypertarget{anova}{%
 \section{ANOVA}\label{anova}}
@@ -342,234 +296,7 @@ SxC Descriptives
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=0.33\linewidth]{001-02-e1-revisits-per-trial_files/figure-latex/anova-table-revisits-1}
-
-\hypertarget{hello-bookdown}{%
-\chapter{Hello bookdown}\label{hello-bookdown}}
-
-All chapters start with a first-level heading followed by your chapter title, like the line above. There should be only one first-level heading (\texttt{\#}) per .Rmd file.
-
-\hypertarget{a-section}{%
-\section{A section}\label{a-section}}
-
-All chapter sections start with a second-level (\texttt{\#\#}) or higher heading followed by your section title, like the sections above and below here. You can have as many as you want within a chapter.
-
-\hypertarget{an-unnumbered-section}{%
-\subsection*{An unnumbered section}\label{an-unnumbered-section}}
-\addcontentsline{toc}{subsection}{An unnumbered section}
-
-Chapters and sections are numbered by default. To un-number a heading, add a \texttt{\{.unnumbered\}} or the shorter \texttt{\{-\}} at the end of the heading, like in this section.
-
-\hypertarget{cross}{%
-\chapter{Cross-references}\label{cross}}
-
-Cross-references make it easier for your readers to find and link to elements in your book.
-
-\hypertarget{chapters-and-sub-chapters}{%
-\section{Chapters and sub-chapters}\label{chapters-and-sub-chapters}}
-
-There are two steps to cross-reference any heading:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Label the heading: \texttt{\#\ Hello\ world\ \{\#nice-label\}}.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Leave the label off if you like the automated heading generated based on your heading title: for example, \texttt{\#\ Hello\ world} = \texttt{\#\ Hello\ world\ \{\#hello-world\}}.
-  \item
-    To label an un-numbered heading, use: \texttt{\#\ Hello\ world\ \{-\#nice-label\}} or \texttt{\{\#\ Hello\ world\ .unnumbered\}}.
-  \end{itemize}
-\item
-  Next, reference the labeled heading anywhere in the text using \texttt{\textbackslash{}@ref(nice-label)}; for example, please see Chapter \ref{cross}.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    If you prefer text as the link instead of a numbered reference use: \protect\hyperlink{cross}{any text you want can go here}.
-  \end{itemize}
-\end{enumerate}
-
-\hypertarget{captioned-figures-and-tables}{%
-\section{Captioned figures and tables}\label{captioned-figures-and-tables}}
-
-Figures and tables \emph{with captions} can also be cross-referenced from elsewhere in your book using \texttt{\textbackslash{}@ref(fig:chunk-label)} and \texttt{\textbackslash{}@ref(tab:chunk-label)}, respectively.
-
-See Figure \ref{fig:nice-fig}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, .}\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{))}
-\FunctionTok{plot}\NormalTok{(pressure, }\AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-cross-refs_files/figure-latex/nice-fig-1} 
-
-}
-
-\caption{Here is a nice figure!}\label{fig:nice-fig}
-\end{figure}
-
-Don't miss Table \ref{tab:nice-tab}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
-  \FunctionTok{head}\NormalTok{(pressure, }\DecValTok{10}\NormalTok{), }\AttributeTok{caption =} \StringTok{\textquotesingle{}Here is a nice table!\textquotesingle{}}\NormalTok{,}
-  \AttributeTok{booktabs =} \ConstantTok{TRUE}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}
-
-\caption{\label{tab:nice-tab}Here is a nice table!}
-\centering
-\begin{tabular}[t]{rr}
-\toprule
-temperature & pressure\\
-\midrule
-0 & 0.0002\\
-20 & 0.0012\\
-40 & 0.0060\\
-60 & 0.0300\\
-80 & 0.0900\\
-\addlinespace
-100 & 0.2700\\
-120 & 0.7500\\
-140 & 1.8500\\
-160 & 4.2000\\
-180 & 8.8000\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\hypertarget{parts}{%
-\chapter{Parts}\label{parts}}
-
-You can add parts to organize one or more book chapters together. Parts can be inserted at the top of an .Rmd file, before the first-level chapter heading in that same file.
-
-Add a numbered part: \texttt{\#\ (PART)\ Act\ one\ \{-\}} (followed by \texttt{\#\ A\ chapter})
-
-Add an unnumbered part: \texttt{\#\ (PART\textbackslash{}*)\ Act\ one\ \{-\}} (followed by \texttt{\#\ A\ chapter})
-
-Add an appendix as a special kind of un-numbered part: \texttt{\#\ (APPENDIX)\ Other\ stuff\ \{-\}} (followed by \texttt{\#\ A\ chapter}). Chapters in an appendix are prepended with letters instead of numbers.
-
-\hypertarget{footnotes-and-citations}{%
-\chapter{Footnotes and citations}\label{footnotes-and-citations}}
-
-\hypertarget{footnotes}{%
-\section{Footnotes}\label{footnotes}}
-
-Footnotes are put inside the square brackets after a caret \texttt{\^{}{[}{]}}. Like this one \footnote{This is a footnote.}.
-
-\hypertarget{citations}{%
-\section{Citations}\label{citations}}
-
-Reference items in your bibliography file(s) using \texttt{@key}.
-
-For example, we are using the \textbf{bookdown} package \citep{R-bookdown} (check out the last code chunk in index.Rmd to see how this citation key was added) in this sample book, which was built on top of R Markdown and \textbf{knitr} \citep{xie2015} (this citation was added manually in an external file book.bib).
-Note that the \texttt{.bib} files need to be listed in the index.Rmd with the YAML \texttt{bibliography} key.
-
-The \texttt{bs4\_book} theme makes footnotes appear inline when you click on them. In this example book, we added \texttt{csl:\ chicago-fullnote-bibliography.csl} to the \texttt{index.Rmd} YAML, and include the \texttt{.csl} file. To download a new style, we recommend: \url{https://www.zotero.org/styles/}
-
-The RStudio Visual Markdown Editor can also make it easier to insert citations: \url{https://rstudio.github.io/visual-markdown-editing/\#/citations}
-
-\hypertarget{blocks}{%
-\chapter{Blocks}\label{blocks}}
-
-\hypertarget{equations}{%
-\section{Equations}\label{equations}}
-
-Here is an equation.
-
-\begin{equation} 
-  f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
-  \label{eq:binom}
-\end{equation}
-
-You may refer to using \texttt{\textbackslash{}@ref(eq:binom)}, like see Equation \eqref{eq:binom}.
-
-\hypertarget{theorems-and-proofs}{%
-\section{Theorems and proofs}\label{theorems-and-proofs}}
-
-Labeled theorems can be referenced in text using \texttt{\textbackslash{}@ref(thm:tri)}.
-
-Here's the theorem:
-
-\begin{theorem}
-\protect\hypertarget{thm:tri}{}\label{thm:tri}For a right triangle, if \(c\) denotes the \emph{length} of the hypotenuse
-and \(a\) and \(b\) denote the lengths of the \textbf{other} two sides, we have
-\[a^2 + b^2 = c^2\]
-\end{theorem}
-
-Here's the reference: for example, check out this smart theorem \ref{thm:tri}.
-
-Read more here \url{https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html}.
-
-\hypertarget{callout-blocks}{%
-\section{Callout blocks}\label{callout-blocks}}
-
-The \texttt{bs4\_book} theme also includes special callout blocks, like this \texttt{.rmdnote}.
-
-You can use \textbf{markdown} inside a block.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{head}\NormalTok{(beaver1, }\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
-\CommentTok{\#\textgreater{}   day time  temp activ}
-\CommentTok{\#\textgreater{} 1 346  840 36.33     0}
-\CommentTok{\#\textgreater{} 2 346  850 36.34     0}
-\CommentTok{\#\textgreater{} 3 346  900 36.35     0}
-\CommentTok{\#\textgreater{} 4 346  910 36.42     0}
-\CommentTok{\#\textgreater{} 5 346  920 36.55     0}
-\end{Highlighting}
-\end{Shaded}
-
-It is up to the user to define the appearance of these blocks for LaTeX output.
-
-You may also use: \texttt{.rmdcaution}, \texttt{.rmdimportant}, \texttt{.rmdtip}, or \texttt{.rmdwarning} as the block name.
-
-The R Markdown Cookbook provides more help on how to use custom blocks to design your own callouts: \url{https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html}
-
-\hypertarget{sharing-your-book}{%
-\chapter{Sharing your book}\label{sharing-your-book}}
-
-\hypertarget{publishing}{%
-\section{Publishing}\label{publishing}}
-
-HTML books can be published online, see: \url{https://bookdown.org/yihui/bookdown/publishing.html}
-
-\hypertarget{pages}{%
-\section{404 pages}\label{pages}}
-
-By default, users will be directed to a 404 page if they try to access a webpage that cannot be found. If you'd like to customize your 404 page instead of using the default, you may add either a \texttt{\_404.Rmd} or \texttt{\_404.md} file to your project root and use code and/or Markdown syntax.
-
-\hypertarget{metadata-for-sharing}{%
-\section{Metadata for sharing}\label{metadata-for-sharing}}
-
-Bookdown HTML books will provide HTML metadata for social sharing on platforms like Twitter, Facebook, and LinkedIn, using information you provide in the \texttt{index.Rmd} YAML. To setup, set the \texttt{url} for your book and the path to your \texttt{cover-image} file. Your book's \texttt{title} and \texttt{description} are also used.
-
-This \texttt{bs4\_book} provides enhanced metadata for social sharing, so that each chapter shared will have a unique description, auto-generated based on the content.
-
-Specify your book's source repository on GitHub as the \texttt{repo} in the \texttt{\_output.yml} file, which allows users to view each chapter's source file or suggest an edit. Read more about the features of this output format here:
-
-\url{https://pkgs.rstudio.com/bookdown/reference/bs4_book.html}
-
-Or use:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{?bookdown}\SpecialCharTok{::}\NormalTok{bs4\_book}
-\end{Highlighting}
-\end{Shaded}
-
+\includegraphics[width=0.33\linewidth]{e1_figures/anova-table-revisits-1}
 
   \bibliography{book.bib,packages.bib}
 
