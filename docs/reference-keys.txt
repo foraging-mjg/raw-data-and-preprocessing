@@ -1,0 +1,9 @@
+first-things-first
+experiment-one-introduction
+experiment-one-revisits-per-trial
+raw-data
+aggregation-1-trial-counts
+aggregation-2-participant-means
+descriptives
+plots
+anova
