@@ -7,3 +7,5 @@ aggregation-2-participant-means
 descriptives
 plots
 anova
+appendix-a
+appendix-b

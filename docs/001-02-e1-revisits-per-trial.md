@@ -35,7 +35,8 @@ e1_revisits <-
 
 
 ```r
-# First level of aggregation collapses over index and yields a count for each trial: 
+# First level of aggregation collapses over index and yields 
+# a count for each trial: 
 # each row is how many revisits they made on that trial
 # THESE ARE TRIAL SUMS
 TRIAL_SUMS <-
@@ -49,7 +50,8 @@ TRIAL_SUMS <-
 
 ```r
 # Second level of aggregation collapses over trials
-# each row is the average number of revisits that participant made in that combination of random/clumped and early/late
+# each row is the average number of revisits that participant 
+# made in that combination of random/clumped and early/late
 # THESE ARE PARTICIPANT MEANS
 PARTICIPANT_MEANS <- 
   TRIAL_SUMS %>% 
@@ -63,12 +65,17 @@ Condition descriptives
 
 
 ```r
-# To generate mean and sd properly for each level of condition (clumped/random), 
-# we first need data with one clumped score for each participant and one random score 
-# for each participant, averaging over early and late stages.
-tempCond <- PARTICIPANT_MEANS %>% group_by(pp,condition) %>% summarise(cmeans=mean(meanrevisits))
-# Now we can ask for means and sd for clumped and random that each pp contributed one value to
-CONDITION_DESCRIPTIVES <- tempCond %>% group_by(condition) %>% summarise(mean=mean(cmeans), sd=sd(cmeans))
+# To generate mean and sd properly for each level of condition 
+# (clumped/random), we first need data with one clumped score 
+# for each participant and one random score for each 
+# participant, averaging over early and late stages.
+tempCond <- PARTICIPANT_MEANS %>% 
+  group_by(pp,condition) %>% summarise(cmeans=mean(meanrevisits))
+# Now we can ask for means and sd for clumped and random 
+# that each pp contributed one value to
+CONDITION_DESCRIPTIVES <- tempCond %>% 
+  group_by(condition) %>% 
+  summarise(mean=mean(cmeans), sd=sd(cmeans))
 # issue the table
 CONDITION_DESCRIPTIVES %>% 
   gt() %>% 
@@ -83,11 +90,17 @@ Stage descriptives
 
 
 ```r
-# To generate mean and sd properly for each level of stage, we first need to 
-# collapse over condition (clumped/random) to get one score for each participant per level of stage (early/late)
-tempStage <- PARTICIPANT_MEANS %>% group_by(pp,stage) %>% summarise(smeans=mean(meanrevisits))
+# To generate mean and sd properly for each level of stage,
+# we first need to collapse over condition (clumped/random)
+# to get one score for each participant per level of stage
+# (early/late)
+tempStage <- PARTICIPANT_MEANS %>% 
+  group_by(pp,stage) %>% 
+  summarise(smeans=mean(meanrevisits))
 # Now we can ask for means and sd per level of stage
-STAGE_DESCRIPTIVES <- tempStage  %>% group_by(stage) %>% summarise(mean=mean(smeans),sd=sd(smeans))
+STAGE_DESCRIPTIVES <- tempStage  %>% 
+  group_by(stage) %>% 
+  summarise(mean=mean(smeans),sd=sd(smeans))
 # issue the table
 STAGE_DESCRIPTIVES %>% 
   gt() %>% 

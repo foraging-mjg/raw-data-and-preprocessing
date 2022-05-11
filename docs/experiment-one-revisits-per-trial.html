@@ -49,6 +49,9 @@
 <li><a class="" href="experiment-one-introduction.html"><span class="header-section-number">2</span> Experiment One Introduction</a></li>
 <li><a class="active" href="experiment-one-revisits-per-trial.html"><span class="header-section-number">3</span> Experiment One Revisits Per Trial</a></li>
 <li><a class="" href="references.html">References</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="appendix-a.html"><span class="header-section-number">A</span> Appendix A</a></li>
+<li><a class="" href="appendix-b.html"><span class="header-section-number">B</span> Appendix B</a></li>
 </ul>
 
         <div class="book-extra">
@@ -87,7 +90,8 @@
 <span class="header-section-number">3.2</span> Aggregation 1: Trial counts<a class="anchor" aria-label="anchor" href="#aggregation-1-trial-counts"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># First level of aggregation collapses over index and yields a count for each trial: </span>
+<code class="sourceCode R"><span class="co"># First level of aggregation collapses over index and yields </span>
+<span class="co"># a count for each trial: </span>
 <span class="co"># each row is how many revisits they made on that trial</span>
 <span class="co"># THESE ARE TRIAL SUMS</span>
 <span class="va">TRIAL_SUMS</span> <span class="op">&lt;-</span>
@@ -101,7 +105,8 @@
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Second level of aggregation collapses over trials</span>
-<span class="co"># each row is the average number of revisits that participant made in that combination of random/clumped and early/late</span>
+<span class="co"># each row is the average number of revisits that participant </span>
+<span class="co"># made in that combination of random/clumped and early/late</span>
 <span class="co"># THESE ARE PARTICIPANT MEANS</span>
 <span class="va">PARTICIPANT_MEANS</span> <span class="op">&lt;-</span> 
   <span class="va">TRIAL_SUMS</span> <span class="op">%&gt;%</span> 
@@ -114,12 +119,17 @@
 </h2>
 <p>Condition descriptives</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># To generate mean and sd properly for each level of condition (clumped/random), </span>
-<span class="co"># we first need data with one clumped score for each participant and one random score </span>
-<span class="co"># for each participant, averaging over early and late stages.</span>
-<span class="va">tempCond</span> <span class="op">&lt;-</span> <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>,<span class="va">condition</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarise</span><span class="op">(</span>cmeans<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">meanrevisits</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># Now we can ask for means and sd for clumped and random that each pp contributed one value to</span>
-<span class="va">CONDITION_DESCRIPTIVES</span> <span class="op">&lt;-</span> <span class="va">tempCond</span> <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">condition</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cmeans</span><span class="op">)</span>, sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">cmeans</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># To generate mean and sd properly for each level of condition </span>
+<span class="co"># (clumped/random), we first need data with one clumped score </span>
+<span class="co"># for each participant and one random score for each </span>
+<span class="co"># participant, averaging over early and late stages.</span>
+<span class="va">tempCond</span> <span class="op">&lt;-</span> <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>,<span class="va">condition</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarise</span><span class="op">(</span>cmeans<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">meanrevisits</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># Now we can ask for means and sd for clumped and random </span>
+<span class="co"># that each pp contributed one value to</span>
+<span class="va">CONDITION_DESCRIPTIVES</span> <span class="op">&lt;-</span> <span class="va">tempCond</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">condition</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cmeans</span><span class="op">)</span>, sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">cmeans</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># issue the table</span>
 <span class="va">CONDITION_DESCRIPTIVES</span> <span class="op">%&gt;%</span> 
   <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -129,11 +139,17 @@
 <div class="inline-figure"><img src="e1_figures/CONDITION_DESCRIPTIVES-1.png" width="33%"></div>
 <p>Stage descriptives</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># To generate mean and sd properly for each level of stage, we first need to </span>
-<span class="co"># collapse over condition (clumped/random) to get one score for each participant per level of stage (early/late)</span>
-<span class="va">tempStage</span> <span class="op">&lt;-</span> <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>,<span class="va">stage</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarise</span><span class="op">(</span>smeans<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">meanrevisits</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># To generate mean and sd properly for each level of stage,</span>
+<span class="co"># we first need to collapse over condition (clumped/random)</span>
+<span class="co"># to get one score for each participant per level of stage</span>
+<span class="co"># (early/late)</span>
+<span class="va">tempStage</span> <span class="op">&lt;-</span> <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>,<span class="va">stage</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>smeans<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">meanrevisits</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Now we can ask for means and sd per level of stage</span>
-<span class="va">STAGE_DESCRIPTIVES</span> <span class="op">&lt;-</span> <span class="va">tempStage</span>  <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">stage</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">smeans</span><span class="op">)</span>,sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">smeans</span><span class="op">)</span><span class="op">)</span>
+<span class="va">STAGE_DESCRIPTIVES</span> <span class="op">&lt;-</span> <span class="va">tempStage</span>  <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">stage</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">smeans</span><span class="op">)</span>,sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">smeans</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># issue the table</span>
 <span class="va">STAGE_DESCRIPTIVES</span> <span class="op">%&gt;%</span> 
   <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -205,7 +221,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Wednesday 11 May 2022 at 01:18:26.</p>
+    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Wednesday 11 May 2022 at 01:33:30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

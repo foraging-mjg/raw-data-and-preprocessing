@@ -117,7 +117,7 @@
 
 \title{Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging}
 \author{Matthew Green}
-\date{Wednesday 11 May 2022 at 01:19:01}
+\date{Wednesday 11 May 2022 at 01:34:02}
 
 \begin{document}
 \maketitle
@@ -189,7 +189,8 @@ This renames the raw data but doesn't do any operations on it.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# First level of aggregation collapses over index and yields a count for each trial: }
+\CommentTok{\# First level of aggregation collapses over index and yields }
+\CommentTok{\# a count for each trial: }
 \CommentTok{\# each row is how many revisits they made on that trial}
 \CommentTok{\# THESE ARE TRIAL SUMS}
 \NormalTok{TRIAL\_SUMS }\OtherTok{\textless{}{-}}
@@ -205,7 +206,8 @@ This renames the raw data but doesn't do any operations on it.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Second level of aggregation collapses over trials}
-\CommentTok{\# each row is the average number of revisits that participant made in that combination of random/clumped and early/late}
+\CommentTok{\# each row is the average number of revisits that participant }
+\CommentTok{\# made in that combination of random/clumped and early/late}
 \CommentTok{\# THESE ARE PARTICIPANT MEANS}
 \NormalTok{PARTICIPANT\_MEANS }\OtherTok{\textless{}{-}} 
 \NormalTok{  TRIAL\_SUMS }\SpecialCharTok{\%\textgreater{}\%} 
@@ -221,12 +223,17 @@ Condition descriptives
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# To generate mean and sd properly for each level of condition (clumped/random), }
-\CommentTok{\# we first need data with one clumped score for each participant and one random score }
-\CommentTok{\# for each participant, averaging over early and late stages.}
-\NormalTok{tempCond }\OtherTok{\textless{}{-}}\NormalTok{ PARTICIPANT\_MEANS }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(pp,condition) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{cmeans=}\FunctionTok{mean}\NormalTok{(meanrevisits))}
-\CommentTok{\# Now we can ask for means and sd for clumped and random that each pp contributed one value to}
-\NormalTok{CONDITION\_DESCRIPTIVES }\OtherTok{\textless{}{-}}\NormalTok{ tempCond }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(condition) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(cmeans), }\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(cmeans))}
+\CommentTok{\# To generate mean and sd properly for each level of condition }
+\CommentTok{\# (clumped/random), we first need data with one clumped score }
+\CommentTok{\# for each participant and one random score for each }
+\CommentTok{\# participant, averaging over early and late stages.}
+\NormalTok{tempCond }\OtherTok{\textless{}{-}}\NormalTok{ PARTICIPANT\_MEANS }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(pp,condition) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{cmeans=}\FunctionTok{mean}\NormalTok{(meanrevisits))}
+\CommentTok{\# Now we can ask for means and sd for clumped and random }
+\CommentTok{\# that each pp contributed one value to}
+\NormalTok{CONDITION\_DESCRIPTIVES }\OtherTok{\textless{}{-}}\NormalTok{ tempCond }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(condition) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(cmeans), }\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(cmeans))}
 \CommentTok{\# issue the table}
 \NormalTok{CONDITION\_DESCRIPTIVES }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{gt}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
@@ -242,11 +249,17 @@ Stage descriptives
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# To generate mean and sd properly for each level of stage, we first need to }
-\CommentTok{\# collapse over condition (clumped/random) to get one score for each participant per level of stage (early/late)}
-\NormalTok{tempStage }\OtherTok{\textless{}{-}}\NormalTok{ PARTICIPANT\_MEANS }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(pp,stage) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{smeans=}\FunctionTok{mean}\NormalTok{(meanrevisits))}
+\CommentTok{\# To generate mean and sd properly for each level of stage,}
+\CommentTok{\# we first need to collapse over condition (clumped/random)}
+\CommentTok{\# to get one score for each participant per level of stage}
+\CommentTok{\# (early/late)}
+\NormalTok{tempStage }\OtherTok{\textless{}{-}}\NormalTok{ PARTICIPANT\_MEANS }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(pp,stage) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{smeans=}\FunctionTok{mean}\NormalTok{(meanrevisits))}
 \CommentTok{\# Now we can ask for means and sd per level of stage}
-\NormalTok{STAGE\_DESCRIPTIVES }\OtherTok{\textless{}{-}}\NormalTok{ tempStage  }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(stage) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(smeans),}\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(smeans))}
+\NormalTok{STAGE\_DESCRIPTIVES }\OtherTok{\textless{}{-}}\NormalTok{ tempStage  }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(stage) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(smeans),}\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(smeans))}
 \CommentTok{\# issue the table}
 \NormalTok{STAGE\_DESCRIPTIVES }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{gt}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
@@ -297,6 +310,20 @@ SxC Descriptives
 \end{Shaded}
 
 \includegraphics[width=0.33\linewidth]{e1_figures/anova-table-revisits-1}
+
+\hypertarget{appendix-appendices}{%
+\appendix}
+
+
+\hypertarget{appendix-a}{%
+\chapter{Appendix A}\label{appendix-a}}
+
+Content \ldots{}
+
+\hypertarget{appendix-b}{%
+\chapter{Appendix B}\label{appendix-b}}
+
+Content \ldots{}
 
   \bibliography{book.bib,packages.bib}
 
