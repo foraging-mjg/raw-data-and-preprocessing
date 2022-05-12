@@ -31,7 +31,7 @@ This renames the raw data but doesn't do any operations on it.
 e2_ntrees <-
   e2 %>%
   transmute(
-    pp           = participant,
+    pp           = as_factor(participant),
     trial        = trial_number,
     resources    = factor(R, levels=c(".pat","dis"), labels=c("clumped", "random")),
     fading       = factor(V, levels=c(".fade","nofade"), labels=c("fade", "no_fade")),
@@ -59,7 +59,17 @@ e2_ntrees_participant_means <-
   e2_ntrees_trial_level %>% 
   group_by(pp, resources, stage, fading) %>% 
   summarise(mean_trees_per_stage=mean(trees))
-
 ```
 
+## ANOVA with resources and stage within-subjects and fading between-subjects
+
+```{r}
+options(contrasts=c("contr.sum","contr.poly"))
+ez1 <- ezANOVA(data=e2_ntrees_participant_means,
+               dv=mean_trees_per_stage,
+               wid=pp,
+               within=c(resources,stage),
+               between=fading,
+               type=3)
+```
 
