@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 9 Number of trees | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</title>
 <meta name="author" content="Matthew Green">
-<meta name="description" content="E2">
+<meta name="description" content='Experiment 2 Load the libraries. This line reads in the dataset that results from collating the results files for each participant. e2 &lt;- readRDS("fgms_e2_allsubs.rds") This renames the raw data...'>
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 9 Number of trees | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://mjgreen.github.io/foraging-paradigm-paper-2022/number-of-trees-1.html">
-<meta property="og:description" content="E2">
+<meta property="og:description" content='Experiment 2 Load the libraries. This line reads in the dataset that results from collating the results files for each participant. e2 &lt;- readRDS("fgms_e2_allsubs.rds") This renames the raw data...'>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 9 Number of trees | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging">
-<meta name="twitter:description" content="E2">
+<meta name="twitter:description" content='Experiment 2 Load the libraries. This line reads in the dataset that results from collating the results files for each participant. e2 &lt;- readRDS("fgms_e2_allsubs.rds") This renames the raw data...'>
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -74,7 +74,27 @@
 <h1>
 <span class="header-section-number">9</span> Number of trees<a class="anchor" aria-label="anchor" href="#number-of-trees-1"><i class="fas fa-link"></i></a>
 </h1>
-<p>E2</p>
+<p>Experiment 2</p>
+<p>Load the libraries.</p>
+<p>This line reads in the dataset that results from collating the results files for each participant.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">e2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"fgms_e2_allsubs.rds"</span><span class="op">)</span></code></pre></div>
+<p>This renames the raw data but doesn’t do any operations on it.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># this tibble is one row for each tree visited saying whether it was a revisit or not</span>
+<span class="va">e2_revisits</span> <span class="op">&lt;-</span>
+  <span class="va">e2</span> <span class="op">%&gt;%</span>
+  <span class="fu">transmute</span><span class="op">(</span>
+    pp           <span class="op">=</span> <span class="va">participant</span>,
+    trial        <span class="op">=</span> <span class="va">trial_number</span>,
+    resources    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">R</span>, levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".pat"</span>,<span class="st">"dis"</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clumped"</span>, <span class="st">"random"</span><span class="op">)</span><span class="op">)</span>,
+    stage        <span class="op">=</span> <span class="fu">as_factor</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">trial</span><span class="op">&lt;=</span><span class="fl">10</span>, <span class="st">"early"</span>, <span class="st">"late"</span><span class="op">)</span><span class="op">)</span>,
+    progress     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">trial</span><span class="op">)</span>,
+    index        <span class="op">=</span> <span class="va">index</span>,
+    tree         <span class="op">=</span> <span class="va">tile</span>,
+    is_a_revisit <span class="op">=</span> <span class="va">revisit</span>
+  <span class="op">)</span></code></pre></div>
+<p>Here</p>
 
 </div>
   <div class="chapter-nav">
@@ -99,7 +119,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Thursday 12 May 2022 at 06:41:37.</p>
+    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Thursday 12 May 2022 at 11:11:09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

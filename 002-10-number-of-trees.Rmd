@@ -1,3 +1,65 @@
 # Number of trees
 
-E2
+Experiment 2
+
+```{r, include=F}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='e2_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+knitr::opts_chunk$set(out.width="33%")
+options(dplyr.summarise.inform=F)
+```
+
+Load the libraries.
+
+```{r, include=F}
+library(tidyverse)
+library(ez)
+library(gt)
+```
+
+This line reads in the dataset that results from collating the results files for each participant.
+
+```{r}
+e2 <- readRDS("fgms_e2_allsubs.rds")
+```
+ 
+This renames the raw data but doesn't do any operations on it.
+
+```{r raw, echo=TRUE}
+# this tibble is one row for each tree visited saying whether it was a revisit or not
+e2_ntrees <-
+  e2 %>%
+  transmute(
+    pp           = participant,
+    trial        = trial_number,
+    resources    = factor(R, levels=c(".pat","dis"), labels=c("clumped", "random")),
+    fading       = factor(V, levels=c(".fade","nofade"), labels=c("fade", "no_fade")),
+    stage        = as_factor(ifelse(trial<=10, "early", "late")),
+    progress     = factor(trial),
+    index        = index,
+    tree         = tile)
+```
+
+## Aggregation 1: 
+
+The data has a row for each tree visited. We want a trial level count of the number of trees visited. 
+
+```{r}
+e2_ntrees_trial_level <- 
+  e2_ntrees %>% 
+  group_by(pp, resources, stage, fading, trial, progress) %>% 
+  summarise(trees=n())
+```
+                                
+## Aggregation 2:
+
+```{r}
+e2_ntrees_participant_means <-
+  e2_ntrees_trial_level %>% 
+  group_by(pp, resources, stage, fading) %>% 
+  summarise(mean_trees_per_stage=mean(trees))
+
+```
+
+

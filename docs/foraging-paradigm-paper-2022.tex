@@ -117,7 +117,7 @@
 
 \title{Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging}
 \author{Matthew Green}
-\date{Thursday 12 May 2022 at 06:42:31}
+\date{Thursday 12 May 2022 at 11:12:06}
 
 \begin{document}
 \maketitle
@@ -413,7 +413,39 @@ This line runs the code that gets the individual participant results files in.
 \hypertarget{number-of-trees-1}{%
 \chapter{Number of trees}\label{number-of-trees-1}}
 
-E2
+Experiment 2
+
+Load the libraries.
+
+This line reads in the dataset that results from collating the results files for each participant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e2 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"fgms\_e2\_allsubs.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This renames the raw data but doesn't do any operations on it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# this tibble is one row for each tree visited saying whether it was a revisit or not}
+\NormalTok{e2\_revisits }\OtherTok{\textless{}{-}}
+\NormalTok{  e2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{transmute}\NormalTok{(}
+    \AttributeTok{pp           =}\NormalTok{ participant,}
+    \AttributeTok{trial        =}\NormalTok{ trial\_number,}
+    \AttributeTok{resources    =} \FunctionTok{factor}\NormalTok{(R, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{".pat"}\NormalTok{,}\StringTok{"dis"}\NormalTok{), }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"clumped"}\NormalTok{, }\StringTok{"random"}\NormalTok{)),}
+    \AttributeTok{stage        =} \FunctionTok{as\_factor}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(trial}\SpecialCharTok{\textless{}=}\DecValTok{10}\NormalTok{, }\StringTok{"early"}\NormalTok{, }\StringTok{"late"}\NormalTok{)),}
+    \AttributeTok{progress     =} \FunctionTok{factor}\NormalTok{(trial),}
+    \AttributeTok{index        =}\NormalTok{ index,}
+    \AttributeTok{tree         =}\NormalTok{ tile,}
+    \AttributeTok{is\_a\_revisit =}\NormalTok{ revisit}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Here
 
 \hypertarget{trial-duration-1}{%
 \chapter{Trial Duration}\label{trial-duration-1}}
