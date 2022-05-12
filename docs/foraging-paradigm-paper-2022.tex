@@ -117,7 +117,7 @@
 
 \title{Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging}
 \author{Matthew Green}
-\date{Wednesday 11 May 2022 at 01:34:02}
+\date{Thursday 12 May 2022 at 06:42:31}
 
 \begin{document}
 \maketitle
@@ -134,8 +134,8 @@ Things about the series of two experiments before we consider experiment one and
 \hypertarget{part-experiment-one}{%
 \part{Experiment One}\label{part-experiment-one}}
 
-\hypertarget{experiment-one-introduction}{%
-\chapter{Experiment One Introduction}\label{experiment-one-introduction}}
+\hypertarget{introduction}{%
+\chapter{Introduction}\label{introduction}}
 
 In experiment 1, the computerized gaze contingent task consisted of 20 individual trials. In each trial participants were presented with a display containing 30 trees, 15 of which contained a hidden fruit item which was the target (the target was an apple, represented by a filled red circle). On each trial, the participant's task was to forage for and retrieve 10 of the 15 fruit items.
 
@@ -151,8 +151,20 @@ This line runs the code that gets the individual participant results files in.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{experiment-one-revisits-per-trial}{%
-\chapter{Experiment One Revisits Per Trial}\label{experiment-one-revisits-per-trial}}
+\hypertarget{number-of-trees}{%
+\chapter{Number of Trees}\label{number-of-trees}}
+
+Contents
+
+\hypertarget{trial-duration}{%
+\chapter{Trial Duration}\label{trial-duration}}
+
+Contents
+
+\hypertarget{revisits-per-trial}{%
+\chapter{Revisits Per Trial}\label{revisits-per-trial}}
+
+Experiment 1
 
 \hypertarget{raw-data}{%
 \section{Raw data}\label{raw-data}}
@@ -310,6 +322,129 @@ SxC Descriptives
 \end{Shaded}
 
 \includegraphics[width=0.33\linewidth]{e1_figures/anova-table-revisits-1}
+
+\hypertarget{retrieval-rate}{%
+\chapter{Retrieval Rate}\label{retrieval-rate}}
+
+Contents
+
+\hypertarget{inter-tree-distance}{%
+\chapter{Inter-tree distance}\label{inter-tree-distance}}
+
+Contents
+
+\hypertarget{part-experiment-two}{%
+\part{Experiment Two}\label{part-experiment-two}}
+
+\hypertarget{introduction-1}{%
+\chapter{Introduction}\label{introduction-1}}
+
+Contents
+
+In experiment 2, n trials. Task.
+
+We manipulated two factors: one within-subjects (Resource Distribution) with two levels: `clumped' and `random'; and one between-subjects (Fading) with two levels `fade' and `no-fade'. The fade condition differeed from experiment 1 in that once a tree had been visited, it was thereafter displayed faded out such that it was apparent to the participant which trees had been visited previously and which had not. The no-fade condition was the same as experiment 1. We expected that the fading would function as a memory aid and reduce revisits as well as making the task easier overall on the other metrics.
+
+We created ?? random stimuli in which the ?? target fruit items were uniformly distributed about the ?? trees (random condition) and ?? stimuli in which all ?? target fruit items were arranged in one large area (clumped condition) that covered either the left or the right side of the layout.
+
+This line runs the code that gets the individual participant results files in.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{source}\NormalTok{(}\StringTok{"e2\_process\_individual\_results\_files.R"}\NormalTok{, }\AttributeTok{local =}\NormalTok{ knitr}\SpecialCharTok{::}\FunctionTok{knit\_global}\NormalTok{())}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}  *********************************************************** }
+\CommentTok{\#\textgreater{}           Loading standardize package version 0.2.2          }
+\CommentTok{\#\textgreater{}      Call standardize.news() to see new features/changes     }
+\CommentTok{\#\textgreater{}  ***********************************************************}
+\CommentTok{\#\textgreater{} {-}{-} Attaching packages {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse 1.3.1 {-}{-}}
+\CommentTok{\#\textgreater{} v ggplot2 3.3.6     v purrr   0.3.4}
+\CommentTok{\#\textgreater{} v tibble  3.1.7     v dplyr   1.0.9}
+\CommentTok{\#\textgreater{} v tidyr   1.2.0     v stringr 1.4.0}
+\CommentTok{\#\textgreater{} v readr   2.1.2     v forcats 0.5.1}
+\CommentTok{\#\textgreater{} {-}{-} Conflicts {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse\_conflicts() {-}{-}}
+\CommentTok{\#\textgreater{} x dplyr::filter() masks stats::filter()}
+\CommentTok{\#\textgreater{} x dplyr::lag()    masks stats::lag()}
+\CommentTok{\#\textgreater{} P001 done}
+\CommentTok{\#\textgreater{} P002 done}
+\CommentTok{\#\textgreater{} P003 done}
+\CommentTok{\#\textgreater{} P004 done}
+\CommentTok{\#\textgreater{} P005 done}
+\CommentTok{\#\textgreater{} P006 done}
+\CommentTok{\#\textgreater{} P007 done}
+\CommentTok{\#\textgreater{} P008 done}
+\CommentTok{\#\textgreater{} P009 done}
+\CommentTok{\#\textgreater{} P010 done}
+\CommentTok{\#\textgreater{} P011 done}
+\CommentTok{\#\textgreater{} P012 done}
+\CommentTok{\#\textgreater{} P013 done}
+\CommentTok{\#\textgreater{} P014 done}
+\CommentTok{\#\textgreater{} P015 done}
+\CommentTok{\#\textgreater{} P016 done}
+\CommentTok{\#\textgreater{} P017 done}
+\CommentTok{\#\textgreater{} P018 done}
+\CommentTok{\#\textgreater{} P019 done}
+\CommentTok{\#\textgreater{} P020 done}
+\CommentTok{\#\textgreater{} P021 done}
+\CommentTok{\#\textgreater{} P022 done}
+\CommentTok{\#\textgreater{} P023 done}
+\CommentTok{\#\textgreater{} P024 done}
+\CommentTok{\#\textgreater{} P025 done}
+\CommentTok{\#\textgreater{} P026 done}
+\CommentTok{\#\textgreater{} P027 done}
+\CommentTok{\#\textgreater{} P028 done}
+\CommentTok{\#\textgreater{} P029 done}
+\CommentTok{\#\textgreater{} P030 done}
+\CommentTok{\#\textgreater{} P031 done}
+\CommentTok{\#\textgreater{} P032 done}
+\CommentTok{\#\textgreater{} P033 done}
+\CommentTok{\#\textgreater{} P034 done}
+\CommentTok{\#\textgreater{} P035 done}
+\CommentTok{\#\textgreater{} P036 done}
+\CommentTok{\#\textgreater{} P037 done}
+\CommentTok{\#\textgreater{} P038 done}
+\CommentTok{\#\textgreater{} P039 done}
+\CommentTok{\#\textgreater{} P040 done}
+\CommentTok{\#\textgreater{} P041 done}
+\CommentTok{\#\textgreater{} P042 done}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{number-of-trees-1}{%
+\chapter{Number of trees}\label{number-of-trees-1}}
+
+E2
+
+\hypertarget{trial-duration-1}{%
+\chapter{Trial Duration}\label{trial-duration-1}}
+
+E2
+
+\hypertarget{revisits-per-trial-1}{%
+\chapter{Revisits Per Trial}\label{revisits-per-trial-1}}
+
+Experiment 2
+
+\hypertarget{raw-data-1}{%
+\section{Raw data}\label{raw-data-1}}
+
+This line reads in the dataset that results from collating the results files for each participant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e2 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"fgms\_e2\_allsubs.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{retrieval-rate-1}{%
+\chapter{Retrieval Rate}\label{retrieval-rate-1}}
+
+E2
+
+\hypertarget{inter-tree-distance-1}{%
+\chapter{Inter-tree-distance}\label{inter-tree-distance-1}}
+
+E2
 
 \hypertarget{appendix-appendices}{%
 \appendix}

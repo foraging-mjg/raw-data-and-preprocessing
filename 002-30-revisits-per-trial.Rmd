@@ -1,0 +1,27 @@
+# Revisits Per Trial
+
+Experiment 2
+
+```{r, include=F}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='e2_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+knitr::opts_chunk$set(out.width="33%")
+options(dplyr.summarise.inform=F)
+```
+
+
+```{r, include=F}
+library(tidyverse)
+library(ez)
+library(gt)
+```
+
+## Raw data
+
+This line reads in the dataset that results from collating the results files for each participant.
+
+```{r get-raw-data-e2, echo=TRUE}
+e2 <- readRDS("fgms_e2_allsubs.rds")
+```
+

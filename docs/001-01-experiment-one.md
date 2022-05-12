@@ -1,6 +1,6 @@
 # (PART) Experiment One {-}
 
-# Experiment One Introduction
+# Introduction
 
 In experiment 1, the computerized gaze contingent task consisted of 20 individual trials. In each trial participants were presented with a display containing 30 trees, 15 of which contained a hidden fruit item which was the target (the target was an apple, represented by a filled red circle). On each trial, the participant’s task was to forage for and retrieve 10 of the 15 fruit items.
 
