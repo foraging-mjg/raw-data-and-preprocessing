@@ -18,6 +18,7 @@ aggregation-2
 aggregation-3
 descriptives-1
 anova-with-resources-and-stage-within-subjects-and-fading-between-subjects
+plots-1
 trial-duration-1
 revisits-per-trial-1
 raw-data-1

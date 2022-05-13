@@ -99,52 +99,52 @@ FADING_MEANS <-
 
 
 ```r
-CONDITION_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% gtsave("e2_tables/ntrees_condition_means.png")
+CONDITION_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>%  gtsave("e2_tables/ntrees_condition_means.png")
 ```
 
 <img src="e2_figures/unnamed-chunk-7-1.png" width="33%" />
 
 
 ```r
-RESOURCES_FADING_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% gtsave("e2_tables/ntrees_resources_fading_means.png")
+RESOURCES_FADING_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_resources_fading_means.png")
 ```
 
 <img src="e2_figures/unnamed-chunk-8-1.png" width="33%" />
 
 
 ```r
-RESOURCES_STAGE_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% gtsave("e2_tables/ntrees_resources_stage_means.png")
+RESOURCES_STAGE_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_resources_stage_means.png")
 ```
 
 <img src="e2_figures/unnamed-chunk-9-1.png" width="33%" />
 
 
 ```r
-STAGE_FADING_MEANS %>% gt(groupname_col = "stage") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% gtsave("e2_tables/ntrees_stage_fading_means.png")
+STAGE_FADING_MEANS %>% gt(groupname_col = "stage") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_stage_fading_means.png")
 ```
 
 <img src="e2_figures/unnamed-chunk-10-1.png" width="33%" />
 
 
 ```r
-RESOURCES_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% gtsave("e2_tables/ntrees_resources_means.png")
+RESOURCES_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>%  tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_resources_means.png")
 ```
 
 <img src="e2_figures/unnamed-chunk-11-1.png" width="33%" />
 
 
 ```r
-STAGE_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% gtsave("e2_tables/ntrees_stage_means.png")
-```
-
-<img src="e2_figures/descr-1.png" width="33%" />
-
-
-```r
-FADING_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% gtsave("e2_tables/ntrees_fading_means.png")
+STAGE_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>%  tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_stage_means.png")
 ```
 
 <img src="e2_figures/unnamed-chunk-12-1.png" width="33%" />
+
+
+```r
+FADING_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>%  tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_fading_means.png")
+```
+
+<img src="e2_figures/unnamed-chunk-13-1.png" width="33%" />
 
 ## ANOVA with resources and stage within-subjects and fading between-subjects
 
@@ -162,31 +162,11 @@ ez_ntrees <- ezANOVA(data=PARTICIPANT_MEANS,
 #> to ezANOVA().
 ```
 
+<img src="e2_figures/unnamed-chunk-15-1.png" width="33%" />
 
-```r
-ez_ntrees$ANOVA %>% 
-  select(-ges) %>% 
-  gt() %>% 
-  tab_header(
-    title="Number of trees",
-    subtitle = "ANOVA table"
-  ) %>% 
-  fmt_number(
-    columns = c("F"),
-    rows=everything(),
-    decimals=2
-  )  %>% 
-  fmt_number(
-    columns = c("p"),
-    rows=everything(),
-    decimals=3
-  ) %>% 
-  cols_align(
-    columns=`p<.05`,
-    align="c"
-  ) %>% 
-  gtsave("e2_tables/ntrees_anova-number-of-trees.png")
-```
+## Plots
 
-<img src="e2_figures/unnamed-chunk-14-1.png" width="33%" />
+<img src="e2_figures/unnamed-chunk-16-1.png" width="50%" />
+
+<img src="e2_figures/unnamed-chunk-17-1.png" width="50%" />
 
