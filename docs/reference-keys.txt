@@ -13,6 +13,11 @@ retrieval-rate
 inter-tree-distance
 introduction-1
 number-of-trees-1
+aggregation-1
+aggregation-2
+aggregation-3
+descriptives-1
+anova-with-resources-and-stage-within-subjects-and-fading-between-subjects
 trial-duration-1
 revisits-per-trial-1
 raw-data-1

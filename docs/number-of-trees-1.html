@@ -82,27 +82,159 @@
 <p>This renames the raw data but doesn’t do any operations on it.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># this tibble is one row for each tree visited saying whether it was a revisit or not</span>
-<span class="va">e2_revisits</span> <span class="op">&lt;-</span>
+<span class="va">e2_ntrees</span> <span class="op">&lt;-</span>
   <span class="va">e2</span> <span class="op">%&gt;%</span>
   <span class="fu">transmute</span><span class="op">(</span>
-    pp           <span class="op">=</span> <span class="va">participant</span>,
+    pp           <span class="op">=</span> <span class="fu">as_factor</span><span class="op">(</span><span class="va">participant</span><span class="op">)</span>,
     trial        <span class="op">=</span> <span class="va">trial_number</span>,
     resources    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">R</span>, levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".pat"</span>,<span class="st">"dis"</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clumped"</span>, <span class="st">"random"</span><span class="op">)</span><span class="op">)</span>,
+    fading       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">V</span>, levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".fade"</span>,<span class="st">"nofade"</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fade"</span>, <span class="st">"no_fade"</span><span class="op">)</span><span class="op">)</span>,
     stage        <span class="op">=</span> <span class="fu">as_factor</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">trial</span><span class="op">&lt;=</span><span class="fl">10</span>, <span class="st">"early"</span>, <span class="st">"late"</span><span class="op">)</span><span class="op">)</span>,
     progress     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">trial</span><span class="op">)</span>,
     index        <span class="op">=</span> <span class="va">index</span>,
-    tree         <span class="op">=</span> <span class="va">tile</span>,
-    is_a_revisit <span class="op">=</span> <span class="va">revisit</span>
-  <span class="op">)</span></code></pre></div>
-<p>Here</p>
+    tree         <span class="op">=</span> <span class="va">tile</span><span class="op">)</span></code></pre></div>
+<div id="aggregation-1" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> Aggregation 1:<a class="anchor" aria-label="anchor" href="#aggregation-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>The data has a row for each tree visited. We want a trial level count of the number of trees visited.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">TRIAL_SUMS</span> <span class="op">&lt;-</span> 
+  <span class="va">e2_ntrees</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>, <span class="va">resources</span>, <span class="va">stage</span>, <span class="va">fading</span>, <span class="va">trial</span>, <span class="va">progress</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>trees<span class="op">=</span><span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="aggregation-2" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Aggregation 2:<a class="anchor" aria-label="anchor" href="#aggregation-2"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">PARTICIPANT_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">TRIAL_SUMS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>, <span class="va">resources</span>, <span class="va">stage</span>, <span class="va">fading</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>mean_trees_per_stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">trees</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="aggregation-3" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Aggregation 3:<a class="anchor" aria-label="anchor" href="#aggregation-3"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">CONDITION_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">resources</span>, <span class="va">stage</span>, <span class="va">fading</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span><span class="op">)</span> 
 
+<span class="va">RESOURCES_FADING_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">resources</span>, <span class="va">fading</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">RESOURCES_STAGE_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">resources</span>, <span class="va">stage</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span><span class="op">)</span>
+  
+<span class="va">STAGE_FADING_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">stage</span>, <span class="va">fading</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span><span class="op">)</span>
+  
+<span class="va">RESOURCES_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">resources</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">STAGE_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">stage</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">FADING_MEANS</span> <span class="op">&lt;-</span>
+  <span class="va">PARTICIPANT_MEANS</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">fading</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mean_trees_per_stage</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="descriptives-1" class="section level2" number="9.4">
+<h2>
+<span class="header-section-number">9.4</span> Descriptives<a class="anchor" aria-label="anchor" href="#descriptives-1"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">CONDITION_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">gt</span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"resources"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, decimals<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_condition_means.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/unnamed-chunk-7-1.png" width="33%"></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">RESOURCES_FADING_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">gt</span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"resources"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, decimals<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_resources_fading_means.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/unnamed-chunk-8-1.png" width="33%"></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">RESOURCES_STAGE_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">gt</span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"resources"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, decimals<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_resources_stage_means.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/unnamed-chunk-9-1.png" width="33%"></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">STAGE_FADING_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">gt</span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, decimals<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_stage_fading_means.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/unnamed-chunk-10-1.png" width="33%"></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">RESOURCES_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, decimals<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_resources_means.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/unnamed-chunk-11-1.png" width="33%"></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">STAGE_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, decimals<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_stage_means.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/descr-1.png" width="33%"></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">FADING_MEANS</span> <span class="op">%&gt;%</span> <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fmt_number</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, decimals<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_fading_means.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/unnamed-chunk-12-1.png" width="33%"></div>
+</div>
+<div id="anova-with-resources-and-stage-within-subjects-and-fading-between-subjects" class="section level2" number="9.5">
+<h2>
+<span class="header-section-number">9.5</span> ANOVA with resources and stage within-subjects and fading between-subjects<a class="anchor" aria-label="anchor" href="#anova-with-resources-and-stage-within-subjects-and-fading-between-subjects"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.sum"</span>,<span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ez_ntrees</span> <span class="op">&lt;-</span> <span class="fu">ezANOVA</span><span class="op">(</span>data<span class="op">=</span><span class="va">PARTICIPANT_MEANS</span>,
+               dv<span class="op">=</span><span class="va">mean_trees_per_stage</span>,
+               wid<span class="op">=</span><span class="va">pp</span>,
+               within<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">resources</span>,<span class="va">stage</span><span class="op">)</span>,
+               between<span class="op">=</span><span class="va">fading</span>,
+               type<span class="op">=</span><span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Data is unbalanced (unequal N per group). Make sure</span>
+<span class="co">#&gt; you specified a well-considered value for the type argument</span>
+<span class="co">#&gt; to ezANOVA().</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ez_ntrees</span><span class="op">$</span><span class="va">ANOVA</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">ges</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">tab_header</span><span class="op">(</span>
+    title<span class="op">=</span><span class="st">"Number of trees"</span>,
+    subtitle <span class="op">=</span> <span class="st">"ANOVA table"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">fmt_number</span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span>,
+    rows<span class="op">=</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,
+    decimals<span class="op">=</span><span class="fl">2</span>
+  <span class="op">)</span>  <span class="op">%&gt;%</span> 
+  <span class="fu">fmt_number</span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"p"</span><span class="op">)</span>,
+    rows<span class="op">=</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,
+    decimals<span class="op">=</span><span class="fl">3</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">cols_align</span><span class="op">(</span>
+    columns<span class="op">=</span><span class="va">`p&lt;.05`</span>,
+    align<span class="op">=</span><span class="st">"c"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">gtsave</span><span class="op">(</span><span class="st">"e2_tables/ntrees_anova-number-of-trees.png"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="e2_figures/unnamed-chunk-14-1.png" width="33%"></div>
+
+</div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="introduction-1.html"><span class="header-section-number">8</span> Introduction</a></div>
 <div class="next"><a href="trial-duration-1.html"><span class="header-section-number">10</span> Trial Duration</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#number-of-trees-1"><span class="header-section-number">9</span> Number of trees</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#number-of-trees-1"><span class="header-section-number">9</span> Number of trees</a></li>
+<li><a class="nav-link" href="#aggregation-1"><span class="header-section-number">9.1</span> Aggregation 1:</a></li>
+<li><a class="nav-link" href="#aggregation-2"><span class="header-section-number">9.2</span> Aggregation 2:</a></li>
+<li><a class="nav-link" href="#aggregation-3"><span class="header-section-number">9.3</span> Aggregation 3:</a></li>
+<li><a class="nav-link" href="#descriptives-1"><span class="header-section-number">9.4</span> Descriptives</a></li>
+<li><a class="nav-link" href="#anova-with-resources-and-stage-within-subjects-and-fading-between-subjects"><span class="header-section-number">9.5</span> ANOVA with resources and stage within-subjects and fading between-subjects</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -119,7 +251,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Thursday 12 May 2022 at 11:11:09.</p>
+    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Friday 13 May 2022 at 18:40:14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

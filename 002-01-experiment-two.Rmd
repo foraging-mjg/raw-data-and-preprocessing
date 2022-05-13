@@ -20,6 +20,6 @@ dir.create("e2_plots")
 This line runs the code that gets the individual participant results files in.
 
 ```{r e2-process-csvs, echo=TRUE, eval=TRUE}
-source("e2_process_individual_results_files.R", local = knitr::knit_global())
+# source("e2_process_individual_results_files.R", local = knitr::knit_global())
 ```
 
