@@ -1,3 +1,6 @@
 # Trial Duration
 
-E2
+Experiment 2
+
+
+

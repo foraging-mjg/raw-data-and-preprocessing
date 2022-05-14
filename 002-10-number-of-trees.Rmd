@@ -2,32 +2,18 @@
 
 Experiment 2
 
-```{r, include=F}
+```{r e2_ntrees_setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(fig.path='e2_figures/')
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 knitr::opts_chunk$set(out.width="33%")
 options(dplyr.summarise.inform=F)
-```
-
-Load the libraries.
-
-```{r, include=F}
 library(tidyverse)
 library(ez)
 library(gt)
-```
 
-This line reads in the dataset that results from collating the results files for each participant.
-
-```{r, echo=TRUE}
 e2 <- readRDS("fgms_e2_allsubs.rds")
-```
- 
-This renames the raw data but doesn't do any operations on it.
 
-```{r raw, echo=TRUE}
-# this tibble is one row for each tree visited saying whether it was a revisit or not
 e2_ntrees <-
   e2 %>%
   transmute(
@@ -36,114 +22,114 @@ e2_ntrees <-
     resources    = factor(R, levels=c(".pat","dis"), labels=c("clumped", "random")),
     fading       = factor(V, levels=c(".fade","nofade"), labels=c("fade", "no_fade")),
     stage        = as_factor(ifelse(trial<=10, "early", "late")),
-    progress     = factor(trial),
     index        = index,
     tree         = tile)
-```
 
-## Aggregation 1: 
-
-The data has a row for each tree visited. We want a trial level count of the number of trees visited. 
-
-```{r, echo=TRUE}
-TRIAL_SUMS <- 
+e2_ntrees_TRIAL_SUMS <- 
   e2_ntrees %>% 
-  group_by(pp, resources, stage, fading, trial, progress) %>% 
-  summarise(trees=n())
-```
-                                
-## Aggregation 2:
+  group_by(pp, resources, stage, fading, trial) %>% 
+  summarise(ntrees=n())
 
-```{r, echo=TRUE}
-PARTICIPANT_MEANS <-
-  TRIAL_SUMS %>% 
+e2_ntrees_PARTICIPANT_MEANS <-
+  e2_ntrees_TRIAL_SUMS %>% 
   group_by(pp, resources, stage, fading) %>% 
-  summarise(mean_trees_per_stage = mean(trees))
-```
+  summarise(mean_ntrees_per_stage = mean(ntrees))
 
-## Aggregation 3:
-
-```{r, echo=TRUE}
-CONDITION_MEANS <-
-  PARTICIPANT_MEANS %>% 
+e2_ntrees_CONDITION_MEANS <-
+  e2_ntrees_PARTICIPANT_MEANS %>% 
   group_by(resources, stage, fading) %>% 
-  summarise(mean = mean(mean_trees_per_stage), sd = sd(mean_trees_per_stage)) 
+  summarise(mean = mean(mean_ntrees_per_stage), sd = sd(mean_ntrees_per_stage)) 
+e2_ntrees_CONDITION_MEANS_TABLE <- 
+  e2_ntrees_CONDITION_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>% 
+  tab_header("Number of trees")
+gtsave(data=e2_ntrees_CONDITION_MEANS_TABLE, filename="e2_tables/e2_ntrees_CONDITION_MEANS_TABLE.png")
 
-RESOURCES_FADING_MEANS <-
-  PARTICIPANT_MEANS %>% 
+e2_ntrees_RESOURCES_FADING_MEANS <-
+  e2_ntrees_PARTICIPANT_MEANS %>% 
   group_by(resources, fading) %>% 
-  summarise(mean = mean(mean_trees_per_stage), sd = sd(mean_trees_per_stage))
+  summarise(mean = mean(mean_ntrees_per_stage), sd = sd(mean_ntrees_per_stage))
+e2_ntrees_RESOURCES_FADING_MEANS_TABLE <-
+  e2_ntrees_RESOURCES_FADING_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>% 
+  tab_header("Number of trees")
+gtsave(data=e2_ntrees_RESOURCES_FADING_MEANS_TABLE, filename="e2_tables/e2_ntrees_RESOURCES_FADING_MEANS_TABLE.png")
 
-RESOURCES_STAGE_MEANS <-
-  PARTICIPANT_MEANS %>% 
+e2_ntrees_RESOURCES_STAGE_MEANS <-
+  e2_ntrees_PARTICIPANT_MEANS %>% 
   group_by(resources, stage) %>% 
-  summarise(mean = mean(mean_trees_per_stage), sd = sd(mean_trees_per_stage))
-  
-STAGE_FADING_MEANS <-
-  PARTICIPANT_MEANS %>% 
+  summarise(mean = mean(mean_ntrees_per_stage), sd = sd(mean_ntrees_per_stage))
+e2_ntrees_RESOURCES_STAGE_MEANS_TABLE <-
+  e2_ntrees_RESOURCES_STAGE_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>% 
+  tab_header("Number of trees")
+gtsave(data=e2_ntrees_RESOURCES_STAGE_MEANS_TABLE, filename="e2_ntrees_RESOURCES_STAGE_MEANS_TABLE.png")
+
+e2_ntrees_STAGE_FADING_MEANS <-
+  e2_ntrees_PARTICIPANT_MEANS %>% 
   group_by(stage, fading) %>% 
-  summarise(mean = mean(mean_trees_per_stage), sd = sd(mean_trees_per_stage))
+  summarise(mean = mean(mean_ntrees_per_stage), sd = sd(mean_ntrees_per_stage))
+e2_ntrees_STAGE_FADING_MEANS_TABLE <-
+  e2_ntrees_STAGE_FADING_MEANS %>% 
+  ungroup() %>%
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%
+  tab_header("Number of trees")
+gtsave(data=e2_ntrees_STAGE_FADING_MEANS_TABLE, "e2_tables/e2_ntrees_STAGE_FADING_MEANS_TABLE.png")
   
-RESOURCES_MEANS <-
-  PARTICIPANT_MEANS %>% 
-  group_by(resources) %>% 
-    summarise(mean = mean(mean_trees_per_stage), sd = sd(mean_trees_per_stage))
+e2_ntrees_RESOURCES_MEANS <-
+  e2_ntrees_PARTICIPANT_MEANS %>% 
+  group_by(resources) %>%
+  summarise(mean = mean(mean_ntrees_per_stage), sd = sd(mean_ntrees_per_stage))
+e2_ntrees_RESOURCES_MEANS_TABLE <-
+  e2_ntrees_RESOURCES_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%  
+  tab_header("Number of trees")
+gtsave(data=e2_ntrees_RESOURCES_MEANS_TABLE, "e2_tables/e2_ntrees_RESOURCES_MEANS_TABLE.png")
 
-STAGE_MEANS <-
-  PARTICIPANT_MEANS %>% 
+e2_ntrees_STAGE_MEANS <-
+  e2_ntrees_PARTICIPANT_MEANS %>% 
   group_by(stage) %>% 
-    summarise(mean = mean(mean_trees_per_stage), sd = sd(mean_trees_per_stage))
+  summarise(mean = mean(mean_ntrees_per_stage), sd = sd(mean_ntrees_per_stage))
+e2_ntrees_STAGE_MEANS_TABLE <-
+  e2_ntrees_STAGE_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%  
+  tab_header("Number of trees")
+gtsave(data=e2_ntrees_STAGE_MEANS_TABLE, filename="e2_tables/e2_ntrees_STAGE_MEANS_TABLE.png")
 
-FADING_MEANS <-
-  PARTICIPANT_MEANS %>% 
+e2_ntrees_FADING_MEANS <-
+  e2_ntrees_PARTICIPANT_MEANS %>% 
   group_by(fading) %>% 
-    summarise(mean = mean(mean_trees_per_stage), sd = sd(mean_trees_per_stage))
-```
+  summarise(mean = mean(mean_ntrees_per_stage), sd = sd(mean_ntrees_per_stage))
+e2_ntrees_FADING_MEANS_TABLE <-
+  e2_ntrees_FADING_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%  
+  tab_header("Number of trees")
+gtsave(data=e2_ntrees_FADING_MEANS_TABLE, filename="e2_tables/e2_ntrees_FADING_MEANS_TABLE.png")
 
-## Descriptives
-
-```{r, echo=TRUE}
-CONDITION_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>%  gtsave("e2_tables/ntrees_condition_means.png")
-```
-
-```{r, echo=TRUE}
-RESOURCES_FADING_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_resources_fading_means.png")
-```
-
-```{r, echo=TRUE}
-RESOURCES_STAGE_MEANS %>% gt(groupname_col = "resources") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_resources_stage_means.png")
-```
-
-```{r, echo=TRUE}
-STAGE_FADING_MEANS %>% gt(groupname_col = "stage") %>% fmt_number(columns = c("mean","sd"), decimals=2) %>% tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_stage_fading_means.png")
-```
-
-```{r, echo=TRUE}
-RESOURCES_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>%  tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_resources_means.png")
-```
-
-```{r, echo=TRUE}
-STAGE_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>%  tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_stage_means.png")
-```
-
-```{r, echo=TRUE}
-FADING_MEANS %>% gt() %>% fmt_number(columns = c("mean","sd"), decimals=2) %>%  tab_header("Number of trees") %>% gtsave("e2_tables/ntrees_fading_means.png")
-```
-
-## ANOVA with resources and stage within-subjects and fading between-subjects
-
-```{r, echo=T}
 options(contrasts=c("contr.sum","contr.poly"))
-ez_ntrees <- ezANOVA(data=PARTICIPANT_MEANS,
-               dv=mean_trees_per_stage,
-               wid=pp,
-               within=c(resources,stage),
-               between=fading,
-               type=3)
-```
+e2_ntrees_ANOVA <- 
+  ezANOVA(data=e2_ntrees_PARTICIPANT_MEANS,
+          dv=mean_ntrees_per_stage,
+          wid=pp,
+          within=c(resources,stage),
+          between=fading,
+          type=3)
 
-```{r, echo=FALSE}
-ez_ntrees$ANOVA %>% 
+e2_ntrees_ANOVA_TABLE <-
+  e2_ntrees_ANOVA$ANOVA %>% 
   select(-ges) %>% 
   gt() %>% 
   tab_header(
@@ -164,16 +150,13 @@ ez_ntrees$ANOVA %>%
     columns=`p<.05`,
     align="c"
   ) %>% 
-  gtsave("e2_tables/ntrees_anova-number-of-trees.png")
-```
+  gtsave("e2_tables/e2_ntrees_ANOVA.png")
 
-## Plots
-
-```{r, echo=F, message=F, out.width="50%"}
 # Ten points along the x axis, each participant contributes one point per cell
-ggplot(
-  data=TRIAL_SUMS, 
-  aes(x=progress, y=trees, group=resources, pch=resources, fill=resources)
+e2_ntrees_PLOT10 <-
+  ggplot(
+  data=e2_ntrees_TRIAL_SUMS, 
+  aes(x=trial, y=ntrees, group=resources, pch=resources, fill=resources)
 ) +
   facet_wrap(~fading)+
   theme_bw()+
@@ -184,14 +167,13 @@ ggplot(
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
   stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25)) +
   geom_jitter(pch=1, width=0.1, alpha=0.4) 
-ggsave("e2_plots/progress-number-of-trees.png")
-```
+ggsave("e2_plots/e2_ntrees_PLOT10.png")
 
-```{r, echo=F, message=F, out.width="50%"}
 # Two points along the x axis, each participant contributes one point per cell
-ggplot(
-  data=PARTICIPANT_MEANS, 
-  aes(x=stage, y=mean_trees_per_stage, group=resources, pch=resources, fill=resources)
+e2_ntrees_PLOT2 <-
+  ggplot(
+  data=e2_ntrees_PARTICIPANT_MEANS, 
+  aes(x=stage, y=mean_ntrees_per_stage, group=resources, pch=resources, fill=resources)
 ) +
   facet_wrap(~fading)+
   theme_bw()+
@@ -201,6 +183,6 @@ ggplot(
   stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
   stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
-ggsave("e2_plots/stage-number-of-trees.png")
+ggsave("e2_plots/e2_ntrees_PLOT2.png")
 ```
 
