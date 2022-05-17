@@ -6,7 +6,6 @@ Experiment 2
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(fig.path='e2_figures/')
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
-knitr::opts_chunk$set(out.width="33%")
 options(dplyr.summarise.inform=F)
 library(tidyverse)
 library(ez)
@@ -149,8 +148,8 @@ e2_ntrees_ANOVA_TABLE <-
   cols_align(
     columns=`p<.05`,
     align="c"
-  ) %>% 
-  gtsave("e2_tables/e2_ntrees_ANOVA.png")
+  )
+gtsave(e2_ntrees_ANOVA_TABLE, "e2_tables/e2_ntrees_ANOVA.png")
 
 # Ten points along the x axis, each participant contributes one point per cell
 e2_ntrees_PLOT10 <-
@@ -186,7 +185,11 @@ e2_ntrees_PLOT2 <-
 ggsave("e2_plots/e2_ntrees_PLOT2.png")
 ```
 
-```{r}
-e2_ntrees_ANOVA_TABLE
+```{r out.width="50%"}
+knitr::include_graphics("e2_tables/e2_ntrees_ANOVA.png")
+```
+
+```{r out.width="75%"}
+knitr::include_graphics("e2_plots/e2_ntrees_PLOT2.png")
 ```
 

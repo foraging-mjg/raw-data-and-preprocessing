@@ -131,27 +131,9 @@ SxC_DESCRIPTIVES %>%
 
 ## Plots
 
-
-```
-#> Warning: Computation failed in `stat_summary()`:
-```
-
 <img src="e1_figures/progress-revisits-1.png" width="50%" />
 
-```
-#> Warning: Computation failed in `stat_summary()`:
-```
-
-
-```
-#> Warning: Computation failed in `stat_summary()`:
-```
-
 <img src="e1_figures/stage-revisits-1.png" width="50%" />
-
-```
-#> Warning: Computation failed in `stat_summary()`:
-```
 
 ## ANOVA
 
