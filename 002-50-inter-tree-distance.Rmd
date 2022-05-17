@@ -1,3 +1,209 @@
-# Inter-tree-distance
+# Inter-tree Distance
 
-E2
+Experiment 2
+
+```{r e2_inter_tree_distance_setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(fig.path='e2_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(dplyr.summarise.inform=F)
+library(tidyverse)
+library(ez)
+library(gt)
+
+e2 <- readRDS("fgms_e2_allsubs.rds")
+
+e2_inter_tree_distance <-
+  e2 %>%
+  transmute(
+    pp           = as_factor(participant),
+    trial        = trial_number,
+    resources    = factor(R, levels=c(".pat","dis"), labels=c("clumped", "random")),
+    fading       = factor(V, levels=c(".fade","nofade"), labels=c("fade", "no_fade")),
+    launch       = factor(L, levels=c(".frt", "nofrt"), labels=c("launched_from_fruit", "launched_from_no_fruit")),
+    stage        = as_factor(ifelse(trial<=10, "early", "late")),
+    index        = index,
+    itdist         = itdist)
+
+e2_inter_tree_distance_TRIAL_SUMS <- 
+  e2_inter_tree_distance %>% 
+  group_by(pp, resources, stage, fading, launch, trial) %>% 
+  summarise(inter_tree_distance=mean(itdist, na.rm=TRUE))
+
+e2_inter_tree_distance_PARTICIPANT_MEANS <-
+  e2_inter_tree_distance_TRIAL_SUMS %>% 
+  group_by(pp, resources, stage, fading, launch) %>% 
+  summarise(mean_inter_tree_distance_per_stage = mean(inter_tree_distance))
+
+e2_inter_tree_distance_CONDITION_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(resources, stage, fading, launch) %>% 
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage)) 
+e2_inter_tree_distance_CONDITION_MEANS_TABLE <- 
+  e2_inter_tree_distance_CONDITION_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>% 
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_CONDITION_MEANS_TABLE, filename="e2_tables/e2_inter_tree_distance_CONDITION_MEANS_TABLE.png")
+
+e2_inter_tree_distance_RESOURCES_FADING_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(resources, fading, launch) %>% 
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage))
+e2_inter_tree_distance_RESOURCES_FADING_MEANS_TABLE <-
+  e2_inter_tree_distance_RESOURCES_FADING_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>% 
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_RESOURCES_FADING_MEANS_TABLE, filename="e2_tables/e2_inter_tree_distance_RESOURCES_FADING_MEANS_TABLE.png")
+
+e2_inter_tree_distance_RESOURCES_STAGE_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(resources, stage, launch) %>% 
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage))
+e2_inter_tree_distance_RESOURCES_STAGE_MEANS_TABLE <-
+  e2_inter_tree_distance_RESOURCES_STAGE_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>% 
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_RESOURCES_STAGE_MEANS_TABLE, filename="e2_tables/e2_inter_tree_distance_RESOURCES_STAGE_MEANS_TABLE.png")
+
+e2_inter_tree_distance_STAGE_FADING_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(stage, fading, launch) %>% 
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage))
+e2_inter_tree_distance_STAGE_FADING_MEANS_TABLE <-
+  e2_inter_tree_distance_STAGE_FADING_MEANS %>% 
+  ungroup() %>%
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_STAGE_FADING_MEANS_TABLE, "e2_tables/e2_inter_tree_distance_STAGE_FADING_MEANS_TABLE.png")
+  
+e2_inter_tree_distance_RESOURCES_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(resources) %>%
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage))
+e2_inter_tree_distance_RESOURCES_MEANS_TABLE <-
+  e2_inter_tree_distance_RESOURCES_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%  
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_RESOURCES_MEANS_TABLE, "e2_tables/e2_inter_tree_distance_RESOURCES_MEANS_TABLE.png")
+
+e2_inter_tree_distance_STAGE_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(stage) %>% 
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage))
+e2_inter_tree_distance_STAGE_MEANS_TABLE <-
+  e2_inter_tree_distance_STAGE_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%  
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_STAGE_MEANS_TABLE, filename="e2_tables/e2_inter_tree_distance_STAGE_MEANS_TABLE.png")
+
+e2_inter_tree_distance_FADING_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(fading) %>% 
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage))
+e2_inter_tree_distance_FADING_MEANS_TABLE <-
+  e2_inter_tree_distance_FADING_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%  
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_FADING_MEANS_TABLE, filename="e2_tables/e2_inter_tree_distance_FADING_MEANS_TABLE.png")
+
+e2_inter_tree_distance_LAUNCH_MEANS <-
+  e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
+  group_by(launch) %>% 
+  summarise(mean = mean(mean_inter_tree_distance_per_stage), sd = sd(mean_inter_tree_distance_per_stage))
+e2_inter_tree_distance_LAUNCH_MEANS_TABLE <-
+  e2_inter_tree_distance_LAUNCH_MEANS %>% 
+  ungroup() %>% 
+  gt() %>% 
+  fmt_number(columns = c("mean","sd"), decimals=2) %>%  
+  tab_header("Inter-tree Distance")
+gtsave(data=e2_inter_tree_distance_LAUNCH_MEANS_TABLE, filename="e2_tables/e2_inter_tree_distance_LAUNCH_MEANS_TABLE.png")
+
+
+options(contrasts=c("contr.sum","contr.poly"))
+e2_inter_tree_distance_ANOVA <- 
+  ezANOVA(data=e2_inter_tree_distance_PARTICIPANT_MEANS,
+          dv=mean_inter_tree_distance_per_stage,
+          wid=pp,
+          within=c(resources,stage,launch),
+          between=fading,
+          type=3)
+
+e2_inter_tree_distance_ANOVA_TABLE <-
+  e2_inter_tree_distance_ANOVA$ANOVA %>% 
+  select(-ges) %>% 
+  gt() %>% 
+  tab_header(
+    title="Inter-tree Distance",
+    subtitle = "ANOVA table"
+  ) %>% 
+  fmt_number(
+    columns = c("F"),
+    rows=everything(),
+    decimals=2
+  )  %>% 
+  fmt_number(
+    columns = c("p"),
+    rows=everything(),
+    decimals=3
+  ) %>% 
+  cols_align(
+    columns=`p<.05`,
+    align="c"
+  )
+gtsave(e2_inter_tree_distance_ANOVA_TABLE, "e2_tables/e2_inter_tree_distance_ANOVA.png")
+
+# Ten points along the x axis, each participant contributes one point per cell
+e2_inter_tree_distance_PLOT10 <-
+  ggplot(
+  data=e2_inter_tree_distance_TRIAL_SUMS, 
+  aes(x=trial, y=inter_tree_distance, group=resources, pch=resources, fill=resources)
+) +
+  facet_wrap(~fading+launch)+
+  theme_bw()+
+  theme(aspect.ratio = 1, panel.grid=element_blank())+
+  scale_fill_manual(values=c("white", "black")) +
+  scale_shape_manual(values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
+  stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25)) +
+  geom_jitter(pch=1, width=0.1, alpha=0.4) 
+ggsave("e2_plots/e2_inter_tree_distance_PLOT10.png")
+
+# Two points along the x axis, each participant contributes one point per cell
+e2_inter_tree_distance_PLOT2 <-
+  ggplot(
+  data=e2_inter_tree_distance_PARTICIPANT_MEANS, 
+  aes(x=stage, y=mean_inter_tree_distance_per_stage, group=resources, pch=resources, fill=resources)
+) +
+  facet_wrap(~fading+launch)+
+  theme_bw()+
+  theme(aspect.ratio = 1, panel.grid=element_blank())+
+  scale_fill_manual(values=c("white", "black")) +
+  scale_shape_manual(values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
+  stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
+ggsave("e2_plots/e2_inter_tree_distance_PLOT2.png")
+```
+
+```{r out.width="50%"}
+knitr::include_graphics("e2_tables/e2_inter_tree_distance_ANOVA.png")
+```
+
+```{r out.width="75%"}
+knitr::include_graphics("e2_plots/e2_inter_tree_distance_PLOT2.png")
+```
+
