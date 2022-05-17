@@ -14,8 +14,7 @@ inter-tree-distance
 introduction-1
 number-of-trees-1
 trial-duration-1
-revisits-per-trial-1
-raw-data-1
+number-of-revisits
 retrieval-rate-1
 inter-tree-distance-1
 appendix-a
