@@ -44,7 +44,7 @@ e2_trialdur_CONDITION_MEANS_TABLE <-
   ungroup() %>% 
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>% 
-  tab_header("Number of trees")
+  tab_header("Trial Duration")
 gtsave(data=e2_trialdur_CONDITION_MEANS_TABLE, filename="e2_tables/e2_trialdur_CONDITION_MEANS_TABLE.png")
 
 e2_trialdur_RESOURCES_FADING_MEANS <-
@@ -56,7 +56,7 @@ e2_trialdur_RESOURCES_FADING_MEANS_TABLE <-
   ungroup() %>% 
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>% 
-  tab_header("Number of trees")
+  tab_header("Trial Duration")
 gtsave(data=e2_trialdur_RESOURCES_FADING_MEANS_TABLE, filename="e2_tables/e2_trialdur_RESOURCES_FADING_MEANS_TABLE.png")
 
 e2_trialdur_RESOURCES_STAGE_MEANS <-
@@ -68,7 +68,7 @@ e2_trialdur_RESOURCES_STAGE_MEANS_TABLE <-
   ungroup() %>% 
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>% 
-  tab_header("Number of trees")
+  tab_header("Trial Duration")
 gtsave(data=e2_trialdur_RESOURCES_STAGE_MEANS_TABLE, filename="e2_tables/e2_trialdur_RESOURCES_STAGE_MEANS_TABLE.png")
 
 e2_trialdur_STAGE_FADING_MEANS <-
@@ -80,7 +80,7 @@ e2_trialdur_STAGE_FADING_MEANS_TABLE <-
   ungroup() %>%
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>%
-  tab_header("Number of trees")
+  tab_header("Trial Duration")
 gtsave(data=e2_trialdur_STAGE_FADING_MEANS_TABLE, "e2_tables/e2_trialdur_STAGE_FADING_MEANS_TABLE.png")
   
 e2_trialdur_RESOURCES_MEANS <-
@@ -92,7 +92,7 @@ e2_trialdur_RESOURCES_MEANS_TABLE <-
   ungroup() %>% 
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>%  
-  tab_header("Number of trees")
+  tab_header("Trial Duration")
 gtsave(data=e2_trialdur_RESOURCES_MEANS_TABLE, "e2_tables/e2_trialdur_RESOURCES_MEANS_TABLE.png")
 
 e2_trialdur_STAGE_MEANS <-
@@ -104,7 +104,7 @@ e2_trialdur_STAGE_MEANS_TABLE <-
   ungroup() %>% 
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>%  
-  tab_header("Number of trees")
+  tab_header("Trial Duration")
 gtsave(data=e2_trialdur_STAGE_MEANS_TABLE, filename="e2_tables/e2_trialdur_STAGE_MEANS_TABLE.png")
 
 e2_trialdur_FADING_MEANS <-
@@ -116,7 +116,7 @@ e2_trialdur_FADING_MEANS_TABLE <-
   ungroup() %>% 
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>%  
-  tab_header("Number of trees")
+  tab_header("Trial Duration")
 gtsave(data=e2_trialdur_FADING_MEANS_TABLE, filename="e2_tables/e2_trialdur_FADING_MEANS_TABLE.png")
 
 options(contrasts=c("contr.sum","contr.poly"))
@@ -133,7 +133,7 @@ e2_trialdur_ANOVA_TABLE <-
   select(-ges) %>% 
   gt() %>% 
   tab_header(
-    title="Number of trees",
+    title="Trial Duration",
     subtitle = "ANOVA table"
   ) %>% 
   fmt_number(
