@@ -1,7 +1,7 @@
 --- 
 title: "Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging"
 author: "Matthew Green"
-date: "Tuesday 17 May 2022 at 19:39:22"
+date: "Tuesday 17 May 2022 at 20:15:53"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
