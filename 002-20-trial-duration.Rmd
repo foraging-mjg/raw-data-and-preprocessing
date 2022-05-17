@@ -69,7 +69,7 @@ e2_trialdur_RESOURCES_STAGE_MEANS_TABLE <-
   gt() %>% 
   fmt_number(columns = c("mean","sd"), decimals=2) %>% 
   tab_header("Number of trees")
-gtsave(data=e2_trialdur_RESOURCES_STAGE_MEANS_TABLE, filename="e2_trialdur_RESOURCES_STAGE_MEANS_TABLE.png")
+gtsave(data=e2_trialdur_RESOURCES_STAGE_MEANS_TABLE, filename="e2_tables/e2_trialdur_RESOURCES_STAGE_MEANS_TABLE.png")
 
 e2_trialdur_STAGE_FADING_MEANS <-
   e2_trialdur_PARTICIPANT_MEANS %>% 
@@ -184,5 +184,9 @@ e2_trialdur_PLOT2 <-
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
   stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
 ggsave("e2_plots/e2_trialdur_PLOT2.png")
+```
+
+```{r}
+e2_trialdur_ANOVA_TABLE
 ```
 
