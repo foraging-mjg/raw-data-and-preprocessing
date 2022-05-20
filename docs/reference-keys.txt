@@ -17,5 +17,7 @@ trial-duration-1
 number-of-revisits
 retrieval-rate-1
 inter-tree-distance-1
+print-all-means.
+need-the-3-way-means-tables-to-be-generated
 appendix-a
 appendix-b

@@ -47,6 +47,8 @@ e2_inter_tree_distance_CONDITION_MEANS_TABLE <-
   tab_header("Inter-tree Distance")
 gtsave(data=e2_inter_tree_distance_CONDITION_MEANS_TABLE, filename="e2_tables/e2_inter_tree_distance_CONDITION_MEANS_TABLE.png")
 
+
+
 e2_inter_tree_distance_RESOURCES_FADING_MEANS <-
   e2_inter_tree_distance_PARTICIPANT_MEANS %>% 
   group_by(resources, fading, launch) %>% 
@@ -207,3 +209,42 @@ knitr::include_graphics("e2_tables/e2_inter_tree_distance_ANOVA.png")
 knitr::include_graphics("e2_plots/e2_inter_tree_distance_PLOT2.png")
 ```
 
+# Print all means.
+
+# Need the 3-way means tables to be generated
+
+* e2_inter_tree_distance_RESOURCES_STAGE_FADING_MEANS
+* e2_inter_tree_distance_RESOURCES_STAGE_LAUNCH_MEANS
+* e2_inter_tree_distance_RESOURCES_FADING_LAUNCH_MEANS
+* e2_inter_tree_distance_RESOURCES_STAGE_FADING_MEANS
+
+
+```{r}
+e2_inter_tree_distance_CONDITION_MEANS
+```
+
+```{r}
+e2_inter_tree_distance_RESOURCES_FADING_MEANS
+```
+
+```{r}
+e2_inter_tree_distance_RESOURCES_STAGE_MEANS
+```
+
+```{r}
+e2_inter_tree_distance_STAGE_FADING_MEANS
+```
+
+```{r}
+e2_inter_tree_distance_RESOURCES_MEANS
+```
+
+```{r}
+e2_inter_tree_distance_STAGE_MEANS
+```
+
+```{r}
+e2_inter_tree_distance_FADING_MEANS
+```
+
+* Do plot aggregating over fade to give resources by launch site by stage
