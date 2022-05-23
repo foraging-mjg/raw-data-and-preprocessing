@@ -26,11 +26,11 @@ for (infilename in list.files(indir, pattern=".pickle$")) {
     samples  <- names(infilecontent[[trialnumber]][['samples']])
     for (samplenumber in samples) {
       i <- i + 1
-      outf[i, "experiment"]          = 1
+      outf[i, "exp"]                 = 1
       outf[i, 'pid']                 = infilecontent[[trialnumber]][['participant_number']]
       outf[i, 'R']                   = ifelse(grepl("cluster", infilecontent[[trialnumber]][['trial_name']]), "clumped", "random")
       outf[i, 'trial_in_session']    = infilecontent[[trialnumber]][['trial_num_in_expt']]
-      outf[i, 'trial']               = infilecontent[[trialnumber]][['trial_num_in_block']]
+      outf[i, 'trial_in_block']      = infilecontent[[trialnumber]][['trial_num_in_block']]
       outf[i, 'trial_identity']      = infilecontent[[trialnumber]][['trial_name']]
       outf[i, 'index']               = infilecontent[[trialnumber]][['samples']][[samplenumber]]$sample_index
       outf[i, 'time']                = infilecontent[[trialnumber]][['samples']][[samplenumber]]$sample_timestamp
@@ -53,7 +53,7 @@ for (infilename in list.files(indir, pattern=".pickle$")) {
   # This sequence of tidyverse operations also does a lot of other stuff...
   outf <-
     outf %>%
-    group_by(R, pid, trial) %>%
+    group_by(R, pid, trial_in_block) %>%
     arrange(index, .by_group=TRUE) 
   
   outf <- outf %>%
@@ -84,11 +84,13 @@ for (infilename in list.files(indir, pattern=".pickle$")) {
   message(paste(substr(infilename, 1, 4), "done"))
   e1allsubs <- bind_rows(e1allsubs, outf)
 }
-e1allsubs             <- e1allsubs %>% select(-R, R) 
-e1allsubs$experiment  <- as_factor(e1allsubs$experiment)
-e1allsubs$pid         <- as_factor(e1allsubs$pid)
-e1allsubs$flag        <- as_factor(e1allsubs$flag)
-e1allsubs$R           <- named_contr_sum(e1allsubs$R, return_contr = FALSE)
+
 e1allsubs$L           <- ifelse(e1allsubs$flag==2, "fruit", "not_fruit")
-e1allsubs$L           <- named_contr_sum(e1allsubs$L, return_contr = FALSE)
+e1allsubs$exp         <- as_factor(e1allsubs$exp)
+e1allsubs$pid         <- as_factor(e1allsubs$pid)
+
+e1allsubs <-
+  e1allsubs %>% 
+  select(exp, pid, R, trial_in_session, trial_in_block, trial_identity, index, time, x, y, tile, flag, basket, L, ntreesperfruit, revisit, numtrees, trialdur, itdistance)
+
 saveRDS(e1allsubs, "fgms_e1_allsubs.rds")

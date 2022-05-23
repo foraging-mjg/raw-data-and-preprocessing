@@ -1,4 +1,4 @@
-# Number of Revisits
+# Number of Revisits Per Trial
 
 Experiment 2
 
