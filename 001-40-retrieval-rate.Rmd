@@ -27,22 +27,26 @@ e1_retrievalrate <-
 
 e1_retrievalrate_TRIAL_VALUES <- 
   e1_retrievalrate %>% 
-  group_by(pp, resources, stage, trial) %>% 
+  group_by(pp, resources, trial, basket) %>% 
   summarise(
     ntrees_to_get_a_fruit = mean(ntrees_to_get_a_fruit, na.rm=TRUE)
     ) 
 
 e1_retrievalrate_PARTICIPANT_MEANS <-
   e1_retrievalrate_TRIAL_VALUES %>% 
-  group_by(pp, resources, stage) %>% 
-  summarise(mean_ntrees_to_get_a_fruit_per_stage = mean(ntrees_to_get_a_fruit))
+  group_by(pp, resources, basket) %>% 
+  summarise(mean_ntrees_to_get_a_fruit_per_stage = mean(ntrees_to_get_a_fruit)) %>% 
+  # remove NaNs for number of fruit of 0
+  na.omit() %>% 
+  # force basket to be a factor
+  mutate(basket = as_factor(basket))
 
 options(contrasts=c("contr.sum","contr.poly"))
 e1_retrievalrate_ANOVA <- 
   ezANOVA(data=e1_retrievalrate_PARTICIPANT_MEANS,
           dv=mean_ntrees_to_get_a_fruit_per_stage,
           wid=pp,
-          within=c(resources,stage),
+          within=c(resources,basket),
           type=3)
 
 e1_retrievalrate_ANOVA_TABLE <-
@@ -69,11 +73,11 @@ e1_retrievalrate_ANOVA_TABLE <-
   )
 gtsave(e1_retrievalrate_ANOVA_TABLE, "e1_tables/e1_retrievalrate_ANOVA.png")
 
-# Two points along the x axis, each participant contributes one point per cell
-e1_retrievalrate_PLOT2 <-
+# Ten points along the x axis, each participant contributes one point per cell
+e1_retrievalrate_PLOT10 <-
   ggplot(
   data=e1_retrievalrate_PARTICIPANT_MEANS, 
-  aes(x=stage, y=mean_ntrees_to_get_a_fruit_per_stage, group=resources, pch=resources, fill=resources)
+  aes(x=basket, y=mean_ntrees_to_get_a_fruit_per_stage, group=resources, pch=resources, fill=resources)
 ) +
   theme_bw()+
   theme(aspect.ratio = 1, panel.grid=element_blank())+
@@ -82,7 +86,7 @@ e1_retrievalrate_PLOT2 <-
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
   stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
-ggsave("e1_plots/e1_retrievalrate_PLOT2.png")
+ggsave("e1_plots/e1_retrievalrate_PLOT10.png")
 ```
 
 ```{r out.width="50%"}
@@ -90,6 +94,6 @@ knitr::include_graphics("e1_tables/e1_retrievalrate_ANOVA.png")
 ```
 
 ```{r out.width="75%"}
-knitr::include_graphics("e1_plots/e1_retrievalrate_PLOT2.png")
+knitr::include_graphics("e1_plots/e1_retrievalrate_PLOT10.png")
 ```
 
