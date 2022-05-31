@@ -92,3 +92,10 @@ knitr::include_graphics("e2_tables/e2_ntrees_ANOVA.png")
 knitr::include_graphics("e2_plots/e2_ntrees_PLOT2.png")
 ```
 
+Double checking main effect of fading not being significant. Does an effect have to be stronger to be significant for a between-subjects variable like this (versus a within-subjects effect)?
+
+```{r dcheckntrees, out.width="100%"}
+ggplot(data=e2_ntrees_PARTICIPANT_MEANS, aes(y=mean_ntrees_per_stage, x=fading))+
+  geom_violin()+geom_jitter(width=0.15)+stat_summary(geom="point",fun="mean",size=6,aes(color=fading))
+```
+

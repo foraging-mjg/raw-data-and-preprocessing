@@ -92,3 +92,9 @@ knitr::include_graphics("e2_tables/e2_trialdur_ANOVA.png")
 knitr::include_graphics("e2_plots/e2_trialdur_PLOT2.png")
 ```
 
+Double checking main effect of fading not being significant (p=0.054 is very nearly sig though). Does an effect have to be stronger to be significant for a between-subjects variable like this (versus a within-subjects effect)?
+
+```{r dchecktrialdur, out.width="100%"}
+ggplot(data=e2_trialdur_PARTICIPANT_MEANS, aes(y=mean_trialdur_per_stage, x=fading))+
+  geom_violin()+geom_jitter(width=0.15)+stat_summary(geom="point",fun="mean",size=4,aes(color=fading))
+```
