@@ -8,3 +8,7 @@ Experiment 2
 
 <img src="e2_plots/e2_retrievalrate_PLOT14.png" width="100%" />
 
+Interaction between fading and basket
+
+<img src="e2_figures/rr111-1.png" width="100%" />
+
