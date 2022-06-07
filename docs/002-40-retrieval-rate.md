@@ -10,5 +10,5 @@ Experiment 2
 
 Interaction between fading and basket
 
-<img src="e2_figures/rr111-1.png" width="100%" />
+<img src="e2_figures/dcheck_retrievalrate_interaction_basket_x_fading-1.png" width="100%" />
 

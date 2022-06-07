@@ -14,13 +14,13 @@ Double checking main effect of fading not being significant. Does an effect have
 
 Interaction between stage and fading
 
-<img src="e2_figures/nti1-1.png" width="100%" />
+<img src="e2_figures/dcheck_ntrees_interaction_stage_x_fading-1.png" width="100%" />
 
 Interaction between stage and resources
 
-<img src="e2_figures/ntr2-1.png" width="100%" />
+<img src="e2_figures/dcheck_ntrees_interaction_stage_x_resources-1.png" width="100%" />
 
 Interaction between resources and fading
 
-<img src="e2_figures/ntr3-1.png" width="100%" />
+<img src="e2_figures/dcheck_ntrees_interaction_resources_x_fading-1.png" width="100%" />
 

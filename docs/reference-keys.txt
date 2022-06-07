@@ -2,13 +2,15 @@ first-things-first
 introduction
 number-of-trees
 trial-duration
-number-of-revisits
+number-of-revisits-per-trial
+number-of-revisits-per-fruit
 retrieval-rate
 inter-tree-distance
 introduction-1
 number-of-trees-1
 trial-duration-1
-number-of-revisits-1
+number-of-revisits-per-trial-1
+number-of-revisits-per-fruit-1
 retrieval-rate-1
 inter-tree-distance-1
 appendix-a

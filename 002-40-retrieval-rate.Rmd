@@ -101,7 +101,7 @@ knitr::include_graphics("e2_plots/e2_retrievalrate_PLOT14.png")
 
 Interaction between fading and basket
 
-```{r rr111, out.width="100%"}
+```{r dcheck_retrievalrate_interaction_basket_x_fading, out.width="100%"}
 ggplot(data=e2_retrievalrate_PARTICIPANT_MEANS %>% group_by(basket,fading,pid) %>% summarise(mean_ntrees_to_get_a_fruit_per_basket2=mean(mean_ntrees_to_get_a_fruit_per_basket)),
        aes(x=basket,y=mean_ntrees_to_get_a_fruit_per_basket2,group=fading,pch=fading))+
   #facet_wrap(~fading)+
@@ -112,6 +112,5 @@ ggplot(data=e2_retrievalrate_PARTICIPANT_MEANS %>% group_by(basket,fading,pid) %
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
   stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
-
 ```
 

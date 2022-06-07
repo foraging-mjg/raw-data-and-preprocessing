@@ -101,7 +101,7 @@ ggplot(data=e2_ntrees_PARTICIPANT_MEANS, aes(y=mean_ntrees_per_stage, x=fading))
 
 Interaction between stage and fading
 
-```{r, nti1, out.width="100%"}
+```{r, dcheck_ntrees_interaction_stage_x_fading, out.width="100%"}
 ggplot(data=e2_ntrees_PARTICIPANT_MEANS %>% group_by(stage,fading,pid) %>% summarise(meanntrees=mean(mean_ntrees_per_stage)),
        aes(x=stage,y=meanntrees,group=stage))+
   facet_wrap(~fading)+
@@ -116,7 +116,7 @@ ggplot(data=e2_ntrees_PARTICIPANT_MEANS %>% group_by(stage,fading,pid) %>% summa
 
 Interaction between stage and resources
 
-```{r, ntr2, out.width="100%"}
+```{r, dcheck_ntrees_interaction_stage_x_resources, out.width="100%"}
 ggplot(data=e2_ntrees_PARTICIPANT_MEANS %>% group_by(stage,resources,pid) %>% summarise(meanntrees=mean(mean_ntrees_per_stage)),
        aes(x=stage,y=meanntrees,group=stage))+
   facet_wrap(~resources)+
@@ -131,7 +131,7 @@ ggplot(data=e2_ntrees_PARTICIPANT_MEANS %>% group_by(stage,resources,pid) %>% su
 
 Interaction between resources and fading
 
-```{r ntr3, out.width="100%"}
+```{r dcheck_ntrees_interaction_resources_x_fading, out.width="100%"}
 ggplot(data=e2_ntrees_PARTICIPANT_MEANS %>% group_by(resources,fading,pid) %>% summarise(meanntrees=mean(mean_ntrees_per_stage)),
        aes(x=resources,y=meanntrees,group=resources))+
   facet_wrap(~fading)+
