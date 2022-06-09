@@ -156,7 +156,7 @@ knitr::include_graphics("e1_tables/e1_nrevisits_grand_ANOVA.png")
 knitr::include_graphics("e1_plots/e1_nrevisits_grand_PLOT10.png")
 ```
 
-* Now averaging over stage to give a plot of the resources X stage interaction:
+* Now averaging over stage to give a plot of the resources X fruit interaction:
 
 ```{r e1_nrevisitsgrandfollowupresourcesXfruit, include=F}
 dd <- e1_nrevisits_grand_PARTICIPANT_MEANS %>% 

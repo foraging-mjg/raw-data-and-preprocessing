@@ -1,7 +1,7 @@
 --- 
 title: "Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging"
 author: "Matthew Green"
-date: "Thursday 09 June 2022 at 11:36:50"
+date: "Thursday 09 June 2022 at 11:43:01"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -20,3 +20,5 @@ csl: chicago-fullnote-bibliography.csl
 Things about the series of two experiments before we consider experiment one and experiment two separately.
 
 
+
+The online version of this document is at https://mjgreen.github.io/foraging-paradigm-paper-2022/
