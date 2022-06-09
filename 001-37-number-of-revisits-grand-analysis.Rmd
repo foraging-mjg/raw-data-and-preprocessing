@@ -156,3 +156,23 @@ knitr::include_graphics("e1_tables/e1_nrevisits_grand_ANOVA.png")
 knitr::include_graphics("e1_plots/e1_nrevisits_grand_PLOT10.png")
 ```
 
+```{r e1_nrevisitsgrandfollowupresourcesXfruit, include=F}
+dd <- e1_nrevisits_grand_PARTICIPANT_MEANS %>% 
+  group_by(pp,resources,fruit) %>% 
+  summarise(mean_revisits=mean(meanrevisits))
+e1_nrevisits_grand_PLOT10resources_x_fruit <-
+  ggplot(data=dd, aes(x=fruit, y=mean_revisits, group=resources, pch=resources, fill=resources)) +
+   theme_bw()+
+  theme(aspect.ratio = 1, panel.grid=element_blank())+
+  scale_fill_manual(values=c("white", "black")) +
+  scale_shape_manual(values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
+  stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
+ggsave("e1_plots/e1_nrevisits_grand_PLOT10resources_x_fruit.png")
+```
+
+```{r out.width="100%"}
+knitr::include_graphics("e1_plots/e1_nrevisits_grand_PLOT10resources_x_fruit.png")
+```
+
