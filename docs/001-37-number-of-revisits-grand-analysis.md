@@ -51,6 +51,8 @@ We replace structural missings with zero: after all, this is equivalent with say
 
 <img src="e1_plots/e1_nrevisits_grand_PLOT10.png" width="100%" />
 
+* Now averaging over stage to give a plot of the resources X stage interaction:
+
 
 
 <img src="e1_plots/e1_nrevisits_grand_PLOT10resources_x_fruit.png" width="100%" />

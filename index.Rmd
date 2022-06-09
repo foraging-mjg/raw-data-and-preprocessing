@@ -25,3 +25,5 @@ knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
 ```
+
+The online version of this document is at https://mjgreen.github.io/foraging-paradigm-paper-2022/
