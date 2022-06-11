@@ -2,6 +2,8 @@ library(reticulate)
 library(tidyverse)
 library(standardize)
 
+start_time_pickles = Sys.time()
+
 if (Sys.info()[['sysname']]=="Windows"){
   source_python("dos2unix.py")
 }
@@ -117,9 +119,13 @@ e1allsubs <-
   e1allsubs %>% 
   select(exp, pid, R, L, trial, index, time, x, y, tile, flag, basket)
 
-saveRDS(e1allsubs, "fgms_e1_allsubs.rds")
+saveRDS(e1allsubs, "fgms_e1_allsubs_stage_1.rds")
 
 # end of loop message
 message("all results pickles have been read in")
 number_of_pickles_that_made_it = length(unique(e1allsubs$pid))
-message(paste("number of results files processed was: ", number_of_pickles_that_made_it))
+message(paste("number of results files processed was:", number_of_pickles_that_made_it))
+
+end_time_pickles = Sys.time()
+
+message(paste("That took", round(as.numeric(end_time_pickles-start_time_pickles),2), "seconds"))

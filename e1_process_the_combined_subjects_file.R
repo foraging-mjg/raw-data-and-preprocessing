@@ -12,5 +12,9 @@
 # C. identify memory errors
 
 
-e1 <- readRDS("fgms_e1_allsubs.rds")
+e1 <- readRDS("fgms_e1_allsubs_stage_1.rds")
 
+
+
+
+saveRDS(stage2, "fgms_e1_allsubs.rds")
