@@ -17,3 +17,15 @@ retrieval-rate-1
 inter-tree-distance-1
 appendix-a
 appendix-b
+we-reveal-the-structural-missings
+we-replace-structural-missings-with-zero-counts
+we-show-that-there-arent-any-structural-missings-now.
+we-do-the-anova-on-the-augmented-data
+means
+interaction-plots
+stage-x-resources
+way-stage-x-fruit-x-resources
+significant-resources-x-fruit-interaction
+significant-stage-effect-means
+significant-fruit-effect-means
+resources-x-fruit-interaction-sig

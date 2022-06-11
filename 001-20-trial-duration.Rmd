@@ -70,18 +70,22 @@ gtsave(e1_trialduration_ANOVA_TABLE, "e1_tables/e1_trialduration_ANOVA.png")
 
 
 # Two points along the x axis, each participant contributes one point per cell
+
+pd <- position_dodge(0.1)
 e1_trialduration_PLOT2 <-
-  ggplot(
-  data=e1_trialduration_PARTICIPANT_MEANS, 
-  aes(x=stage, y=mean_trialduration_per_stage, group=resources, pch=resources, fill=resources)
+  ggplot(data=e1_trialduration_PARTICIPANT_MEANS, aes(x=stage, y=mean_trialduration_per_stage, group=resources, pch=resources, fill=resources)
 ) +
   theme_bw()+
-  theme(aspect.ratio = 1, panel.grid=element_blank())+
-  scale_fill_manual(values=c("white", "black")) +
-  scale_shape_manual(values=c(24,19)) +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
-  stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
-  stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
+  theme(aspect.ratio = 1, panel.grid=element_blank(), axis.title.y=element_text(angle=0,vjust=0.5,hjust=0.5))+
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=4, position=pd)+
+  ggtitle("Trial Duration")+
+  ylab("Trial\nDuration\n(Seconds)")+
+  xlab("Trial")+
+  scale_x_discrete(labels=c("early\ntrials 1 to 5", "late\ntrials 6 to 10"))
 ggsave("e1_plots/e1_trialduration_PLOT2.png")
 ```
 
@@ -91,5 +95,32 @@ knitr::include_graphics("e1_tables/e1_trialduration_ANOVA.png")
 
 ```{r out.width="75%"}
 knitr::include_graphics("e1_plots/e1_trialduration_PLOT2.png")
+```
+
+----
+
+Here we put tables of means for the significant effects.
+
+```{r}
+# The way we do these means and sds is first aggregate over trials so that each pp contributes one mean value for each condition. Then we take the mean of those means, and the sd of those means separately for each cell 
+e1_trialduration_TRIAL_VALUES %>%
+  ungroup() %>% 
+  select(c(resources,pp,trialduration)) %>% 
+  group_by(resources,pp) %>% 
+  summarise(ppXconditionMean=mean(trialduration)) %>% 
+  summarise(mean=mean(ppXconditionMean), sd=sd(ppXconditionMean)) %>% 
+  gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
+```
+
+-----
+
+```{r}
+e1_trialduration_TRIAL_VALUES %>%
+  ungroup() %>% 
+  select(c(stage,pp,trialduration)) %>% 
+  group_by(stage,pp) %>% 
+  summarise(ppXconditionMean=mean(trialduration)) %>% 
+  summarise(mean=mean(ppXconditionMean), sd=sd(ppXconditionMean)) %>% 
+  gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
 ```
 

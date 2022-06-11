@@ -82,7 +82,7 @@
 <p>a 2 (fading) x 2 (resource distribution) x 2 (trial stage) x 14 (fruit consumed) analysis</p>
 <p>Currently this df has multiple rows for each fruit - we want a single row for each fruit representing the count of revisits for that fruit</p>
 <p>Collapse over trials to get means per stage - a mean for each combination of participant and condition where condition is 2 (fading) x 2 (resources) x 2 (stage) x 14 (fruit)</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># not run</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.sum"</span>,<span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">e2_nrevisits_grand_ANOVA</span> <span class="op">&lt;-</span> 
@@ -99,7 +99,7 @@ One or more cells is missing data. Try using ezDesign() to check your data.</p>
 </blockquote>
 <div class="inline-figure"><img src="e2_figures/e2ezDesign_bad_nrevisitsgrand_plot1-1.png" width="672"></div>
 <p>So every time (10 times) participant 3 saw a random trial in the late stage the first tree they looked at was a fruit, leaving them with no value for fruit of 0. This constitutes a structural missing.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># There is a value for early</span>
 <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">e2_nrevisits_grand_PARTICIPANT_MEANS</span>, subset<span class="op">=</span><span class="va">pid</span><span class="op">==</span><span class="fl">3</span> <span class="op">&amp;</span> <span class="va">resources</span><span class="op">==</span><span class="st">"random"</span> <span class="op">&amp;</span> <span class="va">fading</span><span class="op">==</span><span class="st">"no_fade"</span> <span class="op">&amp;</span> <span class="va">stage</span><span class="op">==</span><span class="st">"early"</span> <span class="op">&amp;</span> <span class="va">fruit</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 × 6</span>
@@ -146,7 +146,7 @@ One or more cells is missing data. Try using ezDesign() to check your data.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Saturday 11 June 2022 at 10:41:51.</p>
+    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Saturday 11 June 2022 at 11:26:43.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
