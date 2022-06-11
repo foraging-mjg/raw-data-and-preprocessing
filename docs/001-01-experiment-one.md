@@ -9,6 +9,9 @@ We manipulated one factor within-subjects (Resource Distribution) with 2 levels:
 We created ten random stimuli in which the 15 target fruit items were uniformly distributed about the 30 trees (random condition) and ten stimuli in which all 15 target fruit items were arranged in one large patch (clumped condition) that covered either the left or the right side of the layout.
 
 
+```
+#> Warning in dir.create("e1_plots"): 'e1_plots' already exists
+```
 
 This line runs the code that gets the individual participant results files in.
 

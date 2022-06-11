@@ -89,3 +89,26 @@ knitr::include_graphics("e1_tables/e1_ntrees_ANOVA.png")
 knitr::include_graphics("e1_plots/e1_ntrees_PLOT2.png")
 ```
 
+```{r}
+# The way we do these means and sds is first aggregate over trials so that each pp contributes one mean value for each condition. Then we take the mean of those means, and the sd of those means separately for each cell 
+e1_ntrees_TRIAL_SUMS %>%
+  ungroup() %>% 
+  select(c(resources,pp,ntrees)) %>% 
+  group_by(resources,pp) %>% 
+  summarise(ppXconditionMean=mean(ntrees)) %>% 
+  summarise(mean=mean(ppXconditionMean), sd=sd(ppXconditionMean)) %>% 
+  gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
+```
+
+-----
+
+```{r}
+e1_ntrees_TRIAL_SUMS %>%
+  ungroup() %>% 
+  select(c(stage,pp,ntrees)) %>% 
+  group_by(stage,pp) %>% 
+  summarise(ppXconditionMean=mean(ntrees)) %>% 
+  summarise(mean=mean(ppXconditionMean), sd=sd(ppXconditionMean)) %>% 
+  gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
+```
+

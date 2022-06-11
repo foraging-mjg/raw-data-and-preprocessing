@@ -100,7 +100,7 @@ e1_nrevisits_grand_PARTICIPANT_MEANS <-
 ezDesign(data=e1_nrevisits_grand_PARTICIPANT_MEANS,x=fruit,y=pp,row=resources,col=stage)
 ```
 
-```{r e1nrevisitsanovatable, include=FALSE}
+```{r e1nrevisitsanovatable, include=FALSE, fig.show='hide'}
 options(contrasts=c("contr.sum","contr.poly"))
 e1_nrevisits_grand_ANOVA<-
   ezANOVA(data=e1_nrevisits_grand_PARTICIPANT_MEANS,
