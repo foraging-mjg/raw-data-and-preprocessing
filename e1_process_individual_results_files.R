@@ -23,22 +23,23 @@ for (infilename in list.files(indir, pattern=".pickle$")) {
   }
   for (trialnumber in 1:numberoftrials) {
     trialnumber <- as.character(trialnumber)
-    samples  <- names(infilecontent[[trialnumber]][['samples']])
+    samples <- names(infilecontent[[trialnumber]][['samples']])
+    content <- infilecontent[[trialnumber]] # a list
     for (samplenumber in samples) {
       i <- i + 1
-      outf[i, "exp"]                 = 1
-      outf[i, 'pid']                 = infilecontent[[trialnumber]][['participant_number']]
-      outf[i, 'R']                   = ifelse(grepl("cluster", infilecontent[[trialnumber]][['trial_name']]), "clumped", "random")
-      outf[i, 'trial_in_session']    = infilecontent[[trialnumber]][['trial_num_in_expt']]
-      outf[i, 'trial_in_block']      = infilecontent[[trialnumber]][['trial_num_in_block']]
-      outf[i, 'trial_identity']      = infilecontent[[trialnumber]][['trial_name']]
-      outf[i, 'index']               = infilecontent[[trialnumber]][['samples']][[samplenumber]]$sample_index
-      outf[i, 'time']                = infilecontent[[trialnumber]][['samples']][[samplenumber]]$sample_timestamp
-      outf[i, 'x']                   = infilecontent[[trialnumber]][['samples']][[samplenumber]]$psychopy_x
-      outf[i, 'y']                   = infilecontent[[trialnumber]][['samples']][[samplenumber]]$psychopy_y
-      outf[i, 'tile']                = infilecontent[[trialnumber]][['samples']][[samplenumber]]$hit_tile + 1
-      outf[i, 'flag']                = infilecontent[[trialnumber]][['samples']][[samplenumber]]$hit_flag
-      outf[i, 'basket']              = infilecontent[[trialnumber]][['samples']][[samplenumber]]$fruit_tally
+      outf[i, "exp"] = 1
+      outf[i, 'pid'] = content[['participant_number']]
+      outf[i, 'trial'] = content[['trial_num_in_block']]
+      outf[i, 'R'] = ifelse(grepl("cluster", content[['trial_name']]), "clumped", "random")
+      outf[i, 'L'] = ifelse(content[['samples']][[samplenumber]]$hit_flag==2, "fruit", "not_fruit")
+      outf[i, 'index'] = content[['samples']][[samplenumber]]$sample_index
+      outf[i, 'time'] = content[['samples']][[samplenumber]]$sample_timestamp
+      outf[i, 'x'] = content[['samples']][[samplenumber]]$psychopy_x
+      outf[i, 'y'] = content[['samples']][[samplenumber]]$psychopy_y
+      # +1 to turn zero-indexed into human indexed
+      outf[i, 'tile'] = content[['samples']][[samplenumber]]$hit_tile + 1
+      outf[i, 'flag'] = content[['samples']][[samplenumber]]$hit_flag
+      outf[i, 'basket'] = content[['samples']][[samplenumber]]$fruit_tally
     }
   }
   if (infilename == "P009.pickle") {
@@ -50,47 +51,75 @@ for (infilename in list.files(indir, pattern=".pickle$")) {
   
   # files saved by pickle are in arbitrary (though often deceptively sane) row order
   # so we need to sort on row order after grouping to identify each trial
-  # This sequence of tidyverse operations also does a lot of other stuff...
   outf <-
     outf %>%
-    group_by(R, pid, trial_in_block) %>%
+    group_by(exp, pid, R, trial) %>%
     arrange(index, .by_group=TRUE) 
   
-  outf <- outf %>%
-    mutate(time = time-time[1]) %>%
-    filter(flag %in% c(1, 2, 3)) %>%
-    filter(max(basket) >= 10) %>%
-    # remove the second (and any subsequent) *consecutive* duplicates
-    filter(is.na(tile != lag(tile)) | tile != lag(tile)) %>%
-    # identify as TRUE the second (and any subsequent) duplicates whether 
-    # they are consecutive or not (i.e, memory errors)
-    mutate(revisit = as.numeric(duplicated(tile))) %>%           
-    mutate(numtrees = n()) %>%
-    mutate(trialdur = round(max(time),2)) %>%
-    mutate(itdistance = round(sqrt((lead(x)-x)^2 + (lead(y)-y)^2), 2)) %>%
-    mutate(index = seq_along(index)) %>%
-    ungroup()
+  # make time be relative to the first sample of the session
+  outf <- outf %>% mutate(time = time-time[1])
+  
+  # remove samples that didn't gaze at a tree
+  #outf <- outf %>% filter(flag %in% c(1, 2, 3)) 
+  
+  # remove trial if they didn't get 10 fruit or more
+  #outf <- outf %>% filter(max(basket) >= 10)
+  
+  # remove the second (and any subsequent) *consecutive* duplicates
+  #outf <- outf %>% filter(is.na(tile != lag(tile)) | tile != lag(tile))
+  
+  # identify as TRUE the second (and any subsequent) duplicates whether 
+  # they are consecutive or not (i.e, memory errors)
+  #outf <- outf %>% mutate(revisit = as.numeric(duplicated(tile)))        
+  
+  # compute number of trees - this is the same as the number of rows 
+  # if you do the three removals above first but you should compute this outside
+  #outf <- outf %>% mutate(numtrees = n())
+  
+  # compute trial duration - should do this outside
+  #outf <- outf %>% mutate(trialdur = round(max(time),2))
+  
+  # compute inter-tree distance - do this outside
+  # bear in mind that it needs to be done after reducing the data to valid tree-visits
+  #outf <- outf %>% mutate(itdistance = round(sqrt((lead(x)-x)^2 + (lead(y)-y)^2), 2))
+  
+  # re-roll-out index after doing removal of rows - do this outside
+  #outf <- outf %>% mutate(index = seq_along(index)) 
+  
+  # ungroup
+  outf <- outf %>% ungroup()
+  
   # how many trees to get each fruit?
-  outf$ntreesperfruit = NA
-  j = 0
-  for (k in seq_along(outf$index)) {
-    j = j + 1
-    if (outf[k, 'flag'] ==2) {
-      outf[k, 'ntreesperfruit'] = j
-      j = 0
-    }
-  }
-  # all done
-  message(paste(substr(infilename, 1, 4), "done"))
+  # this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit
+  #outf$ntreesperfruit = NA
+  #j = 0
+  #for (k in seq_along(outf$index)) {
+  #  j = j + 1
+  #  if (outf[k, 'flag']==2) {
+  #    outf[k, 'ntreesperfruit'] = j
+  #    j = 0
+  #  }
+  #}
+  
+  # add this participant to the allsubs tibble
   e1allsubs <- bind_rows(e1allsubs, outf)
+  
+  # this participant is finished - go back for the next one after adding to allsubs
+  message(paste(substr(infilename, 1, 4), "done"))
 }
 
-e1allsubs$L           <- ifelse(e1allsubs$flag==2, "fruit", "not_fruit")
-e1allsubs$exp         <- as_factor(e1allsubs$exp)
-e1allsubs$pid         <- as_factor(e1allsubs$pid)
+# set types
+e1allsubs$exp <- as_factor(e1allsubs$exp)
+e1allsubs$pid <- as_factor(e1allsubs$pid)
 
+# choose and sort columns of the output for saving to RDS file
 e1allsubs <-
   e1allsubs %>% 
-  select(exp, pid, R, trial_in_session, trial_in_block, trial_identity, index, time, x, y, tile, flag, basket, L, ntreesperfruit, revisit, numtrees, trialdur, itdistance)
+  select(exp, pid, R, L, trial, index, time, x, y, tile, flag, basket)
 
 saveRDS(e1allsubs, "fgms_e1_allsubs.rds")
+
+# end of loop message
+message("all results pickles have been read in")
+number_of_pickles_that_made_it = length(unique(e1allsubs$pid))
+message(paste("number of results files processed was: ", number_of_pickles_that_made_it))

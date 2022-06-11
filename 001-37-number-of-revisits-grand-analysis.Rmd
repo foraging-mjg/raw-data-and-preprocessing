@@ -3,7 +3,7 @@
 Experiment 1
 
 ```{r e1_nrevisitsperfruit_setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path='e1_figures/')
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(dplyr.summarise.inform=F)
@@ -14,7 +14,108 @@ library(gt)
 e1 <- readRDS("fgms_e1_allsubs.rds")
 ```
 
-# SANITY CHECKS
+This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.
+
+## Form the dataset
+
+```{r}
+e1_revisits_df <-
+  e1 %>% 
+  transmute(
+    pp = pid,
+    trial = trial_in_block, # ranges 1 to 10
+    resources = R,
+    stage = ifelse(trial_in_block<=5,"early","late"),
+    basket = basket,
+    sample = index,
+    tree = tile,
+    # "is_a" to remind us that the raw data are binary yes/no 
+    # for whether the current visit is a revisit or not
+    is_a_revisit = as.logical(revisit)
+    ) %>% 
+  # number of revisits can't be greater than zero for the 10th fruit 
+  # because we stop recording data as soon as they get to 10
+  # so we remove those values because they must have no variance
+  # and it would distort the analysis to treat those zeros as meaningful.
+  filter(
+    basket < 10
+    ) %>% 
+  # basket+1 because the data were recorded such that this 
+  # tally is zero until they get a fruit but we want to say 
+  # that they had a certain number of revisits while they 
+  # were searching for the first fruit, not while they 
+  # had zero fruit in their basket
+  mutate(
+   basket = basket +1 
+  ) %>% 
+  # set factors
+  mutate(
+    trial = as_factor(trial),
+    stage = as_factor(stage),
+    tree = as_factor(tree),
+    basket = as_factor(basket),
+    resources = as_factor(resources)
+    ) 
+```
+
+```{r}
+gt(subset(e1_revisits_df, pp==1&trial==1&resources=="clumped"))
+```
+
+## First round of aggregation
+
+When someone visits more than one tree to get the next fruit, there is more than one row for that basket. Because we intend to turn the logical `is_a_revisit` into a count of revisits broken down by trial and basket, we want to turn those multiple rows into one row, and add up any revisits that took place in those mutliple rows so that all the single rows in the new df will now represent a count of revisits for the cell of the design that is represented in that row, and no cell of the design will have more than one row.
+
+```{r}
+e1_revisits_df_agg1 <-
+  e1_revisits_df %>% 
+  group_by(pp,trial,stage,resources,basket) %>% 
+  summarise(sum_of_revisits = sum(is_a_revisit))
+```
+
+## Structural missings treatment
+
+It turns out that if the first tree the participant visited contained a fruit that they consumed then `is_a_revisit` doesn't get recorded as FALSE for the first tree. That means that there are structural missings in the data for each time that occurred. The ANOVA fails if there exists a cell of the design that is made up of structural missings - which happens if someone consumed a fruit on the first tree they looked at for all the trials that go into that cell of the ANOVA. This was the case for: participant 17 in clumped; and participants 37, 20, 12, 6 in random. We decided to manually add rows with zero `sum_of_revisit`s for these cases.
+
+We know that we excluded trials on which participants did not collect at least ten fruit (in the code that read in the individual pickles that is executed to yield the starting data in this script). 
+
+If we make a data frame that represents the complete design structure for the participants and trials that are present in the current data, and merge it with the current data, supplying values for the non-matching cells, we will end up with a data frame that will succeed at the stage where it is submitted to ANOVA.
+
+```{r}
+e1_revisits_df_agg2 <-
+  expand.grid(
+    basket=1:10,
+    trial=c(1:10,1:10),
+    pp=unique(e1_revisits_df_agg1$pp)
+    ) %>% # is 8400
+  mutate(
+    stage=ifelse(trial<=5,"early","late") 
+    ) %>% 
+  bind_cols(
+    resources=as_factor(rep(c("clumped","random"),each=10,times=420))
+    ) %>% 
+  select(
+    pp,trial,stage,resources,basket
+    ) %>% 
+  mutate(
+    trial=as_factor(trial),
+    stage=as_factor(stage),
+    resources=as_factor(resources),
+    basket=as_factor(basket)
+    ) %>% 
+  as_tibble() %>% 
+  left_join(
+    y = e1_revisits_df_agg1,
+    by = c("pp", "trial", "stage", "resources", "basket")
+    ) 
+
+```
+
+
+
+
+
+## SANITY CHECKS
 
 We have got problems here.
 
@@ -30,10 +131,6 @@ Even within the new analysis, the tabled means don't line up with the plotted me
 
 ## Raw data plots because the calculated means don't line up with the plotted means
 
-```{r}
-raw=e1_nrevisits_grand
-
-```
 
 
 
@@ -42,27 +139,11 @@ raw=e1_nrevisits_grand
 
 
 
-a 2 (resource distribution) x 2 (trial stage) x 10 (fruit consumed) analysis
 
 ## We reveal the structural missings 
 
 ```{r}
-e1_nrevisits_grand <-
-  e1 %>% 
-  transmute(
-    pp=pid,
-    trial=trial_in_block,
-    resources=R,
-    stage=ifelse(trial_in_block<=5,"early","late"),
-    index=index,
-    tree=tile,
-    fruit=basket,
-    is_a_revisit=revisit) %>% 
-  # number of revisits can't be greater than zero for the 10th fruit because we stop recording data as soon as they get to 10
-  filter(fruit<10) %>% 
-  mutate(fruit=as_factor(fruit),
-         stage=as_factor(stage),
-         resources=as_factor(resources))
+
 ```
 
 Currently this df has multiple rows for each fruit - we want a single row for each fruit representing the count of revisits for that fruit
@@ -103,25 +184,14 @@ That yields:
 ezDesign(data=e1_nrevisits_grand_PARTICIPANT_MEANS,x=fruit,y=pp,row=resources,col=stage)
 ```
 
-So every time (5 times) participant 17 in clumped; and participants 37, 20, 12, 6 in random saw the first tree in the early stage it was a fruit, leading to no value for number of revisits, which constitutes a structural missing not an NA.
+So every time (5 times) , leading to no value for number of revisits, which constitutes a structural missing not an NA.
 
 ## We replace structural missings with zero counts
 
 We replace structural missings with zero: after all, this is equivalent with saying that they didn't revisit any trees on their way to getting their first fruit, which is a true statement, even if it conceals that fact that they didn't have any _opportunities_ to revisit any trees on the way to getting their first fruit.
 
 ```{r}
-# add zero counts to fill out structural missings: 
-# change the participant means tibble
-e1_nrevisits_grand_PARTICIPANT_MEANS <-
-  e1_nrevisits_grand_PARTICIPANT_MEANS %>% 
-  ungroup() %>% 
-  bind_rows(tibble(pp=factor(17),resources=factor("clumped"),stage=factor("early"),fruit=factor(0),meanrevisits=0)) %>% 
-  bind_rows(tibble(pp=factor(37),resources=factor("random"),stage=factor("early"),fruit=factor(0),meanrevisits=0)) %>% 
-  bind_rows(tibble(pp=factor(20),resources=factor("random"),stage=factor("early"),fruit=factor(0),meanrevisits=0)) %>% 
-  bind_rows(tibble(pp=factor(12),resources=factor("random"),stage=factor("early"),fruit=factor(0),meanrevisits=0)) %>% 
-  bind_rows(tibble(pp=factor(6),resources=factor("random"),stage=factor("early"),fruit=factor(0),meanrevisits=0)) %>% 
-  group_by(pp, resources, stage, fruit) %>% 
-  arrange(.by_group=TRUE)
+
 ```
 
 ## We show that there aren't any structural missings now.

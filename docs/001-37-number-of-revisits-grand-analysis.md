@@ -4,6 +4,29 @@ Experiment 1
 
 
 
+# SANITY CHECKS
+
+We have got problems here.
+
+The original analysis' descriptives are wildly different from the ones we are using now. 
+For example, the values for revisits x fruit in the original are 0.02 revisits for the first fruit in clumped and 0.005 for random. Our equivalents are 0.2 for clumped and 0.05 for random. We seem to have ten times as many revisits
+
+One possibility is that the code that parses the pickles is creating the raw variable mutate(revisit = as.numeric(duplicated(tile))) differently.
+
+Even within the new analysis, the tabled means don't line up with the plotted means. For example in the plot of resources x stage, the mean for clumped early is about 1.0 and the mean for random early is about 1.2, so the mean for early is about 1.1. However the table of means thinks that the mean for early is 2.06. The tabled mean for late is 1.57 - the plot's mean for late is about 0.8.
+
+
+
+
+## Raw data plots because the calculated means don't line up with the plotted means
+
+
+
+
+
+
+
+
 a 2 (resource distribution) x 2 (trial stage) x 10 (fruit consumed) analysis
 
 ## We reveal the structural missings 
@@ -49,6 +72,10 @@ We replace structural missings with zero: after all, this is equivalent with say
 
 <img src="e1_figures/e1ezDesign_bad_nrevisitsgrand_plot2-1.png" width="672" />
 
+
+
+
+
 ## We do the ANOVA on the augmented data
 
 Ok we can proceed with the ANOVA now.
@@ -69,12 +96,12 @@ Now we want grand means for the significant stage effect.
 
 
 ```{=html}
-<div id="imgrxktpvl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="pjojjtqaxa" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#imgrxktpvl .gt_table {
+#pjojjtqaxa .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -99,7 +126,7 @@ Now we want grand means for the significant stage effect.
   border-left-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_heading {
+#pjojjtqaxa .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -111,7 +138,7 @@ Now we want grand means for the significant stage effect.
   border-right-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_title {
+#pjojjtqaxa .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -123,7 +150,7 @@ Now we want grand means for the significant stage effect.
   border-bottom-width: 0;
 }
 
-#imgrxktpvl .gt_subtitle {
+#pjojjtqaxa .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -135,13 +162,13 @@ Now we want grand means for the significant stage effect.
   border-top-width: 0;
 }
 
-#imgrxktpvl .gt_bottom_border {
+#pjojjtqaxa .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_col_headings {
+#pjojjtqaxa .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -156,7 +183,7 @@ Now we want grand means for the significant stage effect.
   border-right-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_col_heading {
+#pjojjtqaxa .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -176,7 +203,7 @@ Now we want grand means for the significant stage effect.
   overflow-x: hidden;
 }
 
-#imgrxktpvl .gt_column_spanner_outer {
+#pjojjtqaxa .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -188,15 +215,15 @@ Now we want grand means for the significant stage effect.
   padding-right: 4px;
 }
 
-#imgrxktpvl .gt_column_spanner_outer:first-child {
+#pjojjtqaxa .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#imgrxktpvl .gt_column_spanner_outer:last-child {
+#pjojjtqaxa .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#imgrxktpvl .gt_column_spanner {
+#pjojjtqaxa .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -208,7 +235,7 @@ Now we want grand means for the significant stage effect.
   width: 100%;
 }
 
-#imgrxktpvl .gt_group_heading {
+#pjojjtqaxa .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -233,7 +260,7 @@ Now we want grand means for the significant stage effect.
   vertical-align: middle;
 }
 
-#imgrxktpvl .gt_empty_group_heading {
+#pjojjtqaxa .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -248,15 +275,15 @@ Now we want grand means for the significant stage effect.
   vertical-align: middle;
 }
 
-#imgrxktpvl .gt_from_md > :first-child {
+#pjojjtqaxa .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#imgrxktpvl .gt_from_md > :last-child {
+#pjojjtqaxa .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#imgrxktpvl .gt_row {
+#pjojjtqaxa .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -275,7 +302,7 @@ Now we want grand means for the significant stage effect.
   overflow-x: hidden;
 }
 
-#imgrxktpvl .gt_stub {
+#pjojjtqaxa .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -288,7 +315,7 @@ Now we want grand means for the significant stage effect.
   padding-right: 5px;
 }
 
-#imgrxktpvl .gt_stub_row_group {
+#pjojjtqaxa .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -302,11 +329,11 @@ Now we want grand means for the significant stage effect.
   vertical-align: top;
 }
 
-#imgrxktpvl .gt_row_group_first td {
+#pjojjtqaxa .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#imgrxktpvl .gt_summary_row {
+#pjojjtqaxa .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -316,16 +343,16 @@ Now we want grand means for the significant stage effect.
   padding-right: 5px;
 }
 
-#imgrxktpvl .gt_first_summary_row {
+#pjojjtqaxa .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_first_summary_row.thick {
+#pjojjtqaxa .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#imgrxktpvl .gt_last_summary_row {
+#pjojjtqaxa .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -335,7 +362,7 @@ Now we want grand means for the significant stage effect.
   border-bottom-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_grand_summary_row {
+#pjojjtqaxa .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -345,7 +372,7 @@ Now we want grand means for the significant stage effect.
   padding-right: 5px;
 }
 
-#imgrxktpvl .gt_first_grand_summary_row {
+#pjojjtqaxa .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -355,11 +382,11 @@ Now we want grand means for the significant stage effect.
   border-top-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_striped {
+#pjojjtqaxa .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#imgrxktpvl .gt_table_body {
+#pjojjtqaxa .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -368,7 +395,7 @@ Now we want grand means for the significant stage effect.
   border-bottom-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_footnotes {
+#pjojjtqaxa .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -382,7 +409,7 @@ Now we want grand means for the significant stage effect.
   border-right-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_footnote {
+#pjojjtqaxa .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -391,7 +418,7 @@ Now we want grand means for the significant stage effect.
   padding-right: 5px;
 }
 
-#imgrxktpvl .gt_sourcenotes {
+#pjojjtqaxa .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -405,7 +432,7 @@ Now we want grand means for the significant stage effect.
   border-right-color: #D3D3D3;
 }
 
-#imgrxktpvl .gt_sourcenote {
+#pjojjtqaxa .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -413,36 +440,36 @@ Now we want grand means for the significant stage effect.
   padding-right: 5px;
 }
 
-#imgrxktpvl .gt_left {
+#pjojjtqaxa .gt_left {
   text-align: left;
 }
 
-#imgrxktpvl .gt_center {
+#pjojjtqaxa .gt_center {
   text-align: center;
 }
 
-#imgrxktpvl .gt_right {
+#pjojjtqaxa .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#imgrxktpvl .gt_font_normal {
+#pjojjtqaxa .gt_font_normal {
   font-weight: normal;
 }
 
-#imgrxktpvl .gt_font_bold {
+#pjojjtqaxa .gt_font_bold {
   font-weight: bold;
 }
 
-#imgrxktpvl .gt_font_italic {
+#pjojjtqaxa .gt_font_italic {
   font-style: italic;
 }
 
-#imgrxktpvl .gt_super {
+#pjojjtqaxa .gt_super {
   font-size: 65%;
 }
 
-#imgrxktpvl .gt_two_val_uncert {
+#pjojjtqaxa .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -451,31 +478,31 @@ Now we want grand means for the significant stage effect.
   margin-left: 0.1em;
 }
 
-#imgrxktpvl .gt_footnote_marks {
+#pjojjtqaxa .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#imgrxktpvl .gt_asterisk {
+#pjojjtqaxa .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#imgrxktpvl .gt_slash_mark {
+#pjojjtqaxa .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#imgrxktpvl .gt_fraction_numerator {
+#pjojjtqaxa .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#imgrxktpvl .gt_fraction_denominator {
+#pjojjtqaxa .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -511,12 +538,12 @@ We report the first and tenth value
 
 
 ```{=html}
-<div id="lhjvxijhby" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="lddvtpemun" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#lhjvxijhby .gt_table {
+#lddvtpemun .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: 0;
@@ -541,7 +568,7 @@ We report the first and tenth value
   border-left-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_heading {
+#lddvtpemun .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -553,7 +580,7 @@ We report the first and tenth value
   border-right-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_title {
+#lddvtpemun .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -565,7 +592,7 @@ We report the first and tenth value
   border-bottom-width: 0;
 }
 
-#lhjvxijhby .gt_subtitle {
+#lddvtpemun .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -577,13 +604,13 @@ We report the first and tenth value
   border-top-width: 0;
 }
 
-#lhjvxijhby .gt_bottom_border {
+#lddvtpemun .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_col_headings {
+#lddvtpemun .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -598,7 +625,7 @@ We report the first and tenth value
   border-right-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_col_heading {
+#lddvtpemun .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -618,7 +645,7 @@ We report the first and tenth value
   overflow-x: hidden;
 }
 
-#lhjvxijhby .gt_column_spanner_outer {
+#lddvtpemun .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -630,15 +657,15 @@ We report the first and tenth value
   padding-right: 4px;
 }
 
-#lhjvxijhby .gt_column_spanner_outer:first-child {
+#lddvtpemun .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lhjvxijhby .gt_column_spanner_outer:last-child {
+#lddvtpemun .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lhjvxijhby .gt_column_spanner {
+#lddvtpemun .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -650,7 +677,7 @@ We report the first and tenth value
   width: 100%;
 }
 
-#lhjvxijhby .gt_group_heading {
+#lddvtpemun .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -675,7 +702,7 @@ We report the first and tenth value
   vertical-align: middle;
 }
 
-#lhjvxijhby .gt_empty_group_heading {
+#lddvtpemun .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -690,15 +717,15 @@ We report the first and tenth value
   vertical-align: middle;
 }
 
-#lhjvxijhby .gt_from_md > :first-child {
+#lddvtpemun .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lhjvxijhby .gt_from_md > :last-child {
+#lddvtpemun .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lhjvxijhby .gt_row {
+#lddvtpemun .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -717,7 +744,7 @@ We report the first and tenth value
   overflow-x: hidden;
 }
 
-#lhjvxijhby .gt_stub {
+#lddvtpemun .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -730,7 +757,7 @@ We report the first and tenth value
   padding-right: 5px;
 }
 
-#lhjvxijhby .gt_stub_row_group {
+#lddvtpemun .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -744,11 +771,11 @@ We report the first and tenth value
   vertical-align: top;
 }
 
-#lhjvxijhby .gt_row_group_first td {
+#lddvtpemun .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lhjvxijhby .gt_summary_row {
+#lddvtpemun .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -758,16 +785,16 @@ We report the first and tenth value
   padding-right: 5px;
 }
 
-#lhjvxijhby .gt_first_summary_row {
+#lddvtpemun .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_first_summary_row.thick {
+#lddvtpemun .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lhjvxijhby .gt_last_summary_row {
+#lddvtpemun .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -777,7 +804,7 @@ We report the first and tenth value
   border-bottom-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_grand_summary_row {
+#lddvtpemun .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -787,7 +814,7 @@ We report the first and tenth value
   padding-right: 5px;
 }
 
-#lhjvxijhby .gt_first_grand_summary_row {
+#lddvtpemun .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -797,11 +824,11 @@ We report the first and tenth value
   border-top-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_striped {
+#lddvtpemun .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lhjvxijhby .gt_table_body {
+#lddvtpemun .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -810,7 +837,7 @@ We report the first and tenth value
   border-bottom-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_footnotes {
+#lddvtpemun .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -824,7 +851,7 @@ We report the first and tenth value
   border-right-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_footnote {
+#lddvtpemun .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -833,7 +860,7 @@ We report the first and tenth value
   padding-right: 5px;
 }
 
-#lhjvxijhby .gt_sourcenotes {
+#lddvtpemun .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -847,7 +874,7 @@ We report the first and tenth value
   border-right-color: #D3D3D3;
 }
 
-#lhjvxijhby .gt_sourcenote {
+#lddvtpemun .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -855,36 +882,36 @@ We report the first and tenth value
   padding-right: 5px;
 }
 
-#lhjvxijhby .gt_left {
+#lddvtpemun .gt_left {
   text-align: left;
 }
 
-#lhjvxijhby .gt_center {
+#lddvtpemun .gt_center {
   text-align: center;
 }
 
-#lhjvxijhby .gt_right {
+#lddvtpemun .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lhjvxijhby .gt_font_normal {
+#lddvtpemun .gt_font_normal {
   font-weight: normal;
 }
 
-#lhjvxijhby .gt_font_bold {
+#lddvtpemun .gt_font_bold {
   font-weight: bold;
 }
 
-#lhjvxijhby .gt_font_italic {
+#lddvtpemun .gt_font_italic {
   font-style: italic;
 }
 
-#lhjvxijhby .gt_super {
+#lddvtpemun .gt_super {
   font-size: 65%;
 }
 
-#lhjvxijhby .gt_two_val_uncert {
+#lddvtpemun .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -893,31 +920,31 @@ We report the first and tenth value
   margin-left: 0.1em;
 }
 
-#lhjvxijhby .gt_footnote_marks {
+#lddvtpemun .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#lhjvxijhby .gt_asterisk {
+#lddvtpemun .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lhjvxijhby .gt_slash_mark {
+#lddvtpemun .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#lhjvxijhby .gt_fraction_numerator {
+#lddvtpemun .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#lhjvxijhby .gt_fraction_denominator {
+#lddvtpemun .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
