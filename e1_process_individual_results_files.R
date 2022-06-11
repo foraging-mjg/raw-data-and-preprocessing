@@ -1,8 +1,8 @@
 library(reticulate)
 library(tidyverse)
-library(standardize)
+library(tictoc)
 
-start_time_pickles = Sys.time()
+tic()
 
 if (Sys.info()[['sysname']]=="Windows"){
   source_python("dos2unix.py")
@@ -32,6 +32,7 @@ for (infilename in list.files(indir, pattern=".pickle$")) {
       outf[i, "exp"] = 1
       outf[i, 'pid'] = content[['participant_number']]
       outf[i, 'trial'] = content[['trial_num_in_block']]
+      outf[i, "stage"] = ifelse(content[['trial_num_in_block']] <=5, "early", "late")
       outf[i, 'R'] = ifelse(grepl("cluster", content[['trial_name']]), "clumped", "random")
       outf[i, 'L'] = ifelse(content[['samples']][[samplenumber]]$hit_flag==2, "fruit", "not_fruit")
       outf[i, 'index'] = content[['samples']][[samplenumber]]$sample_index
@@ -111,13 +112,20 @@ for (infilename in list.files(indir, pattern=".pickle$")) {
 }
 
 # set types
-e1allsubs$exp <- as_factor(e1allsubs$exp)
-e1allsubs$pid <- as_factor(e1allsubs$pid)
+e1allsubs <- e1allsubs %>% 
+  mutate(
+    exp=as_factor(exp),
+    pid=as_factor(pid),
+    R=as_factor(R),
+    L=as_factor(L),
+    trial=as_factor(trial),
+    stage=as_factor(stage)
+  )
 
 # choose and sort columns of the output for saving to RDS file
 e1allsubs <-
   e1allsubs %>% 
-  select(exp, pid, R, L, trial, index, time, x, y, tile, flag, basket)
+  select(exp, pid, R, L, trial, stage, index, time, x, y, tile, flag, basket)
 
 saveRDS(e1allsubs, "fgms_e1_allsubs_stage_1.rds")
 
@@ -126,6 +134,7 @@ message("all results pickles have been read in")
 number_of_pickles_that_made_it = length(unique(e1allsubs$pid))
 message(paste("number of results files processed was:", number_of_pickles_that_made_it))
 
-end_time_pickles = Sys.time()
+toc()
 
-message(paste("That took", round(as.numeric(end_time_pickles-start_time_pickles),2), "seconds"))
+
+
