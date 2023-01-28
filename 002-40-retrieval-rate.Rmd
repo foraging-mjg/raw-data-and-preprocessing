@@ -69,7 +69,7 @@ e2_retrievalrate_ANOVA_TABLE <-
   ) %>% 
   cols_align(
     columns=`p<.05`,
-    align="c"
+    align="center"
   )
 gtsave(e2_retrievalrate_ANOVA_TABLE, "e2_tables/e2_retrievalrate_ANOVA.png")
 

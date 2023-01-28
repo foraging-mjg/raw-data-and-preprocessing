@@ -23,9 +23,9 @@ e1_revisits_df <-
   e1 %>% 
   transmute(
     pp = pid,
-    trial = trial_in_block, # ranges 1 to 10
+    trial = as.numeric(trial), # ranges 1 to 10
     resources = R,
-    stage = ifelse(trial_in_block<=5,"early","late"),
+    stage = ifelse(trial<=5,"early","late"),
     basket = basket,
     sample = index,
     tree = tile,
@@ -107,106 +107,21 @@ e1_revisits_df_agg2 <-
   left_join(
     y = e1_revisits_df_agg1,
     by = c("pp", "trial", "stage", "resources", "basket")
-    ) 
+    ) %>% 
+  replace_na(list(sum_of_revisits=0))
 
-```
-
-
-
-
-
-## SANITY CHECKS
-
-We have got problems here.
-
-The original analysis' descriptives are wildly different from the ones we are using now. 
-For example, the values for revisits x fruit in the original are 0.02 revisits for the first fruit in clumped and 0.005 for random. Our equivalents are 0.2 for clumped and 0.05 for random. We seem to have ten times as many revisits
-
-One possibility is that the code that parses the pickles is creating the raw variable mutate(revisit = as.numeric(duplicated(tile))) differently.
-
-Even within the new analysis, the tabled means don't line up with the plotted means. For example in the plot of resources x stage, the mean for clumped early is about 1.0 and the mean for random early is about 1.2, so the mean for early is about 1.1. However the table of means thinks that the mean for early is 2.06. The tabled mean for late is 1.57 - the plot's mean for late is about 0.8.
-
-
-
-
-## Raw data plots because the calculated means don't line up with the plotted means
-
-
-
-
-
-
-
-
-
-
-## We reveal the structural missings 
-
-```{r}
-
-```
-
-Currently this df has multiple rows for each fruit - we want a single row for each fruit representing the count of revisits for that fruit
-
-```{r}
-e1_nrevisits_grand_FRUIT_SUMS <-
-  e1_nrevisits_grand %>% 
-  group_by(pp, resources, stage, trial, fruit) %>% 
-  summarise(sumrevisits=sum(is_a_revisit))
 ```
 
 Collapse over trials to get means per stage - each participant contributes one value per cell where a cell is 2 (resources) x 2 (stage) x 10 (fruit).
 
 ```{r}
 e1_nrevisits_grand_PARTICIPANT_MEANS <-
-  e1_nrevisits_grand_FRUIT_SUMS %>% 
-  group_by(pp, resources, stage, fruit) %>% 
-  summarise(meanrevisits=mean(sumrevisits))
+  e1_revisits_df_agg2 %>% 
+  group_by(pp, resources, stage, basket) %>% 
+  summarise(meanrevisits=mean(sum_of_revisits))
 ```
 
-```{r eval=F, echo=TRUE}
-# not run
-options(contrasts=c("contr.sum","contr.poly"))
-e1_nrevisits_grand_ANOVA<-
-  ezANOVA(data=e1_nrevisits_grand_PARTICIPANT_MEANS,
-          dv=meanrevisits,
-          wid=pp,
-          within=c(resources,stage,fruit),
-          type=3)
-```
-
-That yields:
-
-> Error in ezANOVA_main(data = data, dv = dv, wid = wid, within = within,  : 
-  One or more cells is missing data. Try using ezDesign() to check your data.
-  
-```{r e1ezDesign_bad_nrevisitsgrand_plot1}
-ezDesign(data=e1_nrevisits_grand_PARTICIPANT_MEANS,x=fruit,y=pp,row=resources,col=stage)
-```
-
-So every time (5 times) , leading to no value for number of revisits, which constitutes a structural missing not an NA.
-
-## We replace structural missings with zero counts
-
-We replace structural missings with zero: after all, this is equivalent with saying that they didn't revisit any trees on their way to getting their first fruit, which is a true statement, even if it conceals that fact that they didn't have any _opportunities_ to revisit any trees on the way to getting their first fruit.
-
-```{r}
-
-```
-
-## We show that there aren't any structural missings now.
-
-```{r e1ezDesign_bad_nrevisitsgrand_plot2}
-ezDesign(data=e1_nrevisits_grand_PARTICIPANT_MEANS,x=fruit,y=pp,row=resources,col=stage)
-```
-
-
-
-
-
-## We do the ANOVA on the augmented data
-
-Ok we can proceed with the ANOVA now.
+ANOVA now
 
 ```{r e1nrevisitsanovatable, include=FALSE, fig.show='hide'}
 options(contrasts=c("contr.sum","contr.poly"))
@@ -214,7 +129,7 @@ e1_nrevisits_grand_ANOVA<-
   ezANOVA(data=e1_nrevisits_grand_PARTICIPANT_MEANS,
           dv=meanrevisits,
           wid=pp,
-          within=c(resources,stage,fruit),
+          within=c(resources,stage,basket),
           type=3)
 
 e1_nrevisits_grand_ANOVA_TABLE <-
@@ -237,7 +152,7 @@ e1_nrevisits_grand_ANOVA_TABLE <-
   ) %>% 
   cols_align(
     columns=`p<.05`,
-    align="c"
+    align="center"
   )
 gtsave(e1_nrevisits_grand_ANOVA_TABLE, "e1_tables/e1_nrevisits_grand_ANOVA.png")
 ```
@@ -259,7 +174,7 @@ Now we want grand means for the significant stage effect.
 ```{r}
 # we want one value from each participant for early and one value from each participant for late, = stage means for the body text
 stagemeansPerParticipant <- 
-  e1_nrevisits_grand %>% 
+  e1_revisits_df %>% 
   ungroup() %>% 
   select(pp, trial, stage, is_a_revisit) %>% 
   # get count for each trial
@@ -273,8 +188,9 @@ stageGrandMeans <- # these are for the body text
   stagemeansPerParticipant %>% 
   group_by(stage) %>% 
   summarise(mean=mean(mean_revisits), sd=sd(mean_revisits))
-stageGrandMeans %>% 
-  gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
+stageGrandMeans
+#stageGrandMeans %>% 
+#  gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
 ```
 
 
@@ -284,19 +200,20 @@ We report the first and tenth value
 
 ```{r}
 fruitmeansPerParticipant <-
-  e1_nrevisits_grand %>% 
+  e1_revisits_df %>% 
   # get sum of the revisits on a trial
   ungroup() %>% 
-  select(pp, trial, fruit, is_a_revisit) %>% 
-  group_by(pp, trial, fruit) %>% 
+  select(pp, trial, basket, is_a_revisit) %>% 
+  group_by(pp, trial, basket) %>% 
   summarise(count_revisits=sum(is_a_revisit)) %>% 
   # aggregate over trials - average n revisits for each participant at each fruit consumption
-  group_by(pp, fruit) %>% 
+  group_by(pp, basket) %>% 
   summarise(mean_revisits=mean(count_revisits)) %>% 
   # take it down to ten rows one for each fruit averaging over participants
-  group_by(fruit) %>% 
+  group_by(basket) %>% 
   summarise(mean=mean(mean_revisits), sd=sd(mean_revisits))
-gt(fruitmeansPerParticipant) %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
+fruitmeansPerParticipant
+#gt(fruitmeansPerParticipant) %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
 ```
 
 The average number of revisits made while searching for the first fruit item was 
@@ -314,7 +231,7 @@ We write code for the plot of the stage x resources interaction. The stage effec
 
 ```{r include=FALSE}
 data_for_plot <-
-  e1_nrevisits_grand %>% 
+  e1_revisits_df %>% 
   ungroup() %>% 
   select(pp, trial, resources, stage, is_a_revisit) %>% 
   # get count for each trial
@@ -357,11 +274,11 @@ Now averaging over stage to give a plot of the (significant) resources X fruit i
 
 ```{r e1_nrevisitsgrandfollowupresourcesXfruit, include=F}
 dd <- e1_nrevisits_grand_PARTICIPANT_MEANS %>% 
-  group_by(pp,resources,fruit) %>% 
+  group_by(pp,resources,basket) %>% 
   summarise(mean_revisits=mean(meanrevisits))
 
-e1_nrevisits_grand_PLOT10resources_x_fruit <-
-  ggplot(data=dd, aes(x=fruit, y=mean_revisits, group=resources, pch=resources, fill=resources)) +
+e1_nrevisits_grand_PLOT10resources_x_basket <-
+  ggplot(data=dd, aes(x=basket, y=mean_revisits, group=resources, pch=resources, fill=resources)) +
    theme_bw()+
   theme(aspect.ratio = 1, panel.grid=element_blank())+
   scale_fill_manual(values=c("white", "black")) +
@@ -369,11 +286,11 @@ e1_nrevisits_grand_PLOT10resources_x_fruit <-
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
   stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
-ggsave("e1_plots/e1_nrevisits_grand_PLOT_resources_x_fruit.png")
+ggsave("e1_plots/e1_nrevisits_grand_PLOT_resources_x_basket.png")
 ```
 
 ```{r out.width="100%"}
-knitr::include_graphics("e1_plots/e1_nrevisits_grand_PLOT_resources_x_fruit.png")
+knitr::include_graphics("e1_plots/e1_nrevisits_grand_PLOT_resources_x_basket.png")
 ```
 
 ----
@@ -385,7 +302,7 @@ We write code for the stage x fruit x resources interaction. This 3-way interact
 
 ```{r include=F}
 e1_nrevisits_grand_PLOT10<-
-ggplot(data=e1_nrevisits_grand_PARTICIPANT_MEANS, aes(x=fruit, y=meanrevisits, group=resources, pch=resources, fill=resources)) +
+ggplot(data=e1_nrevisits_grand_PARTICIPANT_MEANS, aes(x=basket, y=meanrevisits, group=resources, pch=resources, fill=resources)) +
   facet_wrap(vars(stage))+
   theme_bw()+
   theme(aspect.ratio = 1, panel.grid=element_blank())+
@@ -395,10 +312,10 @@ ggplot(data=e1_nrevisits_grand_PARTICIPANT_MEANS, aes(x=fruit, y=meanrevisits, g
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
   stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))+
   labs(caption="Significant stage effect, no interaction effect")
-ggsave("e1_plots/e1_nrevisits_grand_PLOT_stage_x_fruit_x_resources.png")
+ggsave("e1_plots/e1_nrevisits_grand_PLOT_stage_x_basket_x_resources.png")
 ```
 
 ```{r out.width="100%"}
-knitr::include_graphics("e1_plots/e1_nrevisits_grand_PLOT_stage_x_fruit_x_resources.png")
+knitr::include_graphics("e1_plots/e1_nrevisits_grand_PLOT_stage_x_basket_x_resources.png")
 ```
 

@@ -2,7 +2,7 @@
 
 Experiment 1
 
-```{r e1_trialduration_setup, include=FALSE}
+```{r e1_duration_setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_chunk$set(fig.path='e1_figures/')
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
@@ -13,39 +13,39 @@ library(gt)
 
 e1 <- readRDS("fgms_e1_allsubs.rds")
 
-e1_trialduration <-
+e1_duration <-
   e1 %>%
   transmute(
     pp           = as_factor(pid),
-    trial        = trial_in_block, # is 1 to 10 for each condition of "resources"
+    trial        = as.numeric(trial), # is 1 to 10 for each condition of "resources"
     resources    = factor(R, levels=c("clumped","random"), labels=c("clumped", "random")),
     stage        = as_factor(ifelse(trial<=5, "early", "late")),
     index        = index,
     tree         = tile,
-    dur          = trialdur)
+    dur          = dur)
 
-e1_trialduration_TRIAL_VALUES <- 
-  e1_trialduration %>% 
+e1_duration_TRIAL_VALUES <- 
+  e1_duration %>% 
   group_by(pp, resources, stage, trial) %>% 
-  summarise(trialduration = unique(dur))
+  summarise(duration = unique(dur))
 
-e1_trialduration_PARTICIPANT_MEANS <-
-  e1_trialduration_TRIAL_VALUES %>% 
+e1_duration_PARTICIPANT_MEANS <-
+  e1_duration_TRIAL_VALUES %>% 
   group_by(pp, resources, stage) %>% 
-  summarise(mean_trialduration_per_stage = mean(trialduration))
+  summarise(mean_duration_per_stage = mean(duration))
 
 
 
 options(contrasts=c("contr.sum","contr.poly"))
-e1_trialduration_ANOVA <- 
-  ezANOVA(data=e1_trialduration_PARTICIPANT_MEANS,
-          dv=mean_trialduration_per_stage,
+e1_duration_ANOVA <- 
+  ezANOVA(data=e1_duration_PARTICIPANT_MEANS,
+          dv=mean_duration_per_stage,
           wid=pp,
           within=c(resources,stage),
           type=3)
 
-e1_trialduration_ANOVA_TABLE <-
-  e1_trialduration_ANOVA$ANOVA %>% 
+e1_duration_ANOVA_TABLE <-
+  e1_duration_ANOVA$ANOVA %>% 
   select(-ges) %>% 
   gt() %>% 
   tab_header(
@@ -64,16 +64,16 @@ e1_trialduration_ANOVA_TABLE <-
   ) %>% 
   cols_align(
     columns=`p<.05`,
-    align="c"
+    align="center"
   )
-gtsave(e1_trialduration_ANOVA_TABLE, "e1_tables/e1_trialduration_ANOVA.png")
+gtsave(e1_duration_ANOVA_TABLE, "e1_tables/e1_duration_ANOVA.png")
 
 
 # Two points along the x axis, each participant contributes one point per cell
 
 pd <- position_dodge(0.1)
-e1_trialduration_PLOT2 <-
-  ggplot(data=e1_trialduration_PARTICIPANT_MEANS, aes(x=stage, y=mean_trialduration_per_stage, group=resources, pch=resources, fill=resources)
+e1_duration_PLOT2 <-
+  ggplot(data=e1_duration_PARTICIPANT_MEANS, aes(x=stage, y=mean_duration_per_stage, group=resources, pch=resources, fill=resources)
 ) +
   theme_bw()+
   theme(aspect.ratio = 1, panel.grid=element_blank(), axis.title.y=element_text(angle=0,vjust=0.5,hjust=0.5))+
@@ -86,15 +86,15 @@ e1_trialduration_PLOT2 <-
   ylab("Trial\nDuration\n(Seconds)")+
   xlab("Trial")+
   scale_x_discrete(labels=c("early\ntrials 1 to 5", "late\ntrials 6 to 10"))
-ggsave("e1_plots/e1_trialduration_PLOT2.png")
+ggsave("e1_plots/e1_duration_PLOT2.png")
 ```
 
 ```{r out.width="50%"}
-knitr::include_graphics("e1_tables/e1_trialduration_ANOVA.png")
+knitr::include_graphics("e1_tables/e1_duration_ANOVA.png")
 ```
 
 ```{r out.width="75%"}
-knitr::include_graphics("e1_plots/e1_trialduration_PLOT2.png")
+knitr::include_graphics("e1_plots/e1_duration_PLOT2.png")
 ```
 
 ----
@@ -103,11 +103,11 @@ Here we put tables of means for the significant effects.
 
 ```{r}
 # The way we do these means and sds is first aggregate over trials so that each pp contributes one mean value for each condition. Then we take the mean of those means, and the sd of those means separately for each cell 
-e1_trialduration_TRIAL_VALUES %>%
+e1_duration_TRIAL_VALUES %>%
   ungroup() %>% 
-  select(c(resources,pp,trialduration)) %>% 
+  select(c(resources,pp,duration)) %>% 
   group_by(resources,pp) %>% 
-  summarise(ppXconditionMean=mean(trialduration)) %>% 
+  summarise(ppXconditionMean=mean(duration)) %>% 
   summarise(mean=mean(ppXconditionMean), sd=sd(ppXconditionMean)) %>% 
   gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
 ```
@@ -115,11 +115,11 @@ e1_trialduration_TRIAL_VALUES %>%
 -----
 
 ```{r}
-e1_trialduration_TRIAL_VALUES %>%
+e1_duration_TRIAL_VALUES %>%
   ungroup() %>% 
-  select(c(stage,pp,trialduration)) %>% 
+  select(c(stage,pp,duration)) %>% 
   group_by(stage,pp) %>% 
-  summarise(ppXconditionMean=mean(trialduration)) %>% 
+  summarise(ppXconditionMean=mean(duration)) %>% 
   summarise(mean=mean(ppXconditionMean), sd=sd(ppXconditionMean)) %>% 
   gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
 ```

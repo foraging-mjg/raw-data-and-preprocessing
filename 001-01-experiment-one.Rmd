@@ -10,14 +10,16 @@ We created ten random stimuli in which the 15 target fruit items were uniformly 
 
 ```{r e1-clean-directories, echo=FALSE}
 unlink("e1_figures", recursive = TRUE)
+dir.create("e1_figures")
 unlink("e1_tables", recursive = TRUE)
+dir.create("e1_tables")
 unlink("e1_plots", recursive = TRUE)
 dir.create("e1_plots")
 ```
 
-This line runs the code that gets the individual participant results files in.
+<!-- This line runs the code that gets the individual participant results files in. -->
 
-```{r e1-process-pickles, echo=TRUE, eval=TRUE}
-# source("e1_process_individual_results_files.R", local = knitr::knit_global())
-# source("e1_process_the_combined_subjects_file.R", local = knitr::knit_global())
-```
+<!-- ```{r e1-process-pickles, echo=TRUE, eval=TRUE} -->
+<!-- # source("e1_process_individual_results_files.R", local = knitr::knit_global()) -->
+<!-- # source("e1_process_the_combined_subjects_file.R", local = knitr::knit_global()) -->
+<!-- ``` -->

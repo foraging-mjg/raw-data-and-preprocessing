@@ -17,7 +17,7 @@ e1_nrevisitspertrial <-
   e1 %>%
   transmute(
     pp           = as_factor(pid),
-    trial        = trial_in_block, # is 1 to 10 for each condition of "resources"
+    trial        = as.numeric(trial), # is 1 to 10 for each condition of "resources"
     resources    = factor(R, levels=c("clumped","random"), labels=c("clumped", "random")),
     stage        = as_factor(ifelse(trial<=5, "early", "late")),
     index        = index,
@@ -62,7 +62,7 @@ e1_nrevisitspertrial_ANOVA_TABLE <-
   ) %>% 
   cols_align(
     columns=`p<.05`,
-    align="c"
+    align="center"
   )
 gtsave(e1_nrevisitspertrial_ANOVA_TABLE, "e1_tables/e1_nrevisitspertrial_ANOVA.png")
 

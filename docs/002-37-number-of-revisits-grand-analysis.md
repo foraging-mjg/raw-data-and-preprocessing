@@ -19,15 +19,14 @@ Collapse over trials to get means per stage - a mean for each combination of par
 
 
 ```r
-# not run
-options(contrasts=c("contr.sum","contr.poly"))
-e2_nrevisits_grand_ANOVA <- 
-  ezANOVA(data=e2_nrevisits_grand_PARTICIPANT_MEANS,
-          dv=meanrevisits,
-          wid=pid,
-          within=c(resources,stage,fruit),
-          between=fading,
-          type=3)
+#options(contrasts=c("contr.sum","contr.poly"))
+#e2_nrevisits_grand_ANOVA <- 
+#  ezANOVA(data=e2_nrevisits_grand_PARTICIPANT_MEANS,
+#          dv=meanrevisits,
+#          wid=pid,
+#          within=c(resources,stage,fruit),
+#          between=fading,
+#          type=3)
 ```
 
 That fails with
@@ -45,14 +44,12 @@ So every time (10 times) participant 3 saw a random trial in the late stage the 
 # There is a value for early
 subset(e2_nrevisits_grand_PARTICIPANT_MEANS, subset=pid==3 & resources=="random" & fading=="no_fade" & stage=="early" & fruit==0)
 #> # A tibble: 1 × 6
-#> # Groups:   pid, resources, fading, stage [1]
 #>   pid   resources fading  stage fruit meanrevisits
 #>   <fct> <fct>     <fct>   <fct> <fct>        <dbl>
 #> 1 3     random    no_fade early 0                0
 # but there isn't a value for late (this is a structural missing)
 subset(e2_nrevisits_grand_PARTICIPANT_MEANS, subset=pid==3 & resources=="random" & fading=="no_fade" & stage=="late" & fruit==0)
 #> # A tibble: 0 × 6
-#> # Groups:   pid, resources, fading, stage [0]
 #> # … with 6 variables: pid <fct>, resources <fct>,
 #> #   fading <fct>, stage <fct>, fruit <fct>,
 #> #   meanrevisits <dbl>

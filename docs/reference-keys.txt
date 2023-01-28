@@ -5,12 +5,9 @@ trial-duration
 number-of-revisits-per-trial
 number-of-revisits-per-fruit
 number-of-revisits-grand-analysis
-sanity-checks
-raw-data-plots-because-the-calculated-means-dont-line-up-with-the-plotted-means
-we-reveal-the-structural-missings
-we-replace-structural-missings-with-zero-counts
-we-show-that-there-arent-any-structural-missings-now.
-we-do-the-anova-on-the-augmented-data
+form-the-dataset
+first-round-of-aggregation
+structural-missings-treatment
 means
 significant-stage-effect-means
 significant-fruit-effect-means
@@ -30,3 +27,7 @@ retrieval-rate-1
 inter-tree-distance-1
 appendix-a
 appendix-b
+sanity-check-raw-data
+basic-structural-properties-dimensions
+test-for-duplicated-rows
+check-samples-are-in-strict-time-order

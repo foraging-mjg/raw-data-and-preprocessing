@@ -16,7 +16,9 @@ As in Experiment 1, We created 20 random stimuli (forests) in which the 15 targe
 
 ```{r e2-clean-directories, echo=FALSE}
 unlink("e2_figures", recursive = TRUE)
+dir.create("e2_figures")
 unlink("e2_tables", recursive = TRUE)
+dir.create("e2_tables")
 unlink("e2_plots", recursive = TRUE)
 dir.create("e2_plots")
 ```
