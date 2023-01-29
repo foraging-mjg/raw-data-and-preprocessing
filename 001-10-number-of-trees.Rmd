@@ -14,6 +14,7 @@ library(gt)
 e1 <- readRDS("001-00-e1-data.RDS")
 
 # remove things from the raw data to make it suitable for this particular analysis
+
 # remove samples that did not look at a tree
 e1 <- e1 %>% 
   filter(fl>0)
