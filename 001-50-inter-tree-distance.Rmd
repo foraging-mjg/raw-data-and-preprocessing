@@ -13,6 +13,23 @@ library(gt)
 
 e1 <- readRDS("001-00-e1-data.RDS")
 
+# remove things from the raw data to make it suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e1 <- e1 %>% 
+  filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e1 <- e1 %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl))
+
+# remove trials where they failed to get 10 fruit
+e1 <- e1 %>% 
+  group_by(pp, te) %>% 
+  mutate(max_fr = max(fr)) %>% 
+  ungroup() %>% 
+  filter(max_fr==10)
+
 e1_inter_tree_distance <-
   e1 %>%
   transmute(
@@ -27,6 +44,7 @@ e1_inter_tree_distance <-
 
 # bear in mind that it needs to be done after reducing the data to valid tree-visits
 e1_inter_tree_distance <- e1_inter_tree_distance %>% 
+  group_by(pp, resources, trial) %>% 
   mutate(itdist = round(sqrt((lead(xx)-xx)^2 + (lead(yy)-yy)^2), 2))
 
 e1_inter_tree_distance_TRIAL_VALUES <- 
@@ -78,9 +96,9 @@ gtsave(e1_inter_tree_distance_ANOVA_TABLE, "e1_tables/e1_inter_tree_distance_ANO
 e1_inter_tree_distance_PLOT2 <-
   ggplot(
   data=e1_inter_tree_distance_PARTICIPANT_MEANS, 
-  aes(x=stage, y=mean_inter_tree_distance_per_stage, group=launch, pch=launch, fill=launch)
+  aes(x=stage, y=mean_inter_tree_distance_per_stage, group=resources, pch=resources, fill=resources)
 ) +
-  facet_wrap(~resources)+
+  facet_wrap(~launch)+
   theme_bw()+
   theme(aspect.ratio = 1, panel.grid=element_blank())+
   scale_fill_manual(values=c("white", "black")) +

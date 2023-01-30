@@ -35,7 +35,7 @@ e1_ntrees <-
   transmute(
     pp           = as_factor(pp),
     trial        = tb, # is 1 to 10 for each condition of "resources"
-    resources    = factor(rr, levels=c("patchy","dispersed"), labels=c("patchy","dispersed")),
+    resources    = factor(rr, levels=c("dispersed", "patchy"), labels=c("dispersed", "patchy")),
     stage        = as_factor(ifelse(tb<=5, "early", "late")),
     index        = ix,
     tree         = tl)
