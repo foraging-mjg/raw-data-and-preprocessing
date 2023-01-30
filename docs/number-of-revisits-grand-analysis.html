@@ -6,18 +6,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 7 Number of revisits grand analysis | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</title>
 <meta name="author" content="Matthew Green">
-<meta name="description" content="Experiment 1 This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.  7.1 Form the dataset e1_revisits_df &lt;-  e1 %&gt;%  transmute(   pp = pid,   trial =...">
+<meta name="description" content="Experiment 1 This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.  7.1 Form the dataset e1_revisits_df &lt;-  e1 %&gt;%  transmute(   pp = as_factor(pp),  ...">
 <meta name="generator" content="bookdown 0.32 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Number of revisits grand analysis | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://mjgreen.github.io/foraging-paradigm-paper-2022/number-of-revisits-grand-analysis.html">
-<meta property="og:description" content="Experiment 1 This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.  7.1 Form the dataset e1_revisits_df &lt;-  e1 %&gt;%  transmute(   pp = pid,   trial =...">
+<meta property="og:description" content="Experiment 1 This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.  7.1 Form the dataset e1_revisits_df &lt;-  e1 %&gt;%  transmute(   pp = as_factor(pp),  ...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 7 Number of revisits grand analysis | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging">
-<meta name="twitter:description" content="Experiment 1 This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.  7.1 Form the dataset e1_revisits_df &lt;-  e1 %&gt;%  transmute(   pp = pid,   trial =...">
+<meta name="twitter:description" content="Experiment 1 This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.  7.1 Form the dataset e1_revisits_df &lt;-  e1 %&gt;%  transmute(   pp = as_factor(pp),  ...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -84,17 +84,21 @@
 <h2>
 <span class="header-section-number">7.1</span> Form the dataset<a class="anchor" aria-label="anchor" href="#form-the-dataset"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e1_revisits_df</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">e1</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">transmute</span><span class="op">(</span></span>
-<span>    pp <span class="op">=</span> <span class="va">pid</span>,</span>
-<span>    trial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">trial</span><span class="op">)</span>, <span class="co"># ranges 1 to 10</span></span>
-<span>    resources <span class="op">=</span> <span class="va">R</span>,</span>
+<span>    pp <span class="op">=</span> <span class="fu">as_factor</span><span class="op">(</span><span class="va">pp</span><span class="op">)</span>,</span>
+<span>    trial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>, <span class="co"># ranges 1 to 10</span></span>
+<span>    resources <span class="op">=</span> <span class="va">rr</span>,</span>
 <span>    stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">trial</span><span class="op">&lt;=</span><span class="fl">5</span>,<span class="st">"early"</span>,<span class="st">"late"</span><span class="op">)</span>,</span>
-<span>    basket <span class="op">=</span> <span class="va">basket</span>,</span>
-<span>    sample <span class="op">=</span> <span class="va">index</span>,</span>
-<span>    tree <span class="op">=</span> <span class="va">tile</span>,</span>
+<span>    basket <span class="op">=</span> <span class="va">fr</span>,</span>
+<span>    sample <span class="op">=</span> <span class="va">ix</span>,</span>
+<span>    tree <span class="op">=</span> <span class="va">tl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">e1_revisits_df</span> <span class="op">&lt;-</span> <span class="va">e1_revisits_df</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>revisit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
 <span>    <span class="co"># "is_a" to remind us that the raw data are binary yes/no </span></span>
 <span>    <span class="co"># for whether the current visit is a revisit or not</span></span>
 <span>    is_a_revisit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="va">revisit</span><span class="op">)</span></span>
@@ -122,14 +126,14 @@
 <span>    basket <span class="op">=</span> <span class="fu">as_factor</span><span class="op">(</span><span class="va">basket</span><span class="op">)</span>,</span>
 <span>    resources <span class="op">=</span> <span class="fu">as_factor</span><span class="op">(</span><span class="va">resources</span><span class="op">)</span></span>
 <span>    <span class="op">)</span> </span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gt</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">e1_revisits_df</span>, <span class="va">pp</span><span class="op">==</span><span class="fl">1</span><span class="op">&amp;</span><span class="va">trial</span><span class="op">==</span><span class="fl">1</span><span class="op">&amp;</span><span class="va">resources</span><span class="op">==</span><span class="st">"clumped"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="xuxmiqktrb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="maeqrbiics" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xuxmiqktrb .gt_table {
+#maeqrbiics .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -154,7 +158,7 @@
   border-left-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_heading {
+#maeqrbiics .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -166,12 +170,12 @@
   border-right-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_caption {
+#maeqrbiics .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xuxmiqktrb .gt_title {
+#maeqrbiics .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -183,7 +187,7 @@
   border-bottom-width: 0;
 }
 
-#xuxmiqktrb .gt_subtitle {
+#maeqrbiics .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -195,13 +199,13 @@
   border-top-width: 0;
 }
 
-#xuxmiqktrb .gt_bottom_border {
+#maeqrbiics .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_col_headings {
+#maeqrbiics .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -216,7 +220,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_col_heading {
+#maeqrbiics .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -236,7 +240,7 @@
   overflow-x: hidden;
 }
 
-#xuxmiqktrb .gt_column_spanner_outer {
+#maeqrbiics .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -248,15 +252,15 @@
   padding-right: 4px;
 }
 
-#xuxmiqktrb .gt_column_spanner_outer:first-child {
+#maeqrbiics .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xuxmiqktrb .gt_column_spanner_outer:last-child {
+#maeqrbiics .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xuxmiqktrb .gt_column_spanner {
+#maeqrbiics .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -268,7 +272,7 @@
   width: 100%;
 }
 
-#xuxmiqktrb .gt_group_heading {
+#maeqrbiics .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -294,7 +298,7 @@
   text-align: left;
 }
 
-#xuxmiqktrb .gt_empty_group_heading {
+#maeqrbiics .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -309,15 +313,15 @@
   vertical-align: middle;
 }
 
-#xuxmiqktrb .gt_from_md > :first-child {
+#maeqrbiics .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xuxmiqktrb .gt_from_md > :last-child {
+#maeqrbiics .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xuxmiqktrb .gt_row {
+#maeqrbiics .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -336,7 +340,7 @@
   overflow-x: hidden;
 }
 
-#xuxmiqktrb .gt_stub {
+#maeqrbiics .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -349,7 +353,7 @@
   padding-right: 5px;
 }
 
-#xuxmiqktrb .gt_stub_row_group {
+#maeqrbiics .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -363,11 +367,11 @@
   vertical-align: top;
 }
 
-#xuxmiqktrb .gt_row_group_first td {
+#maeqrbiics .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xuxmiqktrb .gt_summary_row {
+#maeqrbiics .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -377,16 +381,16 @@
   padding-right: 5px;
 }
 
-#xuxmiqktrb .gt_first_summary_row {
+#maeqrbiics .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_first_summary_row.thick {
+#maeqrbiics .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xuxmiqktrb .gt_last_summary_row {
+#maeqrbiics .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -396,7 +400,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_grand_summary_row {
+#maeqrbiics .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -406,7 +410,7 @@
   padding-right: 5px;
 }
 
-#xuxmiqktrb .gt_first_grand_summary_row {
+#maeqrbiics .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -416,11 +420,11 @@
   border-top-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_striped {
+#maeqrbiics .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xuxmiqktrb .gt_table_body {
+#maeqrbiics .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -429,7 +433,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_footnotes {
+#maeqrbiics .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -443,7 +447,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_footnote {
+#maeqrbiics .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -452,7 +456,7 @@
   padding-right: 5px;
 }
 
-#xuxmiqktrb .gt_sourcenotes {
+#maeqrbiics .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -466,7 +470,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xuxmiqktrb .gt_sourcenote {
+#maeqrbiics .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -474,208 +478,80 @@
   padding-right: 5px;
 }
 
-#xuxmiqktrb .gt_left {
+#maeqrbiics .gt_left {
   text-align: left;
 }
 
-#xuxmiqktrb .gt_center {
+#maeqrbiics .gt_center {
   text-align: center;
 }
 
-#xuxmiqktrb .gt_right {
+#maeqrbiics .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xuxmiqktrb .gt_font_normal {
+#maeqrbiics .gt_font_normal {
   font-weight: normal;
 }
 
-#xuxmiqktrb .gt_font_bold {
+#maeqrbiics .gt_font_bold {
   font-weight: bold;
 }
 
-#xuxmiqktrb .gt_font_italic {
+#maeqrbiics .gt_font_italic {
   font-style: italic;
 }
 
-#xuxmiqktrb .gt_super {
+#maeqrbiics .gt_super {
   font-size: 65%;
 }
 
-#xuxmiqktrb .gt_footnote_marks {
+#maeqrbiics .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#xuxmiqktrb .gt_asterisk {
+#maeqrbiics .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xuxmiqktrb .gt_indent_1 {
+#maeqrbiics .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xuxmiqktrb .gt_indent_2 {
+#maeqrbiics .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xuxmiqktrb .gt_indent_3 {
+#maeqrbiics .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xuxmiqktrb .gt_indent_4 {
+#maeqrbiics .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xuxmiqktrb .gt_indent_5 {
+#maeqrbiics .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="pp">pp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="trial">trial</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="resources">resources</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stage">stage</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="basket">basket</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sample">sample</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="tree">tree</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="revisit">revisit</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="is_a_revisit">is_a_revisit</th>
     </tr></thead>
-<tbody class="gt_table_body">
-<tr class="gt_group_heading_row">
-<th colspan="7" class="gt_group_heading" scope="colgroup" id="1 - clumped - 1">1 - clumped - 1</th>
-    </tr>
-<tr class="gt_row_group_first">
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">1</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">72</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">3</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">74</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">2</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">8</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">54</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">3</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">9</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">40</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">3</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">10</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">54</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">TRUE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">3</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">11</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">40</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">TRUE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">3</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">13</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">9</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">4</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">21</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">37</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">5</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">22</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">35</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">6</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">24</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">3</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">7</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">26</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">8</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">28</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">49</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">9</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">30</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">67</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-<tr>
-<td headers="1 - clumped - 1  pp" class="gt_row gt_center">1</td>
-<td headers="1 - clumped - 1  resources" class="gt_row gt_center">clumped</td>
-<td headers="1 - clumped - 1  stage" class="gt_row gt_center">early</td>
-<td headers="1 - clumped - 1  basket" class="gt_row gt_center">10</td>
-<td headers="1 - clumped - 1  sample" class="gt_row gt_right">32</td>
-<td headers="1 - clumped - 1  tree" class="gt_row gt_center">81</td>
-<td headers="1 - clumped - 1  is_a_revisit" class="gt_row gt_center">FALSE</td>
-</tr>
-</tbody>
+<tbody class="gt_table_body"></tbody>
 </table></div>
 </div>
 </div>
@@ -683,8 +559,8 @@
 <h2>
 <span class="header-section-number">7.2</span> First round of aggregation<a class="anchor" aria-label="anchor" href="#first-round-of-aggregation"><i class="fas fa-link"></i></a>
 </h2>
-<p>When someone visits more than one tree to get the next fruit, there is more than one row for that basket. Because we intend to turn the logical <code>is_a_revisit</code> into a count of revisits broken down by trial and basket, we want to turn those multiple rows into one row, and add up any revisits that took place in those mutliple rows so that all the single rows in the new df will now represent a count of revisits for the cell of the design that is represented in that row, and no cell of the design will have more than one row.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>When someone visits more than one tree to get the next fruit, there is more than one row for that basket. Because we intend to turn the logical <code>is_a_revisit</code> into a count of revisits broken down by trial and basket, we want to turn those multiple rows into one row, and add up any revisits that took place in those multiple rows so that all the single rows in the new df will now represent a count of revisits for the cell of the design that is represented in that row, and no cell of the design will have more than one row.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e1_revisits_df_agg1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">e1_revisits_df</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>,<span class="va">trial</span>,<span class="va">stage</span>,<span class="va">resources</span>,<span class="va">basket</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
@@ -697,7 +573,7 @@
 <p>It turns out that if the first tree the participant visited contained a fruit that they consumed then <code>is_a_revisit</code> doesn’t get recorded as FALSE for the first tree. That means that there are structural missings in the data for each time that occurred. The ANOVA fails if there exists a cell of the design that is made up of structural missings - which happens if someone consumed a fruit on the first tree they looked at for all the trials that go into that cell of the ANOVA. This was the case for: participant 17 in clumped; and participants 37, 20, 12, 6 in random. We decided to manually add rows with zero <code>sum_of_revisit</code>s for these cases.</p>
 <p>We know that we excluded trials on which participants did not collect at least ten fruit (in the code that read in the individual pickles that is executed to yield the starting data in this script).</p>
 <p>If we make a data frame that represents the complete design structure for the participants and trials that are present in the current data, and merge it with the current data, supplying values for the non-matching cells, we will end up with a data frame that will succeed at the stage where it is submitted to ANOVA.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e1_revisits_df_agg2</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span></span>
 <span>    basket<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
@@ -708,7 +584,7 @@
 <span>    stage<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">trial</span><span class="op">&lt;=</span><span class="fl">5</span>,<span class="st">"early"</span>,<span class="st">"late"</span><span class="op">)</span> </span>
 <span>    <span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">bind_cols</span><span class="op">(</span></span>
-<span>    resources<span class="op">=</span><span class="fu">as_factor</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clumped"</span>,<span class="st">"random"</span><span class="op">)</span>,each<span class="op">=</span><span class="fl">10</span>,times<span class="op">=</span><span class="fl">420</span><span class="op">)</span><span class="op">)</span></span>
+<span>    resources<span class="op">=</span><span class="fu">as_factor</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dispersed"</span>,<span class="st">"patchy"</span><span class="op">)</span>,each<span class="op">=</span><span class="fl">10</span>,times<span class="op">=</span><span class="fl">420</span><span class="op">)</span><span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span></span>
 <span>    <span class="va">pp</span>,<span class="va">trial</span>,<span class="va">stage</span>,<span class="va">resources</span>,<span class="va">basket</span></span>
@@ -726,14 +602,14 @@
 <span>    <span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">replace_na</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sum_of_revisits<span class="op">=</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Collapse over trials to get means per stage - each participant contributes one value per cell where a cell is 2 (resources) x 2 (stage) x 10 (fruit).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">e1_nrevisits_grand_PARTICIPANT_MEANS</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">e1_revisits_df_agg2</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">pp</span>, <span class="va">resources</span>, <span class="va">stage</span>, <span class="va">basket</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">summarise</span><span class="op">(</span>meanrevisits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">sum_of_revisits</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>ANOVA now</p>
 <p>This is the ANOVA table</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"e1_tables/e1_nrevisits_grand_ANOVA.png"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="e1_tables/e1_nrevisits_grand_ANOVA.png" width="50%"></div>
 <hr>
@@ -747,7 +623,7 @@
 <span class="header-section-number">7.4.1</span> Significant stage effect means<a class="anchor" aria-label="anchor" href="#significant-stage-effect-means"><i class="fas fa-link"></i></a>
 </h3>
 <p>Now we want grand means for the significant stage effect.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># we want one value from each participant for early and one value from each participant for late, = stage means for the body text</span></span>
 <span><span class="va">stagemeansPerParticipant</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">e1_revisits_df</span> <span class="op">%&gt;%</span> </span>
@@ -768,8 +644,8 @@
 <span><span class="co">#&gt; # A tibble: 2 × 3</span></span>
 <span><span class="co">#&gt;   stage  mean    sd</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 early  16.3  10.9</span></span>
-<span><span class="co">#&gt; 2 late   25.1  13.6</span></span>
+<span><span class="co">#&gt; 1 early  151.  40.7</span></span>
+<span><span class="co">#&gt; 2 late   123.  38.2</span></span>
 <span><span class="co">#stageGrandMeans %&gt;% </span></span>
 <span><span class="co">#  gt() %&gt;% fmt_number(c(2,3), everything(), 2) %&gt;% tab_options(table.align='left')</span></span></code></pre></div>
 </div>
@@ -778,7 +654,7 @@
 <span class="header-section-number">7.4.2</span> Significant fruit effect means<a class="anchor" aria-label="anchor" href="#significant-fruit-effect-means"><i class="fas fa-link"></i></a>
 </h3>
 <p>We report the first and tenth value</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fruitmeansPerParticipant</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">e1_revisits_df</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># get sum of the revisits on a trial</span></span>
@@ -796,21 +672,21 @@
 <span><span class="co">#&gt; # A tibble: 10 × 3</span></span>
 <span><span class="co">#&gt;    basket  mean    sd</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 1       1.97 2.04 </span></span>
-<span><span class="co">#&gt;  2 2       2.16 1.33 </span></span>
-<span><span class="co">#&gt;  3 3       1.95 1.05 </span></span>
-<span><span class="co">#&gt;  4 4       1.99 1.15 </span></span>
-<span><span class="co">#&gt;  5 5       2.00 1.04 </span></span>
-<span><span class="co">#&gt;  6 6       2.01 1.02 </span></span>
-<span><span class="co">#&gt;  7 7       2.06 1.25 </span></span>
-<span><span class="co">#&gt;  8 8       1.94 0.936</span></span>
-<span><span class="co">#&gt;  9 9       2.12 1.24 </span></span>
-<span><span class="co">#&gt; 10 10      2.50 1.42</span></span>
+<span><span class="co">#&gt;  1 1       22.2  7.17</span></span>
+<span><span class="co">#&gt;  2 2       16.7  9.84</span></span>
+<span><span class="co">#&gt;  3 3       13.2  6.26</span></span>
+<span><span class="co">#&gt;  4 4       13.1  5.63</span></span>
+<span><span class="co">#&gt;  5 5       11.9  4.41</span></span>
+<span><span class="co">#&gt;  6 6       12.3  5.65</span></span>
+<span><span class="co">#&gt;  7 7       12.0  3.80</span></span>
+<span><span class="co">#&gt;  8 8       11.0  3.78</span></span>
+<span><span class="co">#&gt;  9 9       12.5  5.98</span></span>
+<span><span class="co">#&gt; 10 10      12.4  5.75</span></span>
 <span><span class="co">#gt(fruitmeansPerParticipant) %&gt;% fmt_number(c(2,3), everything(), 2) %&gt;% tab_options(table.align='left')</span></span></code></pre></div>
 <p>The average number of revisits made while searching for the first fruit item was
-1.97 +/- 2.04.
+22.23 +/- 7.17.
 The average number of revisits made while searching for the last fruit item was
-2.5 +/- 1.42.</p>
+12.42 +/- 5.75.</p>
 <hr>
 </div>
 </div>
@@ -823,7 +699,7 @@ The average number of revisits made while searching for the last fruit item was
 <span class="header-section-number">7.5.1</span> Stage x Resources<a class="anchor" aria-label="anchor" href="#stage-x-resources"><i class="fas fa-link"></i></a>
 </h3>
 <p>We write code for the plot of the stage x resources interaction. The stage effect is significant but the interaction isn’t.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"e1_plots/e1_nrevisits_grand_PLOT_stage_x_resources.png"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="e1_plots/e1_nrevisits_grand_PLOT_stage_x_resources.png" width="100%"></div>
 <hr>
@@ -833,7 +709,7 @@ The average number of revisits made while searching for the last fruit item was
 <span class="header-section-number">7.5.2</span> Resources x Fruit interaction (SIG)<a class="anchor" aria-label="anchor" href="#resources-x-fruit-interaction-sig"><i class="fas fa-link"></i></a>
 </h3>
 <p>Now averaging over stage to give a plot of the (significant) resources X fruit interaction: we will use this in the paper</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"e1_plots/e1_nrevisits_grand_PLOT_resources_x_basket.png"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="e1_plots/e1_nrevisits_grand_PLOT_resources_x_basket.png" width="100%"></div>
 <hr>
@@ -843,7 +719,7 @@ The average number of revisits made while searching for the last fruit item was
 <span class="header-section-number">7.5.3</span> 3-way stage x fruit x resources<a class="anchor" aria-label="anchor" href="#way-stage-x-fruit-x-resources"><i class="fas fa-link"></i></a>
 </h3>
 <p>We write code for the stage x fruit x resources interaction. This 3-way interaction is not sig so we don’t use this plot - instead we separately plot the significant 2-way resource x fruit collapsing over resources.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html">include_graphics</a></span><span class="op">(</span><span class="st">"e1_plots/e1_nrevisits_grand_PLOT_stage_x_basket_x_resources.png"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="e1_plots/e1_nrevisits_grand_PLOT_stage_x_basket_x_resources.png" width="100%"></div>
 
@@ -890,7 +766,7 @@ The average number of revisits made while searching for the last fruit item was
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Saturday 28 January 2023 at 03:19:03.</p>
+    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Monday 30 January 2023 at 18:23:41.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

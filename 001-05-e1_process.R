@@ -50,7 +50,7 @@ outf <- outf %>% ungroup()
 e1allsubs <- e1allsubs %>% 
   mutate(
     exp=as_factor(exp),
-    pid=as_factor(pid),
+    pid=as_factor(pp),
     R=as_factor(R),
     L=as_factor(L),
     trial=as_factor(trial),

@@ -11,19 +11,50 @@ library(tidyverse)
 library(ez)
 library(gt)
 
-e1 <- readRDS("fgms_e1_allsubs.rds")
+e1 <- readRDS("001-00-e1-data.RDS")
+
+# remove things from the raw data to make it suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e1 <- e1 %>% 
+  filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e1 <- e1 %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl))
+
+# remove trials where they failed to get 10 fruit
+e1 <- e1 %>% 
+  group_by(pp, te) %>% 
+  mutate(max_fr = max(fr)) %>% 
+  ungroup() %>% 
+  filter(max_fr==10)
 
 e1_retrievalrate <-
   e1 %>%
   transmute(
-    pid          = pid,
-    trial        = as.numeric(trial), # is 1 to 10 for each condition of "resources"
-    resources    = R,
+    pid          = as_factor(pp),
+    trial        = as.numeric(tb), # is 1 to 10 for each condition of "resources"
+    resources    = factor(rr, levels=c("dispersed", "patchy"), labels=c("dispersed", "patchy")),
     stage        = as_factor(ifelse(trial<=5, "early", "late")),
-    index        = index,
-    tree         = tile,
-    basket       = basket,
-    ntrees_to_get_a_fruit = ntreesperfruit)
+    index        = ix,
+    tree         = tl,
+    flag         = fl,
+    basket       = fr)
+
+# how many trees to get each fruit?
+# this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit
+e1_retrievalrate$ntrees_to_get_a_fruit = NA
+j = 0
+for (k in seq_along(e1_retrievalrate$index)) {
+ j = j + 1
+ if (e1_retrievalrate[k, 'flag']==2) {
+   e1_retrievalrate[k, 'ntrees_to_get_a_fruit'] = j
+   j = 0
+ }
+}
+
+
 
 e1_retrievalrate_BASKET_VALUES <- 
   e1_retrievalrate %>% 

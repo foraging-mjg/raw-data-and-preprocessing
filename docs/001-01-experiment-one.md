@@ -10,10 +10,9 @@ We created ten random stimuli in which the 15 target fruit items were uniformly 
 
 
 
-This line runs the code that gets the individual participant results files in.
+<!-- This line runs the code that gets the individual participant results files in. -->
 
-
-```r
-# source("e1_process_individual_results_files.R", local = knitr::knit_global())
-# source("e1_process_the_combined_subjects_file.R", local = knitr::knit_global())
-```
+<!-- ```{r e1-process-pickles, echo=TRUE, eval=TRUE} -->
+<!-- # source("e1_process_individual_results_files.R", local = knitr::knit_global()) -->
+<!-- # source("e1_process_the_combined_subjects_file.R", local = knitr::knit_global()) -->
+<!-- ``` -->

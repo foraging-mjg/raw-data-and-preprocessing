@@ -11,7 +11,7 @@ library(tidyverse)
 library(ez)
 library(gt)
 
-e1 <- readRDS("fgms_e1_allsubs.rds")
+e1 <- readRDS("001-00-e1-data.RDS")
 ```
 
 This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit consumed) analysis.
@@ -22,13 +22,17 @@ This is a 2 (resource distribution) x 2 (trial stage) x 10 (sequential fruit con
 e1_revisits_df <-
   e1 %>% 
   transmute(
-    pp = pid,
-    trial = as.numeric(trial), # ranges 1 to 10
-    resources = R,
+    pp = as_factor(pp),
+    trial = as.numeric(tb), # ranges 1 to 10
+    resources = rr,
     stage = ifelse(trial<=5,"early","late"),
-    basket = basket,
-    sample = index,
-    tree = tile,
+    basket = fr,
+    sample = ix,
+    tree = tl)
+
+e1_revisits_df <- e1_revisits_df %>% 
+  mutate(revisit = as.numeric(duplicated(tree))) %>% 
+  mutate(
     # "is_a" to remind us that the raw data are binary yes/no 
     # for whether the current visit is a revisit or not
     is_a_revisit = as.logical(revisit)
@@ -64,7 +68,7 @@ gt(subset(e1_revisits_df, pp==1&trial==1&resources=="clumped"))
 
 ## First round of aggregation
 
-When someone visits more than one tree to get the next fruit, there is more than one row for that basket. Because we intend to turn the logical `is_a_revisit` into a count of revisits broken down by trial and basket, we want to turn those multiple rows into one row, and add up any revisits that took place in those mutliple rows so that all the single rows in the new df will now represent a count of revisits for the cell of the design that is represented in that row, and no cell of the design will have more than one row.
+When someone visits more than one tree to get the next fruit, there is more than one row for that basket. Because we intend to turn the logical `is_a_revisit` into a count of revisits broken down by trial and basket, we want to turn those multiple rows into one row, and add up any revisits that took place in those multiple rows so that all the single rows in the new df will now represent a count of revisits for the cell of the design that is represented in that row, and no cell of the design will have more than one row.
 
 ```{r}
 e1_revisits_df_agg1 <-
@@ -92,7 +96,7 @@ e1_revisits_df_agg2 <-
     stage=ifelse(trial<=5,"early","late") 
     ) %>% 
   bind_cols(
-    resources=as_factor(rep(c("clumped","random"),each=10,times=420))
+    resources=as_factor(rep(c("dispersed","patchy"),each=10,times=420))
     ) %>% 
   select(
     pp,trial,stage,resources,basket

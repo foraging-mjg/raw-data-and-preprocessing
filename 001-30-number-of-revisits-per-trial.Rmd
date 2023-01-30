@@ -11,18 +11,40 @@ library(tidyverse)
 library(ez)
 library(gt)
 
-e1 <- readRDS("fgms_e1_allsubs.rds")
+
+e1 <- readRDS("001-00-e1-data.RDS")
+
+# remove things from the raw data to make it suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e1 <- e1 %>% 
+  filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e1 <- e1 %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl))
+
+# remove trials where they failed to get 10 fruit
+e1 <- e1 %>% 
+  group_by(pp, te) %>% 
+  mutate(max_fr = max(fr)) %>% 
+  ungroup() %>% 
+  filter(max_fr==10)
 
 e1_nrevisitspertrial <-
   e1 %>%
   transmute(
-    pp           = as_factor(pid),
-    trial        = as.numeric(trial), # is 1 to 10 for each condition of "resources"
-    resources    = factor(R, levels=c("clumped","random"), labels=c("clumped", "random")),
-    stage        = as_factor(ifelse(trial<=5, "early", "late")),
-    index        = index,
-    tree         = tile,
-    is_a_revisit = revisit)
+    pp           = as_factor(pp),
+    trial        = tb, # is 1 to 10 for each condition of "resources"
+    resources    = factor(rr, levels=c("patchy","dispersed"), labels=c("patchy","dispersed")),
+    stage        = as_factor(ifelse(tb<=5, "early", "late")),
+    index        = ix,
+    tree         = tl)
+
+# identify as TRUE the second (and any subsequent) duplicates whether 
+# they are consecutive or not (i.e, memory errors)
+e1_nrevisitspertrial <- e1_nrevisitspertrial %>% mutate(is_a_revisit = as.numeric(duplicated(tree)))     
+
 
 e1_nrevisitspertrial_TRIAL_VALUES <- 
   e1_nrevisitspertrial %>% 

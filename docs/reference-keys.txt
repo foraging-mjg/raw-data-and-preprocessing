@@ -27,7 +27,3 @@ retrieval-rate-1
 inter-tree-distance-1
 appendix-a
 appendix-b
-sanity-check-raw-data
-basic-structural-properties-dimensions
-test-for-duplicated-rows
-check-samples-are-in-strict-time-order

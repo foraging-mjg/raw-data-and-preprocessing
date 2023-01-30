@@ -11,18 +11,22 @@ library(tidyverse)
 library(ez)
 library(gt)
 
-e1 <- readRDS("fgms_e1_allsubs.rds")
+e1 <- readRDS("001-00-e1-data.RDS")
 
 e1_duration <-
   e1 %>%
   transmute(
-    pp           = as_factor(pid),
-    trial        = as.numeric(trial), # is 1 to 10 for each condition of "resources"
-    resources    = factor(R, levels=c("clumped","random"), labels=c("clumped", "random")),
+    pp           = as_factor(pp),
+    trial        = as.numeric(tb), # is 1 to 10 for each condition of "resources"
+    resources    = factor(rr, levels=c("patchy","dispersed"), labels=c("patchy", "dispersed")),
     stage        = as_factor(ifelse(trial<=5, "early", "late")),
-    index        = index,
-    tree         = tile,
-    dur          = dur)
+    index        = ix,
+    tree         = tl,
+    tm = tm)
+
+e1_duration <- e1_duration %>% 
+  group_by(pp, trial, resources) %>% 
+  mutate(dur=max(tm)-min(tm))
 
 e1_duration_TRIAL_VALUES <- 
   e1_duration %>% 
