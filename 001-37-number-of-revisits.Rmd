@@ -24,7 +24,7 @@ e1.ann <- e1.sub %>%
   # remove samples that did not look at a tree
   filter(fl>0) %>% select(-fl) %>% 
   # identify consecutive dupes for removal
-  mutate(dupe = !(is.na(tl != lag(tl)) | tl != lag(tl))) %>% 
+  group_by(pp, rr, tb) %>% mutate(dupe = !(is.na(tl != lag(tl)) | tl != lag(tl))) %>% ungroup %>% 
   # remove dupes
   filter(dupe==FALSE) %>% 
   # annotate with revisit

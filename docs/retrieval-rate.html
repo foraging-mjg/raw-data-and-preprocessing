@@ -1,108 +1,683 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 5 Retrieval Rate | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</title>
-<meta name="author" content="Matthew Green">
-<meta name="description" content="Experiment 1">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
-<meta property="og:title" content="Chapter 5 Retrieval Rate | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging">
-<meta property="og:type" content="book">
-<meta property="og:url" content="https://mjgreen.github.io/foraging-paradigm-paper-2022/retrieval-rate.html">
-<meta property="og:description" content="Experiment 1">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 5 Retrieval Rate | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging">
-<meta name="twitter:description" content="Experiment 1">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
-    
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  </style>
-<link rel="stylesheet" href="style.css">
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Retrieval Rate | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</title>
+  <meta name="description" content="Chapter 5 Retrieval Rate | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Retrieval Rate | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Retrieval Rate | Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging" />
+  
+  
+  
+
+<meta name="author" content="Matthew Green" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="number-of-revisits.html"/>
+<link rel="next" href="inter-tree-distance.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> First things first</a></li>
-<li class="book-part">Experiment One</li>
-<li><a class="" href="introduction.html"><span class="header-section-number">2</span> Introduction</a></li>
-<li><a class="" href="number-of-trees.html"><span class="header-section-number">3</span> Number of trees</a></li>
-<li><a class="" href="number-of-revisits.html"><span class="header-section-number">4</span> Number of revisits</a></li>
-<li><a class="active" href="retrieval-rate.html"><span class="header-section-number">5</span> Retrieval Rate</a></li>
-<li><a class="" href="inter-tree-distance.html"><span class="header-section-number">6</span> Inter-tree distance</a></li>
-<li class="book-part">Experiment Two</li>
-<li><a class="" href="introduction-1.html"><span class="header-section-number">7</span> Introduction</a></li>
-<li><a class="" href="number-of-trees-1.html"><span class="header-section-number">8</span> Number of trees</a></li>
-<li><a class="" href="number-of-revisits-1.html"><span class="header-section-number">9</span> Number of revisits</a></li>
-<li><a class="" href="retrieval-rate-1.html"><span class="header-section-number">10</span> Retrieval Rate</a></li>
-<li><a class="" href="inter-tree-distance-1.html"><span class="header-section-number">11</span> Inter-tree Distance</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> First things first</a></li>
+<li class="part"><span><b>I Experiment One</b></span></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="number-of-trees.html"><a href="number-of-trees.html"><i class="fa fa-check"></i><b>3</b> Number of trees</a></li>
+<li class="chapter" data-level="4" data-path="number-of-revisits.html"><a href="number-of-revisits.html"><i class="fa fa-check"></i><b>4</b> Number of revisits</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="number-of-revisits.html"><a href="number-of-revisits.html#form-the-dataset"><i class="fa fa-check"></i><b>4.1</b> Form the dataset</a></li>
+<li class="chapter" data-level="4.2" data-path="number-of-revisits.html"><a href="number-of-revisits.html#means"><i class="fa fa-check"></i><b>4.2</b> Means</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="number-of-revisits.html"><a href="number-of-revisits.html#significant-stage-effect-means"><i class="fa fa-check"></i><b>4.2.1</b> Significant stage effect means</a></li>
+<li class="chapter" data-level="4.2.2" data-path="number-of-revisits.html"><a href="number-of-revisits.html#significant-fruit-effect-means"><i class="fa fa-check"></i><b>4.2.2</b> Significant fruit effect means</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="number-of-revisits.html"><a href="number-of-revisits.html#interaction-plots"><i class="fa fa-check"></i><b>4.3</b> Interaction plots</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="number-of-revisits.html"><a href="number-of-revisits.html#stage-x-resources"><i class="fa fa-check"></i><b>4.3.1</b> Stage x Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="retrieval-rate.html"><a href="retrieval-rate.html"><i class="fa fa-check"></i><b>5</b> Retrieval Rate</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="retrieval-rate.html"><a href="retrieval-rate.html#anova"><i class="fa fa-check"></i><b>5.1</b> ANOVA</a></li>
+<li class="chapter" data-level="5.2" data-path="retrieval-rate.html"><a href="retrieval-rate.html#plot"><i class="fa fa-check"></i><b>5.2</b> Plot</a></li>
+<li class="chapter" data-level="5.3" data-path="retrieval-rate.html"><a href="retrieval-rate.html#resources-means"><i class="fa fa-check"></i><b>5.3</b> Resources Means</a></li>
+<li class="chapter" data-level="5.4" data-path="retrieval-rate.html"><a href="retrieval-rate.html#fruit-means"><i class="fa fa-check"></i><b>5.4</b> Fruit means</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inter-tree-distance.html"><a href="inter-tree-distance.html"><i class="fa fa-check"></i><b>6</b> Inter-tree distance</a></li>
+<li class="chapter" data-level="7" data-path="master-plot-e1.html"><a href="master-plot-e1.html"><i class="fa fa-check"></i><b>7</b> Master plot, e1</a></li>
 </ul>
 
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://mjgreen.github.io/foraging-paradigm-paper-2022/">View book source <i class="fab fa-gitlab"></i></a></p>
-        </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="retrieval-rate" class="section level1" number="5">
-<h1>
-<span class="header-section-number">5</span> Retrieval Rate<a class="anchor" aria-label="anchor" href="#retrieval-rate"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="retrieval-rate" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Retrieval Rate<a href="retrieval-rate.html#retrieval-rate" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Experiment 1</p>
-<div class="inline-figure"><img src="e1_tables/e1_retrievalrate_ANOVA.png" width="50%"></div>
-<div class="inline-figure"><img src="e1_plots/e1_retrievalrate_PLOT10.png" width="75%"></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="retrieval-rate.html#cb6-1" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;001-00-e1-data.RDS&quot;</span>)</span>
+<span id="cb6-2"><a href="retrieval-rate.html#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="retrieval-rate.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remove things from the raw data to make it suitable for this particular analysis</span></span>
+<span id="cb6-4"><a href="retrieval-rate.html#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="retrieval-rate.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># remove samples that did not look at a tree</span></span>
+<span id="cb6-6"><a href="retrieval-rate.html#cb6-6" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fl<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb6-7"><a href="retrieval-rate.html#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="retrieval-rate.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the second (and any subsequent) *consecutive* duplicates</span></span>
+<span id="cb6-9"><a href="retrieval-rate.html#cb6-9" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="retrieval-rate.html#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, rr, tb) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-11"><a href="retrieval-rate.html#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">|</span> tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-12"><a href="retrieval-rate.html#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-13"><a href="retrieval-rate.html#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="retrieval-rate.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># remove trials where they failed to get 10 fruit</span></span>
+<span id="cb6-15"><a href="retrieval-rate.html#cb6-15" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> </span>
+<span id="cb6-16"><a href="retrieval-rate.html#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, te) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-17"><a href="retrieval-rate.html#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">max_fr =</span> <span class="fu">max</span>(fr)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-18"><a href="retrieval-rate.html#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-19"><a href="retrieval-rate.html#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(max_fr<span class="sc">==</span><span class="dv">10</span>)</span>
+<span id="cb6-20"><a href="retrieval-rate.html#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="retrieval-rate.html#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># how many trees to get each fruit?</span></span>
+<span id="cb6-22"><a href="retrieval-rate.html#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit</span></span>
+<span id="cb6-23"><a href="retrieval-rate.html#cb6-23" aria-hidden="true" tabindex="-1"></a>e1<span class="sc">$</span>ntrees_to_get_a_fruit <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb6-24"><a href="retrieval-rate.html#cb6-24" aria-hidden="true" tabindex="-1"></a>j <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb6-25"><a href="retrieval-rate.html#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="fu">seq_along</span>(e1<span class="sc">$</span>ix)) {</span>
+<span id="cb6-26"><a href="retrieval-rate.html#cb6-26" aria-hidden="true" tabindex="-1"></a> j <span class="ot">=</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb6-27"><a href="retrieval-rate.html#cb6-27" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> (e1[k, <span class="st">&#39;fl&#39;</span>]<span class="sc">==</span><span class="dv">2</span>) {</span>
+<span id="cb6-28"><a href="retrieval-rate.html#cb6-28" aria-hidden="true" tabindex="-1"></a>   e1[k, <span class="st">&#39;ntrees_to_get_a_fruit&#39;</span>] <span class="ot">=</span> j</span>
+<span id="cb6-29"><a href="retrieval-rate.html#cb6-29" aria-hidden="true" tabindex="-1"></a>   j <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb6-30"><a href="retrieval-rate.html#cb6-30" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb6-31"><a href="retrieval-rate.html#cb6-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-32"><a href="retrieval-rate.html#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="retrieval-rate.html#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># remove any remaining NAs</span></span>
+<span id="cb6-34"><a href="retrieval-rate.html#cb6-34" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ntrees_to_get_a_fruit))</span>
+<span id="cb6-35"><a href="retrieval-rate.html#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="retrieval-rate.html#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA</span></span>
+<span id="cb6-37"><a href="retrieval-rate.html#cb6-37" aria-hidden="true" tabindex="-1"></a>rtv <span class="ot">=</span> e1 <span class="sc">%&gt;%</span> </span>
+<span id="cb6-38"><a href="retrieval-rate.html#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pp, rr, tb, fr, ntrees_to_get_a_fruit) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-39"><a href="retrieval-rate.html#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, rr, fr) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-40"><a href="retrieval-rate.html#cb6-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(ntrees_to_get_a_fruit)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-41"><a href="retrieval-rate.html#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-42"><a href="retrieval-rate.html#cb6-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pp=</span><span class="fu">as_factor</span>(pp), <span class="at">rr=</span><span class="fu">as_factor</span>(rr), <span class="at">fr=</span><span class="fu">as_factor</span>(fr))</span>
+<span id="cb6-43"><a href="retrieval-rate.html#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="retrieval-rate.html#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rtv, <span class="st">&quot;e1_retrieval_plot_data.rds&quot;</span>)</span></code></pre></div>
+<div id="anova" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> ANOVA<a href="retrieval-rate.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="retrieval-rate.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb7-2"><a href="retrieval-rate.html#cb7-2" aria-hidden="true" tabindex="-1"></a>e1_retrievalrate_ANOVA <span class="ot">&lt;-</span> </span>
+<span id="cb7-3"><a href="retrieval-rate.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ezANOVA</span>(<span class="at">data=</span>rtv,</span>
+<span id="cb7-4"><a href="retrieval-rate.html#cb7-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv=</span>mu,</span>
+<span id="cb7-5"><a href="retrieval-rate.html#cb7-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">wid=</span>pp,</span>
+<span id="cb7-6"><a href="retrieval-rate.html#cb7-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">within=</span><span class="fu">c</span>(rr, fr),</span>
+<span id="cb7-7"><a href="retrieval-rate.html#cb7-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">type=</span><span class="dv">3</span>)</span>
+<span id="cb7-8"><a href="retrieval-rate.html#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="retrieval-rate.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_anova</span>(e1_retrievalrate_ANOVA, <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
+<table class="table" style="width: auto !important; ">
+<caption>
+<span id="tab:unnamed-chunk-2">Table 5.1: </span>Retrieval rate
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Effect
+</th>
+<th style="text-align:right;">
+DFn
+</th>
+<th style="text-align:right;">
+DFd
+</th>
+<th style="text-align:right;">
+F
+</th>
+<th style="text-align:left;">
+p
+</th>
+<th style="text-align:left;">
+sig
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+rr
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+41
+</td>
+<td style="text-align:right;">
+54.14
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fr
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+369
+</td>
+<td style="text-align:right;">
+22.99
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rr:fr
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+369
+</td>
+<td style="text-align:right;">
+46.85
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+***
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="retrieval-rate.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_sphericity</span>(e1_retrievalrate_ANOVA, <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
+<table class="table" style="width: auto !important; ">
+<caption>
+<span id="tab:unnamed-chunk-2">Table 5.1: </span>Retrieval rate
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Effect
+</th>
+<th style="text-align:right;">
+GGe
+</th>
+<th style="text-align:left;">
+p[GG]
+</th>
+<th style="text-align:left;">
+sig[GG]
+</th>
+<th style="text-align:right;">
+HFe
+</th>
+<th style="text-align:left;">
+p[HF]
+</th>
+<th style="text-align:left;">
+sig[HF]
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fr
+</td>
+<td style="text-align:right;">
+0.435
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+***
+</td>
+<td style="text-align:right;">
+0.486
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rr:fr
+</td>
+<td style="text-align:right;">
+0.536
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+***
+</td>
+<td style="text-align:right;">
+0.617
+</td>
+<td style="text-align:left;">
+0.000
+</td>
+<td style="text-align:left;">
+***
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="retrieval-rate.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_corrected_dfs</span>(e1_retrievalrate_ANOVA, <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
+<p>The effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(3.91, 160.43) = 22.99, p&lt; .001</p>
+<p>The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(4.83, 197.91) = 46.85, p&lt; .001</p>
+</div>
+<div id="plot" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Plot<a href="retrieval-rate.html#plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="retrieval-rate.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ten points along the x axis, each participant contributes one point per cell</span></span>
+<span id="cb10-2"><a href="retrieval-rate.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="retrieval-rate.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb10-4"><a href="retrieval-rate.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>rtv, </span>
+<span id="cb10-5"><a href="retrieval-rate.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>fr, <span class="at">y=</span>mu, <span class="at">group=</span>rr, <span class="at">pch=</span>rr, <span class="at">fill=</span>rr)</span>
+<span id="cb10-6"><a href="retrieval-rate.html#cb10-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="retrieval-rate.html#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb10-8"><a href="retrieval-rate.html#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>, <span class="at">panel.grid=</span><span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb10-9"><a href="retrieval-rate.html#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">&quot;Resources&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="retrieval-rate.html#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">&quot;Resources&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="dv">24</span>,<span class="dv">19</span>)) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="retrieval-rate.html#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="retrieval-rate.html#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>)) <span class="sc">+</span> </span>
+<span id="cb10-13"><a href="retrieval-rate.html#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>))<span class="sc">+</span></span>
+<span id="cb10-14"><a href="retrieval-rate.html#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Mean number of trees visited to get each fruit&quot;</span>)<span class="sc">+</span></span>
+<span id="cb10-15"><a href="retrieval-rate.html#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Fruit index&quot;</span>)</span></code></pre></div>
+<p><img src="e1_figures/e1retrievalrate-1.png" width="672" /></p>
+</div>
+<div id="resources-means" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Resources Means<a href="retrieval-rate.html#resources-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="retrieval-rate.html#cb11-1" aria-hidden="true" tabindex="-1"></a>rrpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(rr, pp, fr) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="retrieval-rate.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="retrieval-rate.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) </span>
+<span id="cb11-4"><a href="retrieval-rate.html#cb11-4" aria-hidden="true" tabindex="-1"></a>rrmeans <span class="ot">&lt;-</span> rrpremeans <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="retrieval-rate.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
+<span id="cb11-6"><a href="retrieval-rate.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(rrmeans, <span class="st">&quot;stage means&quot;</span>)</span></code></pre></div>
+<table class="table" style="width: auto !important; ">
+<caption>
+<span id="tab:unnamed-chunk-4">Table 5.2: </span>stage means
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+rr
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+dispersed
+</td>
+<td style="text-align:right;">
+2.04
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+patchy
+</td>
+<td style="text-align:right;">
+1.67
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fruit-means" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Fruit means<a href="retrieval-rate.html#fruit-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="retrieval-rate.html#cb12-1" aria-hidden="true" tabindex="-1"></a>frpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(fr, pp, rr) <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="retrieval-rate.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="retrieval-rate.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu))  </span>
+<span id="cb12-4"><a href="retrieval-rate.html#cb12-4" aria-hidden="true" tabindex="-1"></a>frmeans <span class="ot">&lt;-</span> frpremeans <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="retrieval-rate.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
+<span id="cb12-6"><a href="retrieval-rate.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(frmeans, <span class="st">&quot;fruit means&quot;</span>)</span></code></pre></div>
+<table class="table" style="width: auto !important; ">
+<caption>
+<span id="tab:unnamed-chunk-5">Table 5.3: </span>fruit means
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+fr
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+2.79
+</td>
+<td style="text-align:right;">
+0.90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+0.63
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+1.67
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:right;">
+1.77
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:right;">
+1.73
+</td>
+<td style="text-align:right;">
+0.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:right;">
+1.75
+</td>
+<td style="text-align:right;">
+0.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:right;">
+1.68
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:right;">
+1.58
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:right;">
+1.74
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:right;">
+1.79
+</td>
+<td style="text-align:right;">
+0.38
+</td>
+</tr>
+</tbody>
+</table>
 
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="number-of-revisits.html"><span class="header-section-number">4</span> Number of revisits</a></div>
-<div class="next"><a href="inter-tree-distance.html"><span class="header-section-number">6</span> Inter-tree distance</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#retrieval-rate"><span class="header-section-number">5</span> Retrieval Rate</a></li></ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://mjgreen.github.io/foraging-paradigm-paper-2022//blob/master/001-40-retrieval-rate.Rmd">View source <i class="fab fa-gitlab"></i></a></li>
-          <li><a id="book-edit" href="https://mjgreen.github.io/foraging-paradigm-paper-2022//edit/master/001-40-retrieval-rate.Rmd">Edit this page <i class="fab fa-gitlab"></i></a></li>
-        </ul>
 </div>
-    </nav>
-</div>
+            </section>
 
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Foraging: introducing our gaze-contingent eye-tracking paradigm for studying foraging</strong>" was written by Matthew Green. It was last built on Thursday 13 April 2023 at 05:20:44 AM.</p>
+          </div>
+        </div>
+      </div>
+<a href="number-of-revisits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inter-tree-distance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer>
 </body>
+
 </html>

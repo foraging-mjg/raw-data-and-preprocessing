@@ -1,3 +1,6 @@
+tab:unnamed-chunk-2
+tab:unnamed-chunk-4
+tab:unnamed-chunk-5
 first-things-first
 introduction
 number-of-trees
@@ -9,9 +12,9 @@ significant-fruit-effect-means
 interaction-plots
 stage-x-resources
 retrieval-rate
+anova
+plot
+resources-means
+fruit-means
 inter-tree-distance
-introduction-1
-number-of-trees-1
-number-of-revisits-1
-retrieval-rate-1
-inter-tree-distance-1
+master-plot-e1

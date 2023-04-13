@@ -16,7 +16,7 @@ e1.ann <- e1.sub %>%
   # remove samples that did not look at a tree
   filter(fl>0) %>% select(-fl) %>% 
   # identify consecutive dupes for removal
-  mutate(dupe = !(is.na(tl != lag(tl)) | tl != lag(tl))) %>% 
+  group_by(pp, rr, tb) %>% mutate(dupe = !(is.na(tl != lag(tl)) | tl != lag(tl))) %>% ungroup %>% 
   # remove dupes
   filter(dupe==FALSE) %>% 
   # annotate with revisit
@@ -97,7 +97,7 @@ stage_means %>% knitr::kable()
 
 |st    | mean|   sd|
 |:-----|----:|----:|
-|early | 0.11| 0.08|
+|early | 0.11| 0.09|
 |late  | 0.08| 0.07|
 
 ### Significant fruit effect means

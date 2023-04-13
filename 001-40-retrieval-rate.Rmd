@@ -3,25 +3,30 @@
 Experiment 1
 
 ```{r e1_retrievalrate_setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+source("prettify.R")
 knitr::opts_chunk$set(fig.path='e1_figures/')
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(dplyr.summarise.inform=F)
+library(easystats)
+library(kableExtra)
 library(tidyverse)
 library(ez)
 library(gt)
+```
 
+```{r}
 e1 <- readRDS("001-00-e1-data.RDS")
 
 # remove things from the raw data to make it suitable for this particular analysis
 
 # remove samples that did not look at a tree
-e1 <- e1 %>% 
-  filter(fl>0)
+e1 <- e1 %>% filter(fl>0)
 
 # remove the second (and any subsequent) *consecutive* duplicates
 e1 <- e1 %>% 
-  filter(is.na(tl != lag(tl)) | tl != lag(tl))
+  group_by(pp, rr, tb) %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %>% 
+  ungroup()
 
 # remove trials where they failed to get 10 fruit
 e1 <- e1 %>% 
@@ -30,101 +35,98 @@ e1 <- e1 %>%
   ungroup() %>% 
   filter(max_fr==10)
 
-e1_retrievalrate <-
-  e1 %>%
-  transmute(
-    pid          = as_factor(pp),
-    trial        = as.numeric(tb), # is 1 to 10 for each condition of "resources"
-    resources    = factor(rr, levels=c("dispersed", "patchy"), labels=c("dispersed", "patchy")),
-    stage        = as_factor(ifelse(trial<=5, "early", "late")),
-    index        = ix,
-    tree         = tl,
-    flag         = fl,
-    basket       = fr)
-
 # how many trees to get each fruit?
 # this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit
-e1_retrievalrate$ntrees_to_get_a_fruit = NA
+e1$ntrees_to_get_a_fruit = NA
 j = 0
-for (k in seq_along(e1_retrievalrate$index)) {
+for (k in seq_along(e1$ix)) {
  j = j + 1
- if (e1_retrievalrate[k, 'flag']==2) {
-   e1_retrievalrate[k, 'ntrees_to_get_a_fruit'] = j
+ if (e1[k, 'fl']==2) {
+   e1[k, 'ntrees_to_get_a_fruit'] = j
    j = 0
  }
 }
 
+# remove any remaining NAs
+e1 <- e1 %>% filter(!is.na(ntrees_to_get_a_fruit))
 
+# average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA
+rtv = e1 %>% 
+  select(pp, rr, tb, fr, ntrees_to_get_a_fruit) %>% 
+  group_by(pp, rr, fr) %>% 
+  summarise(mu=mean(ntrees_to_get_a_fruit)) %>% 
+  ungroup() %>% 
+  mutate(pp=as_factor(pp), rr=as_factor(rr), fr=as_factor(fr))
 
-e1_retrievalrate_BASKET_VALUES <- 
-  e1_retrievalrate %>% 
-  group_by(pid, resources, trial, basket) %>% 
-  summarise(
-    ntrees_to_get_a_fruit = mean(ntrees_to_get_a_fruit, na.rm=TRUE)
-    ) 
+saveRDS(rtv, "e1_retrieval_plot_data.rds")
+```
 
-e1_retrievalrate_PARTICIPANT_MEANS <-
-  e1_retrievalrate_BASKET_VALUES %>% 
-  group_by(pid, resources, basket) %>% 
-  summarise(mean_ntrees_to_get_a_fruit_per_fruit = mean(ntrees_to_get_a_fruit)) %>% 
-  # remove NaNs for number of fruit of 0
-  na.omit() %>% 
-  # force basket to be a factor
-  mutate(basket = as_factor(basket))
+## ANOVA
 
+```{r, }
 options(contrasts=c("contr.sum","contr.poly"))
 e1_retrievalrate_ANOVA <- 
-  ezANOVA(data=e1_retrievalrate_PARTICIPANT_MEANS,
-          dv=mean_ntrees_to_get_a_fruit_per_fruit,
-          wid=pid,
-          within=c(resources,basket),
+  ezANOVA(data=rtv,
+          dv=mu,
+          wid=pp,
+          within=c(rr, fr),
           type=3)
 
-e1_retrievalrate_ANOVA_TABLE <-
-  e1_retrievalrate_ANOVA$ANOVA %>% 
-  select(-ges) %>% 
-  gt() %>% 
-  tab_header(
-    title="Retrieval Rate",
-    subtitle = "ANOVA table"
-  ) %>% 
-  fmt_number(
-    columns = c("F"),
-    rows=everything(),
-    decimals=2
-  )  %>% 
-  fmt_number(
-    columns = c("p"),
-    rows=everything(),
-    decimals=3
-  ) %>% 
-  cols_align(
-    columns=`p<.05`,
-    align="center"
-  )
-gtsave(e1_retrievalrate_ANOVA_TABLE, "e1_tables/e1_retrievalrate_ANOVA.png")
+prettify_anova(e1_retrievalrate_ANOVA, "Retrieval rate")
+prettify_sphericity(e1_retrievalrate_ANOVA, "Retrieval rate")
+prettify_corrected_dfs(e1_retrievalrate_ANOVA, "Retrieval rate")
+```
 
+```{r, echo=F}
+av = e1_retrievalrate_ANOVA$ANOVA %>% tibble()
+sp = e1_retrievalrate_ANOVA$`Sphericity Corrections` %>% tibble()
+```
+
+The effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(`r round(av %>% filter(Effect=="fr") %>% select(DFn) * sp %>% filter(Effect=="fr") %>% select(GGe), 2) %>% as.numeric()`, `r round(av %>% filter(Effect=="fr") %>% select(DFd) * sp %>% filter(Effect=="fr") %>% select(GGe),2) %>% as.numeric()`) = `r av %>% filter(Effect=="fr") %>% select(F) %>% as.numeric() %>% round(2)`, p< `r ifelse(sp %>% filter(Effect=="fr") %>% select(3) %>% as.numeric() <.001, ".001", sp %>% filter(Effect=="fr") %>% select(3) %>% as.numeric())`
+
+The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(`r round(av %>% filter(Effect=="rr:fr") %>% select(DFn) * sp %>% filter(Effect=="rr:fr") %>% select(GGe), 2) %>% as.numeric()`, `r round(av %>% filter(Effect=="rr:fr") %>% select(DFd) * sp %>% filter(Effect=="rr:fr") %>% select(GGe),2) %>% as.numeric()`) = `r av %>% filter(Effect=="rr:fr") %>% select(F) %>% as.numeric() %>% round(2)`, p< `r ifelse(sp %>% filter(Effect=="rr:fr") %>% select(3) %>% as.numeric() <.001, ".001", sp %>% filter(Effect=="rr:fr") %>% select(3) %>% as.numeric())`
+
+
+## Plot
+
+```{r e1retrievalrate}
 # Ten points along the x axis, each participant contributes one point per cell
-e1_retrievalrate_PLOT10 <-
-  ggplot(
-  data=e1_retrievalrate_PARTICIPANT_MEANS, 
-  aes(x=basket, y=mean_ntrees_to_get_a_fruit_per_fruit, group=resources, pch=resources, fill=resources)
+
+ggplot(
+  data=rtv, 
+  aes(x=fr, y=mu, group=rr, pch=rr, fill=rr)
 ) +
   theme_bw()+
   theme(aspect.ratio = 1, panel.grid=element_blank())+
-  scale_fill_manual(values=c("white", "black")) +
-  scale_shape_manual(values=c(24,19)) +
+  scale_fill_manual(name="Resources", values=c("white", "black")) +
+  scale_shape_manual(name="Resources", values=c(24,19)) +
   stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=position_dodge(0.25)) +
   stat_summary(fun = mean, geom = "line", position=position_dodge(0.25)) + 
-  stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))
-ggsave("e1_plots/e1_retrievalrate_PLOT10.png")
+  stat_summary(fun = mean, geom = "point", size=3, position=position_dodge(0.25))+
+  ylab("Mean number of trees visited to get each fruit")+
+  xlab("Fruit index")
+
 ```
 
-```{r out.width="50%"}
-knitr::include_graphics("e1_tables/e1_retrievalrate_ANOVA.png")
+## Resources Means
+
+```{r}
+rrpremeans = rtv %>% group_by(rr, pp, fr) %>%
+  summarise(mu=mean(mu)) %>% 
+  summarise(mu=mean(mu)) 
+rrmeans <- rrpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(rrmeans, "stage means")
 ```
 
-```{r out.width="75%"}
-knitr::include_graphics("e1_plots/e1_retrievalrate_PLOT10.png")
+## Fruit means
+
+```{r}
+frpremeans = rtv %>% group_by(fr, pp, rr) %>%
+  summarise(mu=mean(mu)) %>% 
+  summarise(mu=mean(mu))  
+frmeans <- frpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(frmeans, "fruit means")
 ```
 

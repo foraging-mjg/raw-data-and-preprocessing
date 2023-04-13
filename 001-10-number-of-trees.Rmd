@@ -21,7 +21,7 @@ e1 <- e1 %>%
 
 # remove the second (and any subsequent) *consecutive* duplicates
 e1 <- e1 %>% 
-  filter(is.na(tl != lag(tl)) | tl != lag(tl))
+  group_by(pp, rr, tb) %>% filter(is.na(tl != lag(tl)) | tl != lag(tl)) %>% ungroup()
 
 # remove trials where they failed to get 10 fruit
 e1 <- e1 %>% 
@@ -115,11 +115,12 @@ Here we put tables of means for the significant effects.
 
 ```{r}
 # The way we do these means and sds is first aggregate over trials so that each pp contributes one mean value for each condition. Then we take the mean of those means, and the sd of those means separately for each cell 
-e1_ntrees_TRIAL_SUMS %>%
+e1_ntrees_TRIAL_SUMS_premeans <- e1_ntrees_TRIAL_SUMS %>%
   ungroup() %>% 
   select(c(resources,pp,ntrees)) %>% 
   group_by(resources,pp) %>% 
-  summarise(ppXconditionMean=mean(ntrees)) %>% 
+  summarise(ppXconditionMean=mean(ntrees)) 
+e1_ntrees_TRIAL_SUMS_means = e1_ntrees_TRIAL_SUMS_premeans %>% 
   summarise(mean=mean(ppXconditionMean), sd=sd(ppXconditionMean)) %>% 
   gt() %>% fmt_number(c(2,3), everything(), 2) %>% tab_options(table.align='left')
 ```

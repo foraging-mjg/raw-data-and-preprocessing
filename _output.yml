@@ -1,8 +1,10 @@
-bookdown::bs4_book:
+bookdown::gitbook:
   css: style.css
-  theme:
-    primary: "#096B72"
-  repo: https://mjgreen.github.io/foraging-paradigm-paper-2022/
+# bookdown::bs4_book:
+#   css: style.css
+#   theme:
+#     primary: "#096B72"
+#   repo: https://mjgreen.github.io/foraging-paradigm-paper-2022/
 # bookdown::pdf_book:
 #   includes:
 #     in_header: preamble.tex
