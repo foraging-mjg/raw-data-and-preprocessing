@@ -28,8 +28,7 @@ e1.ann <- e1.sub %>%
 
 # make sure each trial has an entry for the zeroth fruit
 merge_me = expand_grid(pp = sort(unique(e1.ann$pp)), rr = sort(unique(e1.ann$rr)), tb = sort(unique(e1.ann$tb)), fr = 0)
-e1.ann2 <- full_join(e1.ann, merge_me) %>% arrange(pp, rr, tb, fr)
-#> Joining with `by = join_by(pp, rr, tb, fr)`
+e1.ann2 <- full_join(e1.ann, merge_me, by = join_by(pp, rr, tb, fr)) %>% arrange(pp, rr, tb, fr)
 
 # redo isrv such that the zeroth fruit has FALSE for isrv instead of NA
 e1.ann2 <- e1.ann2 %>% replace_na(list(isrv=FALSE))
