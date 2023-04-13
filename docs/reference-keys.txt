@@ -1,7 +1,7 @@
 first-things-first
 introduction
 number-of-trees
-number-of-revisits-grand-analysis
+number-of-revisits
 form-the-dataset
 means
 significant-stage-effect-means
@@ -12,8 +12,6 @@ retrieval-rate
 inter-tree-distance
 introduction-1
 number-of-trees-1
-number-of-revisits-grand-analysis-1
+number-of-revisits-1
 retrieval-rate-1
 inter-tree-distance-1
-appendix-a
-appendix-b

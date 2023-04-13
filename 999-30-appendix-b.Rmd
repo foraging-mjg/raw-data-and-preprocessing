@@ -1,3 +1,0 @@
-# Appendix B
-
-Content ...
