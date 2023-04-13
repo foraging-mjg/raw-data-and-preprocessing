@@ -14,14 +14,26 @@ Here we put tables of means for the significant effects.
 
 
 ```{=html}
-<div id="jbytjajfrh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="azjexrifbe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#azjexrifbe table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#jbytjajfrh .gt_table {
+#azjexrifbe thead, #azjexrifbe tbody, #azjexrifbe tfoot, #azjexrifbe tr, #azjexrifbe td, #azjexrifbe th {
+  border-style: none;
+}
+
+#azjexrifbe p {
+  margin: 0;
+  padding: 0;
+}
+
+#azjexrifbe .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: 0;
   margin-right: auto;
   color: #333333;
@@ -44,24 +56,12 @@ Here we put tables of means for the significant effects.
   border-left-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#jbytjajfrh .gt_caption {
+#azjexrifbe .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jbytjajfrh .gt_title {
+#azjexrifbe .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -73,25 +73,37 @@ Here we put tables of means for the significant effects.
   border-bottom-width: 0;
 }
 
-#jbytjajfrh .gt_subtitle {
+#azjexrifbe .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#jbytjajfrh .gt_bottom_border {
+#azjexrifbe .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#azjexrifbe .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_col_headings {
+#azjexrifbe .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -106,7 +118,7 @@ Here we put tables of means for the significant effects.
   border-right-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_col_heading {
+#azjexrifbe .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -126,7 +138,7 @@ Here we put tables of means for the significant effects.
   overflow-x: hidden;
 }
 
-#jbytjajfrh .gt_column_spanner_outer {
+#azjexrifbe .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -138,15 +150,15 @@ Here we put tables of means for the significant effects.
   padding-right: 4px;
 }
 
-#jbytjajfrh .gt_column_spanner_outer:first-child {
+#azjexrifbe .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jbytjajfrh .gt_column_spanner_outer:last-child {
+#azjexrifbe .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jbytjajfrh .gt_column_spanner {
+#azjexrifbe .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -158,7 +170,11 @@ Here we put tables of means for the significant effects.
   width: 100%;
 }
 
-#jbytjajfrh .gt_group_heading {
+#azjexrifbe .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#azjexrifbe .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -184,7 +200,7 @@ Here we put tables of means for the significant effects.
   text-align: left;
 }
 
-#jbytjajfrh .gt_empty_group_heading {
+#azjexrifbe .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -199,15 +215,15 @@ Here we put tables of means for the significant effects.
   vertical-align: middle;
 }
 
-#jbytjajfrh .gt_from_md > :first-child {
+#azjexrifbe .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jbytjajfrh .gt_from_md > :last-child {
+#azjexrifbe .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jbytjajfrh .gt_row {
+#azjexrifbe .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -226,7 +242,7 @@ Here we put tables of means for the significant effects.
   overflow-x: hidden;
 }
 
-#jbytjajfrh .gt_stub {
+#azjexrifbe .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -239,7 +255,7 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#jbytjajfrh .gt_stub_row_group {
+#azjexrifbe .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -253,11 +269,15 @@ Here we put tables of means for the significant effects.
   vertical-align: top;
 }
 
-#jbytjajfrh .gt_row_group_first td {
+#azjexrifbe .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jbytjajfrh .gt_summary_row {
+#azjexrifbe .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#azjexrifbe .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -267,16 +287,16 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#jbytjajfrh .gt_first_summary_row {
+#azjexrifbe .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_first_summary_row.thick {
+#azjexrifbe .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jbytjajfrh .gt_last_summary_row {
+#azjexrifbe .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -286,7 +306,7 @@ Here we put tables of means for the significant effects.
   border-bottom-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_grand_summary_row {
+#azjexrifbe .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -296,7 +316,7 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#jbytjajfrh .gt_first_grand_summary_row {
+#azjexrifbe .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -306,11 +326,21 @@ Here we put tables of means for the significant effects.
   border-top-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_striped {
+#azjexrifbe .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#azjexrifbe .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jbytjajfrh .gt_table_body {
+#azjexrifbe .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -319,7 +349,7 @@ Here we put tables of means for the significant effects.
   border-bottom-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_footnotes {
+#azjexrifbe .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -333,30 +363,8 @@ Here we put tables of means for the significant effects.
   border-right-color: #D3D3D3;
 }
 
-#jbytjajfrh .gt_footnote {
+#azjexrifbe .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#jbytjajfrh .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#jbytjajfrh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -364,71 +372,92 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#jbytjajfrh .gt_left {
+#azjexrifbe .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#azjexrifbe .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#azjexrifbe .gt_left {
   text-align: left;
 }
 
-#jbytjajfrh .gt_center {
+#azjexrifbe .gt_center {
   text-align: center;
 }
 
-#jbytjajfrh .gt_right {
+#azjexrifbe .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jbytjajfrh .gt_font_normal {
+#azjexrifbe .gt_font_normal {
   font-weight: normal;
 }
 
-#jbytjajfrh .gt_font_bold {
+#azjexrifbe .gt_font_bold {
   font-weight: bold;
 }
 
-#jbytjajfrh .gt_font_italic {
+#azjexrifbe .gt_font_italic {
   font-style: italic;
 }
 
-#jbytjajfrh .gt_super {
+#azjexrifbe .gt_super {
   font-size: 65%;
 }
 
-#jbytjajfrh .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#azjexrifbe .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#jbytjajfrh .gt_asterisk {
+#azjexrifbe .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jbytjajfrh .gt_indent_1 {
+#azjexrifbe .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jbytjajfrh .gt_indent_2 {
+#azjexrifbe .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jbytjajfrh .gt_indent_3 {
+#azjexrifbe .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jbytjajfrh .gt_indent_4 {
+#azjexrifbe .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jbytjajfrh .gt_indent_5 {
+#azjexrifbe .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="resources">resources</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mean">mean</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sd">sd</th>
@@ -452,14 +481,26 @@ Here we put tables of means for the significant effects.
 
 
 ```{=html}
-<div id="oaqpesyycj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="wcorjzhwbw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wcorjzhwbw table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#oaqpesyycj .gt_table {
+#wcorjzhwbw thead, #wcorjzhwbw tbody, #wcorjzhwbw tfoot, #wcorjzhwbw tr, #wcorjzhwbw td, #wcorjzhwbw th {
+  border-style: none;
+}
+
+#wcorjzhwbw p {
+  margin: 0;
+  padding: 0;
+}
+
+#wcorjzhwbw .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: 0;
   margin-right: auto;
   color: #333333;
@@ -482,24 +523,12 @@ Here we put tables of means for the significant effects.
   border-left-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#oaqpesyycj .gt_caption {
+#wcorjzhwbw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#oaqpesyycj .gt_title {
+#wcorjzhwbw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -511,25 +540,37 @@ Here we put tables of means for the significant effects.
   border-bottom-width: 0;
 }
 
-#oaqpesyycj .gt_subtitle {
+#wcorjzhwbw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#oaqpesyycj .gt_bottom_border {
+#wcorjzhwbw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wcorjzhwbw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_col_headings {
+#wcorjzhwbw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -544,7 +585,7 @@ Here we put tables of means for the significant effects.
   border-right-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_col_heading {
+#wcorjzhwbw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -564,7 +605,7 @@ Here we put tables of means for the significant effects.
   overflow-x: hidden;
 }
 
-#oaqpesyycj .gt_column_spanner_outer {
+#wcorjzhwbw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -576,15 +617,15 @@ Here we put tables of means for the significant effects.
   padding-right: 4px;
 }
 
-#oaqpesyycj .gt_column_spanner_outer:first-child {
+#wcorjzhwbw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oaqpesyycj .gt_column_spanner_outer:last-child {
+#wcorjzhwbw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oaqpesyycj .gt_column_spanner {
+#wcorjzhwbw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -596,7 +637,11 @@ Here we put tables of means for the significant effects.
   width: 100%;
 }
 
-#oaqpesyycj .gt_group_heading {
+#wcorjzhwbw .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#wcorjzhwbw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -622,7 +667,7 @@ Here we put tables of means for the significant effects.
   text-align: left;
 }
 
-#oaqpesyycj .gt_empty_group_heading {
+#wcorjzhwbw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -637,15 +682,15 @@ Here we put tables of means for the significant effects.
   vertical-align: middle;
 }
 
-#oaqpesyycj .gt_from_md > :first-child {
+#wcorjzhwbw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oaqpesyycj .gt_from_md > :last-child {
+#wcorjzhwbw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oaqpesyycj .gt_row {
+#wcorjzhwbw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -664,7 +709,7 @@ Here we put tables of means for the significant effects.
   overflow-x: hidden;
 }
 
-#oaqpesyycj .gt_stub {
+#wcorjzhwbw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -677,7 +722,7 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#oaqpesyycj .gt_stub_row_group {
+#wcorjzhwbw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -691,11 +736,15 @@ Here we put tables of means for the significant effects.
   vertical-align: top;
 }
 
-#oaqpesyycj .gt_row_group_first td {
+#wcorjzhwbw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oaqpesyycj .gt_summary_row {
+#wcorjzhwbw .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#wcorjzhwbw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -705,16 +754,16 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#oaqpesyycj .gt_first_summary_row {
+#wcorjzhwbw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_first_summary_row.thick {
+#wcorjzhwbw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oaqpesyycj .gt_last_summary_row {
+#wcorjzhwbw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -724,7 +773,7 @@ Here we put tables of means for the significant effects.
   border-bottom-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_grand_summary_row {
+#wcorjzhwbw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -734,7 +783,7 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#oaqpesyycj .gt_first_grand_summary_row {
+#wcorjzhwbw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -744,11 +793,21 @@ Here we put tables of means for the significant effects.
   border-top-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_striped {
+#wcorjzhwbw .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wcorjzhwbw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#oaqpesyycj .gt_table_body {
+#wcorjzhwbw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -757,7 +816,7 @@ Here we put tables of means for the significant effects.
   border-bottom-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_footnotes {
+#wcorjzhwbw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -771,30 +830,8 @@ Here we put tables of means for the significant effects.
   border-right-color: #D3D3D3;
 }
 
-#oaqpesyycj .gt_footnote {
+#wcorjzhwbw .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#oaqpesyycj .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#oaqpesyycj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -802,71 +839,92 @@ Here we put tables of means for the significant effects.
   padding-right: 5px;
 }
 
-#oaqpesyycj .gt_left {
+#wcorjzhwbw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wcorjzhwbw .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wcorjzhwbw .gt_left {
   text-align: left;
 }
 
-#oaqpesyycj .gt_center {
+#wcorjzhwbw .gt_center {
   text-align: center;
 }
 
-#oaqpesyycj .gt_right {
+#wcorjzhwbw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oaqpesyycj .gt_font_normal {
+#wcorjzhwbw .gt_font_normal {
   font-weight: normal;
 }
 
-#oaqpesyycj .gt_font_bold {
+#wcorjzhwbw .gt_font_bold {
   font-weight: bold;
 }
 
-#oaqpesyycj .gt_font_italic {
+#wcorjzhwbw .gt_font_italic {
   font-style: italic;
 }
 
-#oaqpesyycj .gt_super {
+#wcorjzhwbw .gt_super {
   font-size: 65%;
 }
 
-#oaqpesyycj .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#wcorjzhwbw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#oaqpesyycj .gt_asterisk {
+#wcorjzhwbw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oaqpesyycj .gt_indent_1 {
+#wcorjzhwbw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#oaqpesyycj .gt_indent_2 {
+#wcorjzhwbw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#oaqpesyycj .gt_indent_3 {
+#wcorjzhwbw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#oaqpesyycj .gt_indent_4 {
+#wcorjzhwbw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#oaqpesyycj .gt_indent_5 {
+#wcorjzhwbw .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stage">stage</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mean">mean</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sd">sd</th>

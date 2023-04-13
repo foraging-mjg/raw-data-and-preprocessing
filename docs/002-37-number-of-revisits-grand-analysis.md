@@ -50,9 +50,8 @@ subset(e2_nrevisits_grand_PARTICIPANT_MEANS, subset=pid==3 & resources=="random"
 # but there isn't a value for late (this is a structural missing)
 subset(e2_nrevisits_grand_PARTICIPANT_MEANS, subset=pid==3 & resources=="random" & fading=="no_fade" & stage=="late" & fruit==0)
 #> # A tibble: 0 × 6
-#> # … with 6 variables: pid <fct>, resources <fct>,
-#> #   fading <fct>, stage <fct>, fruit <fct>,
-#> #   meanrevisits <dbl>
+#> # ℹ 6 variables: pid <fct>, resources <fct>, fading <fct>,
+#> #   stage <fct>, fruit <fct>, meanrevisits <dbl>
 ```
 
 One approach is to replace this missing value with zero.
