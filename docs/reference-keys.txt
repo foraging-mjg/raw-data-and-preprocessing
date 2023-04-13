@@ -1,7 +1,6 @@
 first-things-first
 introduction
 number-of-trees
-trial-duration
 number-of-revisits-grand-analysis
 form-the-dataset
 means
@@ -13,9 +12,6 @@ retrieval-rate
 inter-tree-distance
 introduction-1
 number-of-trees-1
-trial-duration-1
-number-of-revisits-per-trial
-number-of-revisits-per-fruit
 number-of-revisits-grand-analysis-1
 retrieval-rate-1
 inter-tree-distance-1
