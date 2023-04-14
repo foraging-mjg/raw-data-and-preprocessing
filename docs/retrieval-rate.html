@@ -180,61 +180,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="retrieval-rate" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Retrieval Rate<a href="retrieval-rate.html#retrieval-rate" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Experiment 1</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="retrieval-rate.html#cb6-1" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;001-00-e1-data.RDS&quot;</span>)</span>
-<span id="cb6-2"><a href="retrieval-rate.html#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="retrieval-rate.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remove things from the raw data to make it suitable for this particular analysis</span></span>
-<span id="cb6-4"><a href="retrieval-rate.html#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="retrieval-rate.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># remove samples that did not look at a tree</span></span>
-<span id="cb6-6"><a href="retrieval-rate.html#cb6-6" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fl<span class="sc">&gt;</span><span class="dv">0</span>)</span>
-<span id="cb6-7"><a href="retrieval-rate.html#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="retrieval-rate.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the second (and any subsequent) *consecutive* duplicates</span></span>
-<span id="cb6-9"><a href="retrieval-rate.html#cb6-9" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> </span>
-<span id="cb6-10"><a href="retrieval-rate.html#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, rr, tb) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-11"><a href="retrieval-rate.html#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">|</span> tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-12"><a href="retrieval-rate.html#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb6-13"><a href="retrieval-rate.html#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="retrieval-rate.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># remove trials where they failed to get 10 fruit</span></span>
-<span id="cb6-15"><a href="retrieval-rate.html#cb6-15" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> </span>
-<span id="cb6-16"><a href="retrieval-rate.html#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, te) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-17"><a href="retrieval-rate.html#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">max_fr =</span> <span class="fu">max</span>(fr)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-18"><a href="retrieval-rate.html#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb6-19"><a href="retrieval-rate.html#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(max_fr<span class="sc">==</span><span class="dv">10</span>)</span>
-<span id="cb6-20"><a href="retrieval-rate.html#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="retrieval-rate.html#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># how many trees to get each fruit?</span></span>
-<span id="cb6-22"><a href="retrieval-rate.html#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit</span></span>
-<span id="cb6-23"><a href="retrieval-rate.html#cb6-23" aria-hidden="true" tabindex="-1"></a>e1<span class="sc">$</span>ntrees_to_get_a_fruit <span class="ot">=</span> <span class="cn">NA</span></span>
-<span id="cb6-24"><a href="retrieval-rate.html#cb6-24" aria-hidden="true" tabindex="-1"></a>j <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb6-25"><a href="retrieval-rate.html#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="fu">seq_along</span>(e1<span class="sc">$</span>ix)) {</span>
-<span id="cb6-26"><a href="retrieval-rate.html#cb6-26" aria-hidden="true" tabindex="-1"></a> j <span class="ot">=</span> j <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb6-27"><a href="retrieval-rate.html#cb6-27" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> (e1[k, <span class="st">&#39;fl&#39;</span>]<span class="sc">==</span><span class="dv">2</span>) {</span>
-<span id="cb6-28"><a href="retrieval-rate.html#cb6-28" aria-hidden="true" tabindex="-1"></a>   e1[k, <span class="st">&#39;ntrees_to_get_a_fruit&#39;</span>] <span class="ot">=</span> j</span>
-<span id="cb6-29"><a href="retrieval-rate.html#cb6-29" aria-hidden="true" tabindex="-1"></a>   j <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb6-30"><a href="retrieval-rate.html#cb6-30" aria-hidden="true" tabindex="-1"></a> }</span>
-<span id="cb6-31"><a href="retrieval-rate.html#cb6-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-32"><a href="retrieval-rate.html#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="retrieval-rate.html#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># remove any remaining NAs</span></span>
-<span id="cb6-34"><a href="retrieval-rate.html#cb6-34" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ntrees_to_get_a_fruit))</span>
-<span id="cb6-35"><a href="retrieval-rate.html#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-36"><a href="retrieval-rate.html#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA</span></span>
-<span id="cb6-37"><a href="retrieval-rate.html#cb6-37" aria-hidden="true" tabindex="-1"></a>rtv <span class="ot">=</span> e1 <span class="sc">%&gt;%</span> </span>
-<span id="cb6-38"><a href="retrieval-rate.html#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pp, rr, tb, fr, ntrees_to_get_a_fruit) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-39"><a href="retrieval-rate.html#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, rr, fr) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-40"><a href="retrieval-rate.html#cb6-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(ntrees_to_get_a_fruit)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-41"><a href="retrieval-rate.html#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb6-42"><a href="retrieval-rate.html#cb6-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pp=</span><span class="fu">as_factor</span>(pp), <span class="at">rr=</span><span class="fu">as_factor</span>(rr), <span class="at">fr=</span><span class="fu">as_factor</span>(fr))</span>
-<span id="cb6-43"><a href="retrieval-rate.html#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-44"><a href="retrieval-rate.html#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rtv, <span class="st">&quot;e1_retrieval_plot_data.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="retrieval-rate.html#cb1-1" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;001-00-e1-data.RDS&quot;</span>)</span>
+<span id="cb1-2"><a href="retrieval-rate.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="retrieval-rate.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remove things from the raw data to make it suitable for this particular analysis</span></span>
+<span id="cb1-4"><a href="retrieval-rate.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="retrieval-rate.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># remove samples that did not look at a tree</span></span>
+<span id="cb1-6"><a href="retrieval-rate.html#cb1-6" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(fl<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="retrieval-rate.html#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="retrieval-rate.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the second (and any subsequent) *consecutive* duplicates</span></span>
+<span id="cb1-9"><a href="retrieval-rate.html#cb1-9" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-10"><a href="retrieval-rate.html#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, rr, tb) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href="retrieval-rate.html#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">|</span> tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-12"><a href="retrieval-rate.html#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb1-13"><a href="retrieval-rate.html#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="retrieval-rate.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># remove trials where they failed to get 10 fruit</span></span>
+<span id="cb1-15"><a href="retrieval-rate.html#cb1-15" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-16"><a href="retrieval-rate.html#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, te) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-17"><a href="retrieval-rate.html#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">max_fr =</span> <span class="fu">max</span>(fr)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-18"><a href="retrieval-rate.html#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-19"><a href="retrieval-rate.html#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(max_fr<span class="sc">==</span><span class="dv">10</span>)</span>
+<span id="cb1-20"><a href="retrieval-rate.html#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="retrieval-rate.html#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># how many trees to get each fruit?</span></span>
+<span id="cb1-22"><a href="retrieval-rate.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit</span></span>
+<span id="cb1-23"><a href="retrieval-rate.html#cb1-23" aria-hidden="true" tabindex="-1"></a>e1<span class="sc">$</span>ntrees_to_get_a_fruit <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb1-24"><a href="retrieval-rate.html#cb1-24" aria-hidden="true" tabindex="-1"></a>j <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-25"><a href="retrieval-rate.html#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="fu">seq_along</span>(e1<span class="sc">$</span>ix)) {</span>
+<span id="cb1-26"><a href="retrieval-rate.html#cb1-26" aria-hidden="true" tabindex="-1"></a> j <span class="ot">=</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb1-27"><a href="retrieval-rate.html#cb1-27" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> (e1[k, <span class="st">&#39;fl&#39;</span>]<span class="sc">==</span><span class="dv">2</span>) {</span>
+<span id="cb1-28"><a href="retrieval-rate.html#cb1-28" aria-hidden="true" tabindex="-1"></a>   e1[k, <span class="st">&#39;ntrees_to_get_a_fruit&#39;</span>] <span class="ot">=</span> j</span>
+<span id="cb1-29"><a href="retrieval-rate.html#cb1-29" aria-hidden="true" tabindex="-1"></a>   j <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-30"><a href="retrieval-rate.html#cb1-30" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb1-31"><a href="retrieval-rate.html#cb1-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-32"><a href="retrieval-rate.html#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="retrieval-rate.html#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># remove any remaining NAs</span></span>
+<span id="cb1-34"><a href="retrieval-rate.html#cb1-34" aria-hidden="true" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> e1 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ntrees_to_get_a_fruit))</span>
+<span id="cb1-35"><a href="retrieval-rate.html#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="retrieval-rate.html#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA</span></span>
+<span id="cb1-37"><a href="retrieval-rate.html#cb1-37" aria-hidden="true" tabindex="-1"></a>rtv <span class="ot">=</span> e1 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-38"><a href="retrieval-rate.html#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pp, rr, tb, fr, ntrees_to_get_a_fruit) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-39"><a href="retrieval-rate.html#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, rr, fr) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-40"><a href="retrieval-rate.html#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(ntrees_to_get_a_fruit)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-41"><a href="retrieval-rate.html#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-42"><a href="retrieval-rate.html#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pp=</span><span class="fu">as_factor</span>(pp), <span class="at">rr=</span><span class="fu">as_factor</span>(rr), <span class="at">fr=</span><span class="fu">as_factor</span>(fr))</span>
+<span id="cb1-43"><a href="retrieval-rate.html#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="retrieval-rate.html#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rtv, <span class="st">&quot;e1_retrieval_plot_data.rds&quot;</span>)</span></code></pre></div>
 <div id="anova" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> ANOVA<a href="retrieval-rate.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="retrieval-rate.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;contr.poly&quot;</span>))</span>
-<span id="cb7-2"><a href="retrieval-rate.html#cb7-2" aria-hidden="true" tabindex="-1"></a>e1_retrievalrate_ANOVA <span class="ot">&lt;-</span> </span>
-<span id="cb7-3"><a href="retrieval-rate.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ezANOVA</span>(<span class="at">data=</span>rtv,</span>
-<span id="cb7-4"><a href="retrieval-rate.html#cb7-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv=</span>mu,</span>
-<span id="cb7-5"><a href="retrieval-rate.html#cb7-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">wid=</span>pp,</span>
-<span id="cb7-6"><a href="retrieval-rate.html#cb7-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">within=</span><span class="fu">c</span>(rr, fr),</span>
-<span id="cb7-7"><a href="retrieval-rate.html#cb7-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">type=</span><span class="dv">3</span>)</span>
-<span id="cb7-8"><a href="retrieval-rate.html#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="retrieval-rate.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_anova</span>(e1_retrievalrate_ANOVA, <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="retrieval-rate.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb2-2"><a href="retrieval-rate.html#cb2-2" aria-hidden="true" tabindex="-1"></a>e1_retrievalrate_ANOVA <span class="ot">&lt;-</span> </span>
+<span id="cb2-3"><a href="retrieval-rate.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ezANOVA</span>(<span class="at">data=</span>rtv,</span>
+<span id="cb2-4"><a href="retrieval-rate.html#cb2-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv=</span>mu,</span>
+<span id="cb2-5"><a href="retrieval-rate.html#cb2-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">wid=</span>pp,</span>
+<span id="cb2-6"><a href="retrieval-rate.html#cb2-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">within=</span><span class="fu">c</span>(rr, fr),</span>
+<span id="cb2-7"><a href="retrieval-rate.html#cb2-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">type=</span><span class="dv">3</span>, <span class="at">return_aov =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-8"><a href="retrieval-rate.html#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="retrieval-rate.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_anova</span>(e1_retrievalrate_ANOVA, <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; ">
 <caption>
 <span id="tab:unnamed-chunk-2">Table 5.1: </span>Retrieval rate
@@ -324,7 +324,7 @@ rr:fr
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="retrieval-rate.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_sphericity</span>(e1_retrievalrate_ANOVA, <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="retrieval-rate.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_anova</span>(<span class="fu">aovSphericityAdjustment</span>(e1_retrievalrate_ANOVA), <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; ">
 <caption>
 <span id="tab:unnamed-chunk-2">Table 5.1: </span>Retrieval rate
@@ -335,32 +335,35 @@ rr:fr
 Effect
 </th>
 <th style="text-align:right;">
-GGe
-</th>
-<th style="text-align:left;">
-p[GG]
-</th>
-<th style="text-align:left;">
-sig[GG]
+DFn
 </th>
 <th style="text-align:right;">
-HFe
+DFd
+</th>
+<th style="text-align:right;">
+F
 </th>
 <th style="text-align:left;">
-p[HF]
+p
 </th>
 <th style="text-align:left;">
-sig[HF]
+sig
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-fr
+rr
 </td>
 <td style="text-align:right;">
-0.435
+1.0
+</td>
+<td style="text-align:right;">
+41.0
+</td>
+<td style="text-align:right;">
+54.14
 </td>
 <td style="text-align:left;">
 0.000
@@ -368,8 +371,19 @@ fr
 <td style="text-align:left;">
 ***
 </td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fr
+</td>
 <td style="text-align:right;">
-0.486
+3.9
+</td>
+<td style="text-align:right;">
+160.4
+</td>
+<td style="text-align:right;">
+22.99
 </td>
 <td style="text-align:left;">
 0.000
@@ -383,16 +397,13 @@ fr
 rr:fr
 </td>
 <td style="text-align:right;">
-0.536
-</td>
-<td style="text-align:left;">
-0.000
-</td>
-<td style="text-align:left;">
-***
+4.8
 </td>
 <td style="text-align:right;">
-0.617
+197.9
+</td>
+<td style="text-align:right;">
+46.85
 </td>
 <td style="text-align:left;">
 0.000
@@ -403,37 +414,37 @@ rr:fr
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="retrieval-rate.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_corrected_dfs</span>(e1_retrievalrate_ANOVA, <span class="st">&quot;Retrieval rate&quot;</span>)</span></code></pre></div>
+<p>The effect of fruit (<span class="math inline">\(F(9, 369) = 22.99\)</span>, <span class="math inline">\(p &lt; .001\)</span>, <span class="math inline">\(\hat{\eta}^2_G = .204\)</span>, 90% CI <span class="math inline">\([.133, .250]\)</span>)</p>
 <p>The effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(3.91, 160.43) = 22.99, p&lt; .001</p>
 <p>The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(4.83, 197.91) = 46.85, p&lt; .001</p>
 </div>
 <div id="plot" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Plot<a href="retrieval-rate.html#plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="retrieval-rate.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ten points along the x axis, each participant contributes one point per cell</span></span>
-<span id="cb10-2"><a href="retrieval-rate.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="retrieval-rate.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb10-4"><a href="retrieval-rate.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>rtv, </span>
-<span id="cb10-5"><a href="retrieval-rate.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>fr, <span class="at">y=</span>mu, <span class="at">group=</span>rr, <span class="at">pch=</span>rr, <span class="at">fill=</span>rr)</span>
-<span id="cb10-6"><a href="retrieval-rate.html#cb10-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="retrieval-rate.html#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb10-8"><a href="retrieval-rate.html#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>, <span class="at">panel.grid=</span><span class="fu">element_blank</span>())<span class="sc">+</span></span>
-<span id="cb10-9"><a href="retrieval-rate.html#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">&quot;Resources&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb10-10"><a href="retrieval-rate.html#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">&quot;Resources&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="dv">24</span>,<span class="dv">19</span>)) <span class="sc">+</span></span>
-<span id="cb10-11"><a href="retrieval-rate.html#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb10-12"><a href="retrieval-rate.html#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>)) <span class="sc">+</span> </span>
-<span id="cb10-13"><a href="retrieval-rate.html#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>))<span class="sc">+</span></span>
-<span id="cb10-14"><a href="retrieval-rate.html#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Mean number of trees visited to get each fruit&quot;</span>)<span class="sc">+</span></span>
-<span id="cb10-15"><a href="retrieval-rate.html#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Fruit index&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="retrieval-rate.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ten points along the x axis, each participant contributes one point per cell</span></span>
+<span id="cb4-2"><a href="retrieval-rate.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="retrieval-rate.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb4-4"><a href="retrieval-rate.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>rtv, </span>
+<span id="cb4-5"><a href="retrieval-rate.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>fr, <span class="at">y=</span>mu, <span class="at">group=</span>rr, <span class="at">pch=</span>rr, <span class="at">fill=</span>rr)</span>
+<span id="cb4-6"><a href="retrieval-rate.html#cb4-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="retrieval-rate.html#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb4-8"><a href="retrieval-rate.html#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>, <span class="at">panel.grid=</span><span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb4-9"><a href="retrieval-rate.html#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">&quot;Resources&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="retrieval-rate.html#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">&quot;Resources&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="dv">24</span>,<span class="dv">19</span>)) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="retrieval-rate.html#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="retrieval-rate.html#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>)) <span class="sc">+</span> </span>
+<span id="cb4-13"><a href="retrieval-rate.html#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.25</span>))<span class="sc">+</span></span>
+<span id="cb4-14"><a href="retrieval-rate.html#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Mean number of trees visited to get each fruit&quot;</span>)<span class="sc">+</span></span>
+<span id="cb4-15"><a href="retrieval-rate.html#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Fruit index&quot;</span>)</span></code></pre></div>
 <p><img src="e1_figures/e1retrievalrate-1.png" width="672" /></p>
 </div>
 <div id="resources-means" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Resources Means<a href="retrieval-rate.html#resources-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="retrieval-rate.html#cb11-1" aria-hidden="true" tabindex="-1"></a>rrpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(rr, pp, fr) <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="retrieval-rate.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="retrieval-rate.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) </span>
-<span id="cb11-4"><a href="retrieval-rate.html#cb11-4" aria-hidden="true" tabindex="-1"></a>rrmeans <span class="ot">&lt;-</span> rrpremeans <span class="sc">%&gt;%</span> </span>
-<span id="cb11-5"><a href="retrieval-rate.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
-<span id="cb11-6"><a href="retrieval-rate.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(rrmeans, <span class="st">&quot;stage means&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="retrieval-rate.html#cb5-1" aria-hidden="true" tabindex="-1"></a>rrpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(rr, pp, fr) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="retrieval-rate.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="retrieval-rate.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) </span>
+<span id="cb5-4"><a href="retrieval-rate.html#cb5-4" aria-hidden="true" tabindex="-1"></a>rrmeans <span class="ot">&lt;-</span> rrpremeans <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="retrieval-rate.html#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
+<span id="cb5-6"><a href="retrieval-rate.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(rrmeans, <span class="st">&quot;stage means&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; ">
 <caption>
 <span id="tab:unnamed-chunk-4">Table 5.2: </span>stage means
@@ -479,12 +490,12 @@ patchy
 </div>
 <div id="fruit-means" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> Fruit means<a href="retrieval-rate.html#fruit-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="retrieval-rate.html#cb12-1" aria-hidden="true" tabindex="-1"></a>frpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(fr, pp, rr) <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="retrieval-rate.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="retrieval-rate.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu))  </span>
-<span id="cb12-4"><a href="retrieval-rate.html#cb12-4" aria-hidden="true" tabindex="-1"></a>frmeans <span class="ot">&lt;-</span> frpremeans <span class="sc">%&gt;%</span> </span>
-<span id="cb12-5"><a href="retrieval-rate.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
-<span id="cb12-6"><a href="retrieval-rate.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(frmeans, <span class="st">&quot;fruit means&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="retrieval-rate.html#cb6-1" aria-hidden="true" tabindex="-1"></a>frpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(fr, pp, rr) <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="retrieval-rate.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="retrieval-rate.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu))  </span>
+<span id="cb6-4"><a href="retrieval-rate.html#cb6-4" aria-hidden="true" tabindex="-1"></a>frmeans <span class="ot">&lt;-</span> frpremeans <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="retrieval-rate.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
+<span id="cb6-6"><a href="retrieval-rate.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(frmeans, <span class="st">&quot;fruit means&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; ">
 <caption>
 <span id="tab:unnamed-chunk-5">Table 5.3: </span>fruit means
@@ -678,6 +689,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

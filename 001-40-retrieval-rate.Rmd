@@ -7,6 +7,8 @@ source("prettify.R")
 knitr::opts_chunk$set(fig.path='e1_figures/')
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(dplyr.summarise.inform=F)
+library(psychReport)
+library(papaja)
 library(easystats)
 library(kableExtra)
 library(tidyverse)
@@ -70,11 +72,10 @@ e1_retrievalrate_ANOVA <-
           dv=mu,
           wid=pp,
           within=c(rr, fr),
-          type=3)
+          type=3, return_aov = TRUE)
 
 prettify_anova(e1_retrievalrate_ANOVA, "Retrieval rate")
-prettify_sphericity(e1_retrievalrate_ANOVA, "Retrieval rate")
-prettify_corrected_dfs(e1_retrievalrate_ANOVA, "Retrieval rate")
+prettify_anova(aovSphericityAdjustment(e1_retrievalrate_ANOVA), "Retrieval rate")
 ```
 
 ```{r, echo=F}
@@ -82,9 +83,13 @@ av = e1_retrievalrate_ANOVA$ANOVA %>% tibble()
 sp = e1_retrievalrate_ANOVA$`Sphericity Corrections` %>% tibble()
 ```
 
+The effect of fruit (`r apa_print(aovSphericityAdjustment(e1_retrievalrate_ANOVA)$aov)$full_result$fr`)
+
 The effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(`r round(av %>% filter(Effect=="fr") %>% select(DFn) * sp %>% filter(Effect=="fr") %>% select(GGe), 2) %>% as.numeric()`, `r round(av %>% filter(Effect=="fr") %>% select(DFd) * sp %>% filter(Effect=="fr") %>% select(GGe),2) %>% as.numeric()`) = `r av %>% filter(Effect=="fr") %>% select(F) %>% as.numeric() %>% round(2)`, p< `r ifelse(sp %>% filter(Effect=="fr") %>% select(3) %>% as.numeric() <.001, ".001", sp %>% filter(Effect=="fr") %>% select(3) %>% as.numeric())`
 
 The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(`r round(av %>% filter(Effect=="rr:fr") %>% select(DFn) * sp %>% filter(Effect=="rr:fr") %>% select(GGe), 2) %>% as.numeric()`, `r round(av %>% filter(Effect=="rr:fr") %>% select(DFd) * sp %>% filter(Effect=="rr:fr") %>% select(GGe),2) %>% as.numeric()`) = `r av %>% filter(Effect=="rr:fr") %>% select(F) %>% as.numeric() %>% round(2)`, p< `r ifelse(sp %>% filter(Effect=="rr:fr") %>% select(3) %>% as.numeric() <.001, ".001", sp %>% filter(Effect=="rr:fr") %>% select(3) %>% as.numeric())`
+
+
 
 
 ## Plot

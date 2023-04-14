@@ -62,7 +62,7 @@ e1_retrievalrate_ANOVA <-
           dv=mu,
           wid=pp,
           within=c(rr, fr),
-          type=3)
+          type=3, return_aov = TRUE)
 
 prettify_anova(e1_retrievalrate_ANOVA, "Retrieval rate")
 ```
@@ -108,7 +108,7 @@ prettify_anova(e1_retrievalrate_ANOVA, "Retrieval rate")
 </table>
 
 ```r
-prettify_sphericity(e1_retrievalrate_ANOVA, "Retrieval rate")
+prettify_anova(aovSphericityAdjustment(e1_retrievalrate_ANOVA), "Retrieval rate")
 ```
 
 <table class="table" style="width: auto !important; ">
@@ -116,45 +116,50 @@ prettify_sphericity(e1_retrievalrate_ANOVA, "Retrieval rate")
  <thead>
   <tr>
    <th style="text-align:left;"> Effect </th>
-   <th style="text-align:right;"> GGe </th>
-   <th style="text-align:left;"> p[GG] </th>
-   <th style="text-align:left;"> sig[GG] </th>
-   <th style="text-align:right;"> HFe </th>
-   <th style="text-align:left;"> p[HF] </th>
-   <th style="text-align:left;"> sig[HF] </th>
+   <th style="text-align:right;"> DFn </th>
+   <th style="text-align:right;"> DFd </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:left;"> p </th>
+   <th style="text-align:left;"> sig </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> fr </td>
-   <td style="text-align:right;"> 0.435 </td>
+   <td style="text-align:left;"> rr </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;"> 41.0 </td>
+   <td style="text-align:right;"> 54.14 </td>
    <td style="text-align:left;"> 0.000 </td>
    <td style="text-align:left;"> *** </td>
-   <td style="text-align:right;"> 0.486 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> fr </td>
+   <td style="text-align:right;"> 3.9 </td>
+   <td style="text-align:right;"> 160.4 </td>
+   <td style="text-align:right;"> 22.99 </td>
    <td style="text-align:left;"> 0.000 </td>
    <td style="text-align:left;"> *** </td>
   </tr>
   <tr>
    <td style="text-align:left;"> rr:fr </td>
-   <td style="text-align:right;"> 0.536 </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:left;"> *** </td>
-   <td style="text-align:right;"> 0.617 </td>
+   <td style="text-align:right;"> 4.8 </td>
+   <td style="text-align:right;"> 197.9 </td>
+   <td style="text-align:right;"> 46.85 </td>
    <td style="text-align:left;"> 0.000 </td>
    <td style="text-align:left;"> *** </td>
   </tr>
 </tbody>
 </table>
 
-```r
-prettify_corrected_dfs(e1_retrievalrate_ANOVA, "Retrieval rate")
-```
 
 
+The effect of fruit ($F(9, 369) = 22.99$, $p < .001$, $\hat{\eta}^2_G = .204$, 90\% CI $[.133, .250]$)
 
 The effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(3.91, 160.43) = 22.99, p< .001
 
 The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(4.83, 197.91) = 46.85, p< .001
+
+
 
 
 ## Plot
